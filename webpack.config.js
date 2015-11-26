@@ -57,13 +57,22 @@ var config = {
       },
       {
         test: /\.woff$/, 
-        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&minetype=application/font-woff'},
+        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&minetype=application/font-woff'
+      },
+        {
+        test: /\.woff2$/, 
+        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000'
+      },
       {
         test: /\.ttf$/, 
         loader: 'file-loader?name=fonts/[name].[ext]'
       },
       {
         test: /\.eot$/, 
+        loader: 'file-loader?name=fonts/[name].[ext]'
+      },
+      {
+        test: /\.woff2$/, 
         loader: 'file-loader?name=fonts/[name].[ext]'
       },       
       {

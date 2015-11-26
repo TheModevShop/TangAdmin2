@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import routes from 'components/Application/routes';
 import history from 'appHistory';
 import es6Promise from 'es6-promise';
+import "babel-core/polyfill";
 es6Promise.polyfill();
 
 

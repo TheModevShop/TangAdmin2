@@ -8,11 +8,7 @@ class Dashboard extends React.Component {
   }
   render() {
     return (
-        <Grid>
-          <Row>
-           
-          </Row>
-        </Grid>
+        <div className="dahboard-home">hello</div>
     );
   }
 }

@@ -1,6 +1,8 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
-import MainTable from 'pages/Components/Tables/MainTable/MainTable';
+import Table from 'components/theme/Tables';
+import GymsTableHeader from './components/GymsTableHeader';
+import GymsTableBody from './components/GymsTableBody';
 import _ from 'lodash';
 
 class Gyms extends React.Component {
@@ -12,11 +14,13 @@ class Gyms extends React.Component {
   render() {
     const gyms = _.get(this.props, 'gyms.allGyms');
     return (
-      <div>
-        {this.props.name}
+      <div className="gyms-wrapper">
         {
           gyms ?
-          <MainTable gymList={gyms} /> : null
+          <Table> 
+            <GymsTableHeader />
+            <GymsTableBody data={gyms} />
+          </Table> : null
         }
        </div>
     );

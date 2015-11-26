@@ -1,6 +1,7 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
-import SignInForm from './components/SignInForm';
+import {signIn} from 'actions/authenticationActions';
+import history from 'appHistory';
 
 
 class Login extends React.Component {
@@ -16,14 +17,20 @@ class Login extends React.Component {
     const sessionData = nextProps.authentication.sessionData;
     if (sessionData && !_.get(this.context.router, 'state.isTransitioning')) {
       const screen = _.get(nextProps, 'authentication.sessionData.user');
-      this.context.router.transitionTo(screen);
+      history.pushState(null, screen);
     }
   }
 
   render() {
     return (
-      <div>fsadhfjkasfhsk</div>
+      <div onClick={this.submitForm.bind(this)}>fsadhfjkasfhsk</div>
     );
+  }
+
+  async submitForm(e) {
+    e.preventDefault();
+    console.log('hello')
+    await signIn(e);
   }
 }
 
