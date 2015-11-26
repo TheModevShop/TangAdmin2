@@ -1,3 +1,4 @@
+import React from 'react';
 import {setActiveGym} from 'actions/GymActions';
 import {Link} from 'react-router';
 

@@ -1,3 +1,4 @@
+import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import MainTable from 'pages/Components/Tables/MainTable/MainTable';
 import _ from 'lodash';

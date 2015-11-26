@@ -1,3 +1,4 @@
+import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 
 class GymsProfile extends React.Component {

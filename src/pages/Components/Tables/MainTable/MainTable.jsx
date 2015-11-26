@@ -1,3 +1,4 @@
+import React from 'react';
 import './table.less';
 import MainTableRow from './components/MainTableRow';
 

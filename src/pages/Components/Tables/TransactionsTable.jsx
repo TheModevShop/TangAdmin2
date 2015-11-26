@@ -1,3 +1,4 @@
+import React from 'react';
 const TransactionsTable = React.createClass({
   render: function() {
     return (

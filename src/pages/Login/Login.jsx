@@ -1,3 +1,4 @@
+import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import SignInForm from './components/SignInForm';
 
@@ -21,19 +22,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <Grid>
-        <Row>
-          <Col sm={6}>
-            <PanelContainer>
-              <Panel>
-                
-                <SignInForm /> 
-
-              </Panel>
-            </PanelContainer>
-          </Col>
-        </Row>
-      </Grid>
+      <div>fsadhfjkasfhsk</div>
     );
   }
 }

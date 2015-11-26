@@ -5,43 +5,43 @@ var WebpackDevServer = require('webpack-dev-server');
 var path = require('path');
 var filenameResolver = require('./filenameResolver');
 
-var appName = 'app';
-var host = '0.0.0.0';
-var port = '9000';
 
-var plugins = [
-      new filenameResolver()
-    ], outputFile;
+var plugins = [new filenameResolver(),
+new webpack.HotModuleReplacementPlugin(),
+new webpack.NoErrorsPlugin(),
+new webpack.optimize.UglifyJsPlugin({sourceMap: false})
+], outputFile;
 
 if (env === 'build') {
   plugins.push(new UglifyJsPlugin({minimize: true}));
-  outputFile = appName + '.min.js';
 } else {
-  outputFile = appName + '.js';
-  plugins.push(new webpack.HotModuleReplacementPlugin())
-  plugins.push(new webpack.NoErrorsPlugin())
-  plugins.push(new webpack.optimize.UglifyJsPlugin({sourceMap: false}))
+  
+  
+  
 }
 
 var config = {
-  entry: './src/index.js',
-  devtool: 'source-map',
+  devtool: 'eval',
+  entry: [
+    'webpack-dev-server/client?http://localhost:8585',
+    'webpack/hot/only-dev-server',
+    './src/index.js'
+  ],
   output: {
-    path: __dirname + '/lib',
-    filename: outputFile,
-    publicPath: __dirname + '/example'
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/static/'
   },
   module: {
     loaders: [
       {
         test: /(\.jsx|\.js)$/,
-        loaders: ["babel?stage=1&optional=runtime"],
-        exclude: /(node_modules|bower_components)/
+        exclude: /node_modules/,
+        loaders: ["react-hot", "babel?stage=1&optional=runtime"]
       },
       {
-        test: /(\.jsx|\.js)$/,
-        loader: "eslint-loader",
-        exclude: /node_modules/
+        test: /\.html$/,
+        loader: "file?name=[name].[ext]",
       },
       {
         test: /\.json$/,
@@ -82,20 +82,5 @@ var config = {
   },
   plugins: plugins
 };
-
-if (env === 'dev') {
-  new WebpackDevServer(webpack(config), {
-    contentBase: './example',
-    hot: true,
-    debug: true
-  }).listen(port, host, function (err, result) {
-    if (err) {
-      console.log(err);
-    }
-  });
-  console.log('-------------------------');
-  console.log('Local web server runs at http://' + host + ':' + port);
-  console.log('-------------------------');
-}
 
 module.exports = config;

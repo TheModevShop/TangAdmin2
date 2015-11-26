@@ -1,3 +1,4 @@
+import React from 'react';
 const CoachesTable = React.createClass({
   render: function() {
     return (

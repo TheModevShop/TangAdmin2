@@ -4,6 +4,7 @@ import tree from 'state/StateTree';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import _ from 'lodash';
+import './app.less';
 
 class App extends React.Component {
   render() {

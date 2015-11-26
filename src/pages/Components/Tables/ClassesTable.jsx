@@ -1,3 +1,4 @@
+import React from 'react';
 const ClassesTable = React.createClass({
   render: function() {
     return (

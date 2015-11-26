@@ -1,7 +1,8 @@
 import React from 'react';
-import {Route} from 'react-router';
+import {Route
+} from 'react-router';
 
-function getComponents(cb) {
+function getComponents(location, cb) {
   require.ensure([], (require) => {
     cb(null, require('./Dashboard'));
   });
