@@ -1,11 +1,15 @@
 import React, { PropTypes, Component } from 'react';
 import {Pagination, Panel, Well, Button, PageHeader} from "react-bootstrap";
+import $ from 'jquery';
 
 var Tables = React.createClass({
+  
+  setViewNumbers: function(e) {
+    this.setState({numbersViewed: e.currentTarget.value})
+  },
 
   render: function() {
     return (
-
       <div>
         <div className="col-lg-12"> 
           <PageHeader>Tables</PageHeader> 
@@ -20,7 +24,13 @@ var Tables = React.createClass({
                   <div className="row">
                     <div className="col-sm-9">
                       <div className="dataTables_length" id="dataTables-example_length">
-                        <label>Show <select name="dataTables-example_length" aria-controls="dataTables-example" className="form-control input-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label>
+                        <label>Show 
+                        <select onChange={this.setViewNumbers} name="dataTables-example_length" aria-controls="dataTables-example" className="form-control input-sm">
+                          <option value="10">10</option>
+                          <option value="25">25</option>
+                          <option value="50">50</option>
+                          <option value="100">100</option>
+                        </select> entries</label>
                       </div>
                     </div>
                     <div className="col-sm-3">
@@ -32,7 +42,7 @@ var Tables = React.createClass({
 
                   <div className="row">
                     <div className="col-sm-12">
-                      <table className="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" role="grid" aria-describedby="dataTables-example_info">
+                      <table id="gymsTable" className="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" role="grid" aria-describedby="dataTables-example_info">
                         {this.props.children}
                       </table>
                     </div>
@@ -43,7 +53,7 @@ var Tables = React.createClass({
                     </div>
                     <div className="col-sm-6" pullRight >
                       <Pagination activePage={1}
-                        items={6} perPage={10} 
+                        items={this.props.length} perPage={1} 
                         first={true} last={true}
                         prev={true} next={true}
                         onSelect={ (pageNumber) => {} } />  

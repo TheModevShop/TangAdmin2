@@ -1,9 +1,27 @@
 .nav-bar {
-  top: 60px;
+  top: 0px;
   bottom:0;
   position: fixed;
   left: 0;
   width: @appNavWidth;
-  background-color: #ccc;
+  background-color: @navy;
   height: 100%;
+  ul {
+    padding: 0;
+    li {
+      a {
+        color: @purple;
+        padding: 10px @containerPadding;
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
+      &:hover {
+        background: @red;
+        a {
+          color: #fff;
+        }
+      }
+    }
+  }
 }

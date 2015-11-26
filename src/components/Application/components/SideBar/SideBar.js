@@ -1,5 +1,7 @@
 import React from 'react';
 import history from 'appHistory';
+import Router, { Link, RouteHandler } from "react-router";
+import classNames from "classnames";
 import './side-bar.less';
 
 class Header extends React.Component {
@@ -10,15 +12,18 @@ class Header extends React.Component {
 
   render() {
     return (
-      <nav className="nav-bar">
-      </nav>
+      <div className="nav-bar">
+        <ul>
+          <li> 
+            <Link to="dashboard">Dashboard</Link> 
+          </li>
+          <li> 
+            <Link to="gyms">Gyms</Link>
+          </li> 
+        </ul>
+      </div>
     );
   }
-
-  goHome() {
-    history.pushState(null, '/');
-  }
-
 }
 
 Header.contextTypes = {

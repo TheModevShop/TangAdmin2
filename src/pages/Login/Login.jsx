@@ -2,6 +2,7 @@ import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {signIn} from 'actions/authenticationActions';
 import history from 'appHistory';
+import {Panel, Input, Button} from 'react-bootstrap';
 
 
 class Login extends React.Component {
@@ -23,7 +24,27 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div onClick={this.submitForm.bind(this)}>fsadhfjkasfhsk</div>
+      <div className="col-md-4 col-md-offset-4">
+
+        <Panel header={<h3>Please Sign In</h3>} className="login-panel">
+          <form role="form" onSubmit={this.submitForm}>
+            <fieldset>
+              <div className="form-group">
+                <Input onChange={this.setLoginID} className="form-control" placeholder="Username" ref="loginID" type="text" autofocus="" name="name" />
+              </div>
+
+              <div className="form-group">
+                <Input onChange={this.setPassword} className="form-control" placeholder="Password" ref="password" type="password" name="password" />
+              </div>
+              <Input type="checkbox" label="Remember Me" />
+              <Button type="submit" bsSize="large" bsStyle="success" block>Login</Button>
+              
+            </fieldset>
+          </form>
+
+        </Panel>
+        
+      </div>
     );
   }
 
