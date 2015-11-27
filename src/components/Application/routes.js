@@ -16,8 +16,8 @@ function getChildRoutes(state, cb) {
       require('pages/Coaches/routes'),
       require('pages/GymProfile/routes'),
       require('pages/Transactions/routes'),
-      require('pages/Gyms/routes')
-      // require('pages/AddGym/routes')
+      require('pages/Gyms/routes'),
+      require('pages/AddGym/routes')
     ]);
   });
 }

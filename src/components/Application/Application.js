@@ -16,7 +16,7 @@ class App extends React.Component {
       return accum;
     }, '');
     return (
-      <div className={classNames+'-wrapper' + 'main-container'}>
+      <div className={classNames.trim()+'-wrapper ' + 'main-container'}>
         <Header />
         {
           classNames.trim() !== 'login' ? 

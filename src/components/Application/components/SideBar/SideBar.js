@@ -20,6 +20,9 @@ class Header extends React.Component {
           <li> 
             <Link to="gyms">Gyms</Link>
           </li> 
+          <li> 
+            <Link to="add-gym">Add Gym</Link>
+          </li> 
         </ul>
       </div>
     );
