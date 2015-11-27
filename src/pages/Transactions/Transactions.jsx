@@ -1,7 +1,5 @@
 import {branch} from 'baobab-react/higher-order';
 
-import TransactionsTable from 'pages/Components/Tables/TransactionsTable';
-
 
 class Transactions extends React.Component {
   constructor(...args) {
@@ -10,7 +8,7 @@ class Transactions extends React.Component {
   }
   render() {
     return (
-        <TransactionsTable />
+        <div></div>
     );
   }
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
-import ClassesTable from 'pages/Components/Tables/ClassesTable';
 
 class Classes extends React.Component {
   constructor(...args) {
@@ -10,7 +9,7 @@ class Classes extends React.Component {
 
   render() {
     return (
-      <ClassesTable />
+      <div></div>
     );
   }
 }
