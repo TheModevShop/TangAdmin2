@@ -1,25 +1,16 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
-import {signIn} from 'actions/authenticationActions';
+import {getAuthentication} from 'actions/authenticationActions';
 import history from 'appHistory';
 import {Panel, Input, Button} from 'react-bootstrap';
+import $ from 'jquery';
+import formData from 'utility/formData';
 
 
 class Login extends React.Component {
   constructor(...args) {
     super(...args);
     this.state = {};
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (!nextProps || !nextProps.authentication) {
-      return;
-    }
-    const sessionData = nextProps.authentication.sessionData;
-    if (sessionData && !_.get(this.context.router, 'state.isTransitioning')) {
-      const screen = _.get(nextProps, 'authentication.sessionData.user');
-      history.pushState(null, screen);
-    }
   }
 
   render() {
@@ -30,7 +21,7 @@ class Login extends React.Component {
           <form role="form" onSubmit={this.submitForm}>
             <fieldset>
               <div className="form-group">
-                <Input onChange={this.setLoginID} className="form-control" placeholder="Username" ref="loginID" type="text" autofocus="" name="name" />
+                <Input onChange={this.setLoginID} className="form-control" placeholder="Username" ref="loginID" type="text" autofocus="" name="email" />
               </div>
 
               <div className="form-group">
@@ -50,8 +41,7 @@ class Login extends React.Component {
 
   async submitForm(e) {
     e.preventDefault();
-    console.log('hello')
-    await signIn(e);
+    await getAuthentication(formData(e.target));
   }
 }
 

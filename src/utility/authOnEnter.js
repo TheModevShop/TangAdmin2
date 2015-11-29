@@ -1,20 +1,11 @@
-import unsupportedBrowser from './unsupportedBrowserOnEnter';
-import tree from 'state';
+import tree from 'state/StateTree';
 export default function authOnEnter(redirect, hasAccess) {
   return function onEnter(nextState, replaceState, callback) {
-    const session = tree.get(['authentication', 'sessionData']);
+  const session = tree.get(['authentication', 'sessionData']);
+    console.log(redirect)
     if (!session) {
       replaceState(null, '/'+redirect);
     }
-    if (unsupportedBrowser(nextState)) {
-      replaceState(null, '/unsupported-browser');
-    }
-    if (session && hasAccess) {
-      if (!hasAccess()) {
-        replaceState(null, '/');
-      }
-    };
-
     callback();
   };
 }

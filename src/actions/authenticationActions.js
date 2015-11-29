@@ -1,16 +1,50 @@
 import tree from 'state/StateTree';
-import xhr from 'utility/xhr';
-const BASE = 'www.someurl.com/api/v1'
-const authentication = tree.select('authentication');
-// const awaitingAuthentication = tree.select('awaitingAuthentication');
-// const resetPassword = tree.select(['views', 'ResetPassword']);
+import bluebird from 'bluebird';
+import history from 'appHistory';
+import {fetchToken} from 'api/authApi';
+import {getMe} from 'actions/userActions';
+const authentication = tree.select(['authentication']);
+const userCursor = tree.select(['user']);
 
-refreshSession();
+const preferences = tree.select(['preferences']);
+const account = tree.select(['account']);
 
-async function setupSession(session) {
+checkSession();
+
+export async function getAuthentication(data) {
+  const {email, password} = data;
+  try {
+    const token = await fetchToken({email, password});
+    if (token.body.success === false) {
+      return token;
+    } else {
+      buildSession(token.body.token);
+      return token;
+    }
+  } catch (e) {
+    return token;
+  }
+}
+
+export async function checkSession() {
+  const user = await getMe();
+  if (user) {
+    userCursor.set(user);
+    return user;
+  } else {
+    //go to login
+    teardownSession();
+    return false;
+  }
+}
+
+async function buildSession(session) {
   authentication.set({sessionData: session});
-  localStorage.setItem('sessionData', JSON.stringify(session));
+  localStorage.setItem('sessionData', session);
+  // invalidatePreferencesCache();
   tree.commit();
+  const user = await getMe();
+  history.pushState(null, '/dashboard');
 }
 
 function teardownSession() {
@@ -18,41 +52,3 @@ function teardownSession() {
   authentication.set({});
   tree.commit();
 }
-
-export async function refreshSession() {
-  const session = await getSession();
-  if (session) {
-    setupSession(session);
-  } else {
-    teardownSession();
-  }
-}
-
-export async function signIn(data) {
-  console.log('login submitted');
-  console.log(data);
-  setupSession({user: '/dashboard'}); 
-  // Check the user type that comes back from the server and render that route
-  // awaitingAuthentication.set(true);
-  // teardownSession();
-  // try {
-  //   const session = await xhr('POST', `${BASE}/session`, data);
-  //   setupSession(session.data);
-  // } catch(err) {
-  //   authentication.set({error: 'Error creating session.'});
-  // }
-  // awaitingAuthentication.set(false);
-};
-
-export function signOut() {
-  teardownSession();
-};
-
-export async function getSession() {
-  try {
-    const session = await xhr('GET', `${BASE}/session`);
-    return session;
-  } catch (e) {
-    return false;
-  }
-};

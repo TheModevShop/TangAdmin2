@@ -23,8 +23,11 @@ export default function getInitialState() {
           serverResponse: {}
         },
       },
+      user: {
+        details: {},
+      },
       authentication: {
-        sessionData: sessionData ? JSON.parse(sessionData) : null
+        sessionData: sessionData ? sessionData : null
       },
       awaitingAuthentication: false,
     },
