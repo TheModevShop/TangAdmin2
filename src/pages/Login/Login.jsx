@@ -14,9 +14,14 @@ class Login extends React.Component {
   }
 
   render() {
+    const error = _.get(this.props, 'authentication.error');
+    console.log(this.props.authentication)
     return (
       <div className="col-md-4 col-md-offset-4">
-
+        {
+          error ? 
+          <div className="error">ERROR LOGGING IN</div> : null
+        }
         <Panel header={<h3>Please Sign In</h3>} className="login-panel">
           <form role="form" onSubmit={this.submitForm}>
             <fieldset>

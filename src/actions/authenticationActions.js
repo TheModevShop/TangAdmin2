@@ -15,14 +15,11 @@ export async function getAuthentication(data) {
   const {email, password} = data;
   try {
     const token = await fetchToken({email, password});
-    if (token.body.success === false) {
-      return token;
-    } else {
-      buildSession(token.body.token);
-      return token;
-    }
-  } catch (e) {
+    buildSession(token.body.token);
     return token;
+  } catch (e) {
+    authentication.set('error', e);
+    return false;
   }
 }
 
@@ -32,8 +29,9 @@ export async function checkSession() {
     userCursor.set(user);
     return user;
   } else {
-    //go to login
+    // go to login
     teardownSession();
+    history.pushState(null, '/login');
     return false;
   }
 }

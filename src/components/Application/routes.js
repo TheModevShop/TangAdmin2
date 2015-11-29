@@ -1,6 +1,7 @@
 import React from 'react';
 import {Route} from 'react-router';
 
+
 function getComponent(location, cb) {
   require.ensure([], (require) => {
     cb(null, require('./Application'));
