@@ -9,7 +9,7 @@ var filenameResolver = require('./filenameResolver');
 var plugins = [new filenameResolver(),
 new webpack.HotModuleReplacementPlugin(),
 new webpack.NoErrorsPlugin(),
-new webpack.optimize.UglifyJsPlugin({sourceMap: false})
+new webpack.optimize.UglifyJsPlugin({sourceMap: true})
 ], outputFile;
 
 if (env === 'build') {
@@ -21,7 +21,7 @@ if (env === 'build') {
 }
 
 var config = {
-  devtool: 'eval',
+  devtool: "eval-source-map",
   entry: [
     'webpack-dev-server/client?http://localhost:8585',
     'webpack/hot/only-dev-server',
@@ -55,28 +55,15 @@ var config = {
         test: /\.css$/, 
         loaders: ['style', 'css', 'autoprefixer?browsers=last 2 versions']
       },
-      {
-        test: /\.woff$/, 
-        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&minetype=application/font-woff'
+     
+      { 
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, 
+        loader: "url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff" 
       },
-        {
-        test: /\.woff2$/, 
-        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000'
+      { 
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, 
+        loader: "file-loader?name=fonts/[name].[ext]" 
       },
-      {
-        test: /\.ttf$/, 
-        loader: 'file-loader?name=fonts/[name].[ext]'
-      },
-      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
-      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" },
-      {
-        test: /\.eot$/, 
-        loader: 'file-loader?name=fonts/[name].[ext]'
-      },
-      {
-        test: /\.woff2$/, 
-        loader: 'file-loader?name=fonts/[name].[ext]'
-      },       
       {
         test: /\.jpe?g$|\.gif$|\.png$|\.svg$/,
         loader: "file-loader?name=img/[name].[ext]"

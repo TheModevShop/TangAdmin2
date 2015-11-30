@@ -33,7 +33,7 @@ class Login extends React.Component {
                 <Input onChange={this.setPassword} className="form-control" placeholder="Password" ref="password" type="password" name="password" />
               </div>
               <Input type="checkbox" label="Remember Me" />
-              <Button type="submit" bsSize="large" bsStyle="success" block>Sign In</Button>
+              <Button type="submit" bsSize="large" bsStyle="success" block>Login</Button>
               
             </fieldset>
           </form>
