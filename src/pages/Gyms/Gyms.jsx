@@ -4,9 +4,12 @@ import {DataTable} from 'react-data-components';
 import {Link} from 'react-router';
 import _ from 'lodash';
 require('react-data-components/css/table-twbs.css')
+export async function setActiveGym(row) {
+  const data.activeGymProfileId = row.target.id;
+}
 
 var renderName = (val, row) => {
-  return <Link to={`/gyms/${row._id}`}>{row.name}</Link>;
+  return <Link to={`/gyms/profile`} id={row._id} onClick={setActiveGym}>{row.name}</Link>;
 }
 const columns = [
   { title: 'Name', prop: 'name', render: renderName},
@@ -28,7 +31,7 @@ class Gyms extends React.Component {
           gyms.length ?
           <DataTable
             className="table-wrapper"
-            keys={[ 'name', 'addressFormatted']}
+            keys={[ 'name', 'addressFormatted', 'id']}
             columns={columns}
             initialData={gyms}
             initialPageLength={15}
@@ -47,7 +50,9 @@ class Gyms extends React.Component {
     });
     return gyms;
   }
+  
 }
+
 
 export default branch(Gyms, {
   cursors: {

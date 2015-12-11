@@ -4,7 +4,7 @@ import {BASE} from 'constants';
 
 const loader = new RESTLoader({
   getResourceUrl: (id) => {
-    return `${BASE}/gyms`;
+    return `${BASE}/gyms/` + id;
   },
   successTransformer: (data) => {
     return {
@@ -25,9 +25,9 @@ export default function LocationScheduleFacet() {
       activeGymProfileId: ['views', 'GymProfile', 'ActiveId'],
     },
     get(data) {
-      // window location
-      // when transitioning set id on state object and then import
-      console.log('GYM ACTIVE ID', data.activeGymProfileId)
+      var id = window.location.href.split('/').pop();
+      data.activeGymProfileId = id;
+      console.log('GYM ACTIVE ID', data.activeGymProfileId);
       // IF DOESNT EXISTS GET IT OFF THE WINDOW AND SET IT USING ACTIONS JUST LIKE WE DID IN THE GYMS LIST
 
       if (data.gymProfile && data.gymProfile.stale) {

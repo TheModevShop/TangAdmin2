@@ -12,6 +12,6 @@ import {Route} from 'react-router';
 export default (
   <Route>
     <Route pageName="gyms" path="/gyms" component={Gyms} />
-    <Route pageName="gyms" path="/gyms/:id" component={GymsProfile} />
+    <Route pageName="gyms" path="/gyms/profile" component={GymsProfile} />
   </Route>
 );

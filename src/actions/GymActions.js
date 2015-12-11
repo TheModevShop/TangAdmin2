@@ -1,7 +1,7 @@
 import tree from 'state/StateTree';
 // import xhr from 'utility/xhr';
 // const authentication = tree.select('authentication');
-const activeGym = tree.select(['view', 'GymProfile', 'ActiveId']);
+const activeGym = tree.select(['views', 'GymProfile', 'ActiveId']);
 
 
 
@@ -16,6 +16,7 @@ const activeGym = tree.select(['view', 'GymProfile', 'ActiveId']);
 // }
 
 export function setActiveGym(id) {
+  console.log(id)
   activeGym.set(id);
   tree.commit();
   // console.log(activeGym.get());
