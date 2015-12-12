@@ -25,7 +25,7 @@ export default function LocationScheduleFacet() {
     },
     get(data) {
       const id = window.location.href.split('/').pop();
-
+      
       if (data.gymProfile && data.gymProfile.stale) {
         loader.invalidateCache();
       }

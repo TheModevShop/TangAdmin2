@@ -1,12 +1,16 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {Row, Col, Grid} from 'react-bootstrap';
+import {setActiveGym} from 'actions/GymActions';
 import "./gyms.less";
 
 class GymsProfile extends React.Component {
   constructor(...args) {
     super(...args);
     this.state = {};
+  }
+  componentWillMount() {
+    setActiveGym();
   }
 
   render() {

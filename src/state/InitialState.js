@@ -14,8 +14,7 @@ export default function getInitialState() {
       views: {
         GymList: null,
         GymProfile: {
-          Profile: null,
-          ActiveId: null
+          Profile: null
         },
         AddGym: {},
         CreateAccount: {
