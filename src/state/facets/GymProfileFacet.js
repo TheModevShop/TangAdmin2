@@ -8,7 +8,7 @@ const loader = new RESTLoader({
   },
   successTransformer: (data) => {
     return {
-      allGyms: data.body
+      gymProfile: data.body
     };
   },
   errorTransformer: (err) => {
@@ -28,16 +28,15 @@ export default function LocationScheduleFacet() {
       var id = window.location.href.split('/').pop();
       data.activeGymProfileId = id;
       console.log('GYM ACTIVE ID', data.activeGymProfileId);
-      // IF DOESNT EXISTS GET IT OFF THE WINDOW AND SET IT USING ACTIONS JUST LIKE WE DID IN THE GYMS LIST
-
       if (data.gymProfile && data.gymProfile.stale) {
         loader.invalidateCache();
       }
       if (!loader.cursor) {
         loader.setCursor(this.cursors.gymProfile);
+        loader.setCursor(this.cursors.activeGymProfileId);
       }
-      const gyms = _.clone(loader.fetch(data.activeGymProfileId));
-      return gyms
+      const gymProfile = _.clone(loader.fetch(data.activeGymProfileId));
+      return gymProfile
     }
   };
 };
