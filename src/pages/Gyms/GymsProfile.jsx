@@ -10,9 +10,11 @@ class GymsProfile extends React.Component {
   }
 
   render() {
-    const profile = _.get(this.props, 'gyms.gymProfile') || [];
+    const profile = _.get(this.props, 'gymProfile.gymProfile') || {};
     return (
       <div className="page">
+        {
+          profile.address ?
         <Grid fluid>
           <Row>
             <Col xs={12} sm={10} smOffset={1}>
@@ -49,6 +51,8 @@ class GymsProfile extends React.Component {
             </Col>
           </Row>
         </Grid>
+        : null
+      }
        </div>
     );
   }

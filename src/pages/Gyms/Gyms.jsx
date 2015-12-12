@@ -5,12 +5,20 @@ import {Link} from 'react-router';
 import _ from 'lodash';
 require('react-data-components/css/table-twbs.css')
 
-var renderName = (val, row) => {
+const renderName = (val, row) => {
   return <Link to={`/gyms/${row._id}`}>{row.name}</Link>;
 }
+
 const columns = [
-  { title: 'Name', prop: 'name', render: renderName},
-  { title: 'Address', prop: 'addressFormatted' },
+  { 
+    title: 'Name', 
+    prop: 'name', 
+    render: renderName
+  },
+  { 
+    title: 'Address', 
+    prop: 'addressFormatted' 
+  }
 ];
 
 class Gyms extends React.Component {
@@ -21,7 +29,6 @@ class Gyms extends React.Component {
 
   render() {
     const gyms = this.formatData();
-
     return (
       <div className="gyms-wrapper">
         {
@@ -39,6 +46,7 @@ class Gyms extends React.Component {
        </div>
     );
   }
+
   formatData() {
     let gyms = _.get(this.props, 'gyms.allGyms') || [];
     gyms = _.map(gyms, (gym) => {

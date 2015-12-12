@@ -4,7 +4,7 @@ import {BASE} from 'constants';
 
 const loader = new RESTLoader({
   getResourceUrl: (id) => {
-    return `${BASE}/gyms/` + id;
+    return `${BASE}/gyms/${id}`;
   },
   successTransformer: (data) => {
     return {
@@ -21,21 +21,18 @@ const loader = new RESTLoader({
 export default function LocationScheduleFacet() {
   return {
     cursors: {
-      gymProfile: ['views', 'GymProfile', 'Profile'],
-      activeGymProfileId: ['views', 'GymProfile', 'ActiveId'],
+      gymProfile: ['views', 'GymProfile', 'Profile']
     },
     get(data) {
-      var id = window.location.href.split('/').pop();
-      data.activeGymProfileId = id;
-      console.log('GYM ACTIVE ID', data.activeGymProfileId);
+      const id = window.location.href.split('/').pop();
+
       if (data.gymProfile && data.gymProfile.stale) {
         loader.invalidateCache();
       }
       if (!loader.cursor) {
         loader.setCursor(this.cursors.gymProfile);
-        loader.setCursor(this.cursors.activeGymProfileId);
       }
-      const gymProfile = _.clone(loader.fetch(data.activeGymProfileId));
+      const gymProfile = _.clone(loader.fetch(id));
       return gymProfile
     }
   };
