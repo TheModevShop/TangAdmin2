@@ -1,21 +1,23 @@
 import tree from 'state/StateTree';
-// import xhr from 'utility/xhr';
-// const authentication = tree.select('authentication');
+import {getMyGymApi} from 'api/locationsApi';
 const activeGym = tree.select(['views', 'GymProfile']);
-
-
-
-// export async function deleteGym() {
-//   try {
-//     const session = await xhr('GET', `${BASE}/deteGym`);
-//     allGyms.set({'stale', true});
-//     return session;
-//   } catch(e) {
-//     return false;
-//   }
-// }
+const myGym = tree.select(['user', 'myGym']);
 
 export function setActiveGym() {
   activeGym.set({stale: true});
   tree.commit();
+}
+
+
+export async function getMyGym(id) {
+  myGym.set({isLoading: true});
+  try {
+    const location = await getMyGymApi(id);
+    myGym.set('gymDetails', location.body);
+  } catch (err) {
+    myGym.set('error', err);
+  }
+  myGym.set('isLoading', false);
+  tree.commit();
+  myGym.get();
 }

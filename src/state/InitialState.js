@@ -24,6 +24,7 @@ export default function getInitialState() {
       },
       user: {
         details: {},
+        myGym: null
       },
       authentication: {
         sessionData: sessionData ? sessionData : null

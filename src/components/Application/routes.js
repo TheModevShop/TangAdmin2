@@ -24,7 +24,6 @@ function getChildRoutes(state, cb) {
 }
 
 function onEnter(nextState, replaceState, callback) {
-  checkSession();
   callback();
 }
 

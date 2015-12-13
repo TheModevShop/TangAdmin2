@@ -6,6 +6,8 @@ import {getMe} from 'actions/userActions';
 const authentication = tree.select(['authentication']);
 const userCursor = tree.select(['user']);
 
+checkSession();
+
 export async function getAuthentication(data) {
   const {email, password} = data;
   try {
@@ -21,7 +23,10 @@ export async function getAuthentication(data) {
 export async function checkSession() {
   const user = await getMe();
   if (user._id) {
-    buildSession(localStorage.getItem('sessionData'))
+    const session = localStorage.getItem('sessionData');
+    authentication.set(['sessionData'], session);
+    tree.commit();
+    history.pushState(null, '/dashboard');
   } else {
     // go to login
     teardownSession();

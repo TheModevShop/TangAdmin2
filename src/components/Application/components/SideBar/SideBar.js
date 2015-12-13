@@ -1,6 +1,10 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import Router, { Link, RouteHandler } from "react-router";
+
+import AppOwnerLinks from './components/AppOwnerLinks';
+import GymOwnerLinks from './components/GymOwnerLinks';
+
 import './side-bar.less';
 
 class SideBar extends React.Component {
@@ -10,24 +14,21 @@ class SideBar extends React.Component {
   }
 
   render() {
-    const user = _.get(this.props, 'user.details.name');
+    const name = _.get(this.props, 'user.details.name', {});
+    const user = _.get(this.props, 'user.details', {});
+    const gym = _.get(this.props, 'user.myGym.gymDetails.name', {});
     return (
       <div className="nav-bar">
         <div className="current-user">
           <div className="img"></div>
-          <div className="name">{user.first} {user.last}</div>
+          <div className="name">{name.first} {name.last}</div>
+          <div className="gym">{gym}</div>
         </div>
-        <ul>
-          <li> 
-            <Link to="dashboard">Dashboard</Link> 
-          </li>
-          <li> 
-            <Link to="gyms">Gyms</Link>
-          </li> 
-          <li> 
-            <Link to="add-gym">Add Gym</Link>
-          </li> 
-        </ul>
+        {
+          user.roles ?
+          <GymOwnerLinks /> :
+          <AppOwnerLinks />
+        }
       </div>
     );
   }
