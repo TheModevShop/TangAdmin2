@@ -20,9 +20,11 @@ class SideBar extends React.Component {
     return (
       <div className="nav-bar">
         <div className="current-user">
-          <div className="img"></div>
-          <div className="name">{name.first} {name.last}</div>
-          <div className="gym">{gym}</div>
+          <div className="img" style={{backgroundImage: "url('http://blog.ramboll.com/fehmarnbelt/wp-content/themes/ramboll2/images/profile-img.jpg')"}}></div>
+        <div className="title-group">
+            <div className="name">{name.first} {name.last}</div>
+            <div className="gym">{gym}</div>
+          </div>
         </div>
         {
           user.roles ?
