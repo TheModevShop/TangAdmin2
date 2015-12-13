@@ -26,7 +26,7 @@ export async function checkSession() {
     const session = localStorage.getItem('sessionData');
     authentication.set(['sessionData'], session);
     tree.commit();
-    history.pushState(null, '/dashboard');
+    // history.pushState(null, '/dashboard');
   } else {
     // go to login
     teardownSession();
