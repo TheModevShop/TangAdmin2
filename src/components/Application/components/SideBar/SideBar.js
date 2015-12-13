@@ -1,18 +1,22 @@
 import React from 'react';
-import history from 'appHistory';
+import {branch} from 'baobab-react/higher-order';
 import Router, { Link, RouteHandler } from "react-router";
-import classNames from "classnames";
 import './side-bar.less';
 
-class Header extends React.Component {
+class SideBar extends React.Component {
   constructor(...args) {
     super(...args);
     this.state = {};
   }
 
   render() {
+    const user = _.get(this.props, 'user.details.name');
     return (
       <div className="nav-bar">
+        <div className="current-user">
+          <div className="img"></div>
+          <div className="name">{user.first} {user.last}</div>
+        </div>
         <ul>
           <li> 
             <Link to="dashboard">Dashboard</Link> 
@@ -29,8 +33,12 @@ class Header extends React.Component {
   }
 }
 
-Header.contextTypes = {
+SideBar.contextTypes = {
   history: React.PropTypes.object
 };
 
-export default Header;
+export default branch(SideBar, {
+  cursors: {
+    user: ['user']
+  }
+});

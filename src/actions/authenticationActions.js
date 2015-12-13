@@ -6,11 +6,6 @@ import {getMe} from 'actions/userActions';
 const authentication = tree.select(['authentication']);
 const userCursor = tree.select(['user']);
 
-const preferences = tree.select(['preferences']);
-const account = tree.select(['account']);
-
-checkSession();
-
 export async function getAuthentication(data) {
   const {email, password} = data;
   try {
@@ -25,28 +20,26 @@ export async function getAuthentication(data) {
 
 export async function checkSession() {
   const user = await getMe();
-  if (user) {
-    userCursor.set(user);
-    return user;
+  if (user._id) {
+    buildSession(localStorage.getItem('sessionData'))
   } else {
     // go to login
     teardownSession();
-    history.pushState(null, '/login');
     return false;
   }
 }
 
 async function buildSession(session) {
-  authentication.set({sessionData: session});
+  authentication.set(['sessionData'], session);
   localStorage.setItem('sessionData', session);
-  // invalidatePreferencesCache();
   tree.commit();
   const user = await getMe();
   history.pushState(null, '/dashboard');
 }
 
-function teardownSession() {
-  localStorage.removeItem('sessionData');
-  authentication.set({});
+export async function teardownSession() {
+  // localStorage.removeItem('sessionData');
+  // authentication.set({});
+  history.pushState(null, '/login');
   tree.commit();
 }

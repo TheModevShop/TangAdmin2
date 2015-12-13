@@ -15,7 +15,6 @@ class Login extends React.Component {
 
   render() {
     const error = _.get(this.props, 'authentication.error');
-    console.log(this.props.authentication)
     return (
       <div className="col-md-4 col-md-offset-4">
         {

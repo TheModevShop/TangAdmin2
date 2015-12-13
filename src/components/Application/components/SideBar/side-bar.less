@@ -6,6 +6,15 @@
   width: @appNavWidth;
   background-color: @navy;
   height: 100%;
+  .current-user {
+    height: @appHeaderHeight;
+    width: 100%;
+    background-color: @red;
+    .name {
+      color: #fff;
+      width: 100%;
+    }
+  }
   ul {
     padding: 0;
     li {
@@ -17,7 +26,7 @@
         width: 100%;
       }
       &:hover {
-        background: @red;
+        background: @sidebarHover;
         a {
           color: #fff;
         }

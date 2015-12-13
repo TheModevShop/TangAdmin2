@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route} from 'react-router';
-
+import {checkSession} from 'actions/authenticationActions';
 
 function getComponent(location, cb) {
   require.ensure([], (require) => {
@@ -24,6 +24,7 @@ function getChildRoutes(state, cb) {
 }
 
 function onEnter(nextState, replaceState, callback) {
+  checkSession();
   callback();
 }
 
