@@ -38,8 +38,8 @@ async function buildSession(session) {
 }
 
 export async function teardownSession() {
-  // localStorage.removeItem('sessionData');
-  // authentication.set({});
+  localStorage.removeItem('sessionData');
+  authentication.set({});
   history.pushState(null, '/login');
   tree.commit();
 }
