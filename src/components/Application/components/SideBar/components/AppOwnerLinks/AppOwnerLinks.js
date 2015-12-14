@@ -18,7 +18,13 @@ class AppOwnerLinks extends React.Component {
           </li> 
           <li> 
             <Link to="/add-gym">Add Gym</Link>
-          </li> 
+          </li>
+          <li> 
+            <Link to="/transactions">Transactions</Link>
+          </li>
+          <li> 
+            <Link to="/coaches">Coaches</Link>
+          </li>
         </ul>
     );
   }

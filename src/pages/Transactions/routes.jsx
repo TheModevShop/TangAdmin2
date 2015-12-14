@@ -9,6 +9,6 @@ function getComponents(location, cb) {
 
 export default (
   <Route>
-    <Route pageName="transactions" path="/transactions" getComponents={getComponents} />
+    <Route pageName="transactions" path="/transactions" getComponents={getComponents}/>
   </Route>
 );
