@@ -1,5 +1,6 @@
 import React from 'react';
 import {Row, Col} from 'react-bootstrap';
+import LocationHours from '../../components/LocationHours';
 import _ from 'lodash';
 
 class LocationInfo extends React.Component {
@@ -9,15 +10,10 @@ class LocationInfo extends React.Component {
         <Col xs={12} md={7}>
           <Row>
             <Col xs={12}>
-              <h1>{profile.name}</h1>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
               <h2>Address</h2>
-              <div>
+              <div className="address-container">
                 <span>{profile.address.street}</span>
-                <div className="city-zip">{profile.address.city}, {profile.address.state} {profile.address.zipcode}</div>
+                <span className="city-zip">{profile.address.city}, {profile.address.state} {profile.address.zipcode}</span>
               </div>
             </Col>
           </Row>
@@ -36,6 +32,9 @@ class LocationInfo extends React.Component {
                 <span>{profile.contact.email}</span>
               </div>
             </Col>
+          </Row>
+          <Row>
+            <LocationHours profile={profile}/>
           </Row>
         </Col>
     );

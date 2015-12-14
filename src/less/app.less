@@ -2,12 +2,43 @@
 @import '~font-awesome/less/font-awesome.less';
 @import '~bootstrap-social/bootstrap-social.less';
 @import "./sb-admin-2.less";
+@import './reset.less';
+@import './fonts.less';
+@import './text.less';
+
+html {
+	font-size: 14px;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	color: #222;
+}
+h1 {
+	font-size: 2.4em;
+}
+h2 {
+	font-size: 2.2em;
+}
+h3 {
+	font-size: 1.8em;
+}
 
 .navbar-brand img {
 	display: inline-block;
 	height: 26px;
 }
 
-.table-wrapper {
-  max-width: 100%;
+.panel {
+	padding: 30px;
+	.panel-heading {
+		margin: -30px;
+		padding: 30px 15px;
+		&.row {
+			margin-bottom: 30px;
+		}
+	}
+}
+
+label {
+	font-family: 'default_bold';
+	-webkit-font-smoothing: antialiased;
+	font-size: 1.1em;
 }

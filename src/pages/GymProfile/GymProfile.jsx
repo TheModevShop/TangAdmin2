@@ -2,7 +2,6 @@ import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {Row, Col, Grid} from 'react-bootstrap';
 import AccountImages from './components/AccountImages';
-import LocationHours from './components/LocationHours';
 import LocationInfo from './components/LocationInfo';
 import {setActiveGym} from 'actions/GymActions';
 import _ from 'lodash';
@@ -23,9 +22,17 @@ class GymProfile extends React.Component {
         <div className="gym-profile">
            <Grid fluid>
             <Row>
-              <LocationInfo profile={profile} />
-              <LocationHours profile={profile}/>
-              <AccountImages profile={profile} />
+              <div className="panel panel-info col-xs-12 col-sm-10 col-sm-offset-1">
+                <div className="row panel-heading">
+                  <Col xs={12}>
+                    <h1>{profile.name}</h1>
+                  </Col>
+                </div>
+                <Row className="info-container">
+                  <LocationInfo profile={profile} />
+                  <AccountImages profile={profile} />
+                </Row>
+              </div>
             </Row>
           </Grid>
         </div> : null

@@ -1,9 +1,11 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {DataTable} from 'react-data-components';
+import {Row, Col, Grid, Panel} from 'react-bootstrap';
 import {Link} from 'react-router';
+import "./gyms.less";
 import _ from 'lodash';
-require('react-data-components/css/table-twbs.css')
+
 
 const renderName = (val, row) => {
   return <Link to={`/gyms/${row._id}`}>{row.name}</Link>;
@@ -30,11 +32,15 @@ class Gyms extends React.Component {
   render() {
     const gyms = this.formatData();
     return (
-      <div className="gyms-wrapper">
+      <div className="gyms-table-wrapper panel panel-primary">
+        <div className="row panel-heading">
+          <Col xs={12}>
+            <h1>Gyms</h1>
+          </Col>
+        </div>
         {
           gyms.length ?
           <DataTable
-            className="table-wrapper"
             keys={[ 'name', 'addressFormatted']}
             columns={columns}
             initialData={gyms}
