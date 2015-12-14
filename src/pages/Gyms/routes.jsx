@@ -1,6 +1,6 @@
 import React from 'react';
 import Gyms from './Gyms';
-import GymsProfile from './GymsProfile';
+import GymProfile from 'pages/GymProfile';
 import {Route} from 'react-router';
 
 // function getComponents(location, cb) {
@@ -12,6 +12,6 @@ import {Route} from 'react-router';
 export default (
   <Route>
     <Route pageName="gyms" path="/gyms" component={Gyms} />
-    <Route pageName="gyms" path="/gyms/:id" component={GymsProfile} />
+    <Route pageName="gyms" path="/gyms/:id" component={GymProfile} />
   </Route>
 );

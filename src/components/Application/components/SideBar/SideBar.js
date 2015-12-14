@@ -1,6 +1,7 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import Router, { Link, RouteHandler } from "react-router";
+import _ from 'lodash';
 
 import AppOwnerLinks from './components/AppOwnerLinks';
 import GymOwnerLinks from './components/GymOwnerLinks';
@@ -21,13 +22,13 @@ class SideBar extends React.Component {
       <div className="nav-bar">
         <div className="current-user">
           <div className="img" style={{backgroundImage: "url('http://blog.ramboll.com/fehmarnbelt/wp-content/themes/ramboll2/images/profile-img.jpg')"}}></div>
-        <div className="title-group">
+          <div className="title-group">
             <div className="name">{name.first} {name.last}</div>
             <div className="gym">{gym}</div>
           </div>
         </div>
         {
-          user.roles ?
+          user && user.roles ?
           <GymOwnerLinks /> :
           <AppOwnerLinks />
         }

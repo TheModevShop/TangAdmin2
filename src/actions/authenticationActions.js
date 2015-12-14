@@ -13,6 +13,7 @@ export async function getAuthentication(data) {
   try {
     const token = await fetchToken({email, password});
     buildSession(token.body.token);
+    history.pushState(null, '/dashboard');
     return token;
   } catch (e) {
     authentication.set('error', e);
