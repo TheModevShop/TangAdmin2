@@ -11,13 +11,13 @@ class AppOwnerLinks extends React.Component {
     return (
         <ul>
           <li> 
-            <Link to="dashboard">Dashboard</Link> 
+            <Link to="/dashboard">Dashboard</Link> 
           </li>
           <li> 
-            <Link to="gyms">Gyms</Link>
+            <Link to="/gyms">Gyms</Link>
           </li> 
           <li> 
-            <Link to="add-gym">Add Gym</Link>
+            <Link to="/add-gym">Add Gym</Link>
           </li> 
         </ul>
     );

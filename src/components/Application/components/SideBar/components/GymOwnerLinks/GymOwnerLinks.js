@@ -11,16 +11,16 @@ class GymOwnerLinks extends React.Component {
     return (
         <ul>
           <li> 
-            <Link to="dashboard">Dashboard</Link> 
+            <Link to="/dashboard">Dashboard</Link> 
           </li>
           <li> 
-            <Link to="gyms">Instructors</Link>
+            <Link to="/gyms">Instructors</Link>
           </li> 
           <li> 
-            <Link to="add-gym">Privates</Link>
+            <Link to="/add-gym">Privates</Link>
           </li> 
           <li> 
-            <Link to="add-gym">Classes</Link>
+            <Link to="/add-gym">Classes</Link>
           </li> 
         </ul>
     );
