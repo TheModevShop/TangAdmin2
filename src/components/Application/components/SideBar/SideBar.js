@@ -15,18 +15,20 @@ class SideBar extends React.Component {
   }
 
   render() {
-    const name = _.get(this.props, 'user.details.name', {});
+    const name = _.get(this.props, 'user.details.name', null);
     const user = _.get(this.props, 'user.details', {});
-    const gym = _.get(this.props, 'user.myGym.gymDetails.name', {});
+    const gym = _.get(this.props, 'user.myGym.gymDetails.name', null);
+    const nameFormatted = name ? name.first +' '+name.last : null;
     return (
       <div className="nav-bar">
         <div className="current-user">
           <div className="img" style={{backgroundImage: "url('http://blog.ramboll.com/fehmarnbelt/wp-content/themes/ramboll2/images/profile-img.jpg')"}}></div>
           <div className="title-group">
-            <div className="name">{name.first} {name.last}</div>
+            <div className="name">{nameFormatted}</div>
             <div className="gym">{gym}</div>
           </div>
         </div>
+
         {
           user && user.roles ?
           <GymOwnerLinks /> :

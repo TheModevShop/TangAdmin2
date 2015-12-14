@@ -1,4 +1,5 @@
 import React from 'react';
+import tree from 'state/StateTree';
 import {Route, Redirect} from 'react-router';
 
 function getComponents(location, cb) {
@@ -7,9 +8,17 @@ function getComponents(location, cb) {
   });
 }
 
+function onEnter(nextState, replaceState, callback) {
+  const session = tree.get(['authentication', 'sessionData']);
+  if (session) {
+    replaceState(null, '/dashboard');
+  }
+  callback();
+};
+
 export default (
   <Route>
-    <Route pageName="login" path="/" getComponents={getComponents} />
-    <Route pageName="login" path="/login" getComponents={getComponents} />
+    <Route pageName="login" path="/" getComponents={getComponents} onEnter={onEnter}/>
+    <Route pageName="login" path="/login" getComponents={getComponents} onEnter={onEnter} />
   </Route>
 );
