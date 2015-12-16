@@ -5,6 +5,7 @@
 @import './reset.less';
 @import './fonts.less';
 @import './text.less';
+@import './color.less';
 
 html {
 	font-size: 14px;
@@ -38,6 +39,28 @@ h3 {
 		padding: 30px 15px;
 		&.row {
 			margin-bottom: 30px;
+		}
+	}
+	&.panel-info,
+	&.panel-primary {
+		border-color: @borderColor;
+		> .panel-heading {
+			background-color: @charcoal;
+			color: #fff;
+			border-color: @borderColor;
+		}
+		form button {
+			background-color: @salmon;
+			border-color: @salmonDark;
+			&:hover {
+				background-color: @salmonDark;
+			}
+			&:active {
+				background-color: @salmonDark;
+				&:focus {
+					background-color: @salmonDark;
+				}
+			}
 		}
 	}
 }
