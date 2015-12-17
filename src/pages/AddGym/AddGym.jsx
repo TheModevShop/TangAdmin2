@@ -1,5 +1,6 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
+import {addGym} from 'actions/GymActions';
 import {Row, Label, Textarea, FormGroup, Form, Col, Grid, Input, Button} from 'react-bootstrap';
 import './add-gym.less';
 
@@ -20,7 +21,7 @@ class AddGym extends React.Component {
               </Col>
             </div>
             <Row>
-              <form className="col-xs-12">
+              <form onSubmit={this.submitGym.bind(this)} className="col-xs-12">
                 <Row>
                   <Col xs={12}>
                     <Input id='gymName' type="text" placeholder='' label='Name' />
@@ -66,6 +67,11 @@ class AddGym extends React.Component {
         </Row>
       </Grid>
     );
+  }
+  submitGym(e) {
+    e.preventDefault();
+    const data = {}
+    addGym(data);
   }
 }
 
