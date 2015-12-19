@@ -11,11 +11,14 @@ export default function getInitialState() {
   const sessionData = localStorage.getItem('sessionData');
   return {
     cursors: {
+      roles: null,
       views: {
         GymList: {},
         GymProfile: {
           Profile: null
         },
+        GymInstructors: null,
+        GymStudents: null,
         AddGym: {},
         CreateAccount: {
           awaitingSave: false,
