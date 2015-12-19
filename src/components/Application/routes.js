@@ -13,11 +13,13 @@ function getChildRoutes(state, cb) {
     cb(null, [
       require('pages/Login/routes'),
       require('pages/Dashboard/routes'),
-      require('pages/Classes/routes'),
-      require('pages/Coaches/routes'),
-      require('pages/Transactions/routes'),
       require('pages/Gyms/routes'),
-      require('pages/AddGym/routes')
+      require('pages/AddGym/routes'),
+
+      require('pages/GymOwner/Classes/routes'),
+      require('pages/GymOwner/Coaches/routes'),
+      require('pages/GymOwner/Transactions/routes'),
+      require('pages/GymOwner/Students/routes')
     ]);
   });
 }

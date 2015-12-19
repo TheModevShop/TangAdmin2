@@ -4,15 +4,23 @@ import _ from 'lodash';
 import history from 'appHistory';
 import {teardownSession} from 'actions/authenticationActions';
 import {getMyGym} from 'actions/GymActions';
+import {getRoles} from 'actions/RolesActions';
 
 const userCursor = tree.select(['user']);
 const userDetailsCurosr = tree.select(['user', 'details']);
 
+const rolesCursor = tree.select(['roles']);
+
 userDetailsCurosr.on('update', async (value) => {
-  const locationId = _.get(value, 'data.data.gyms[0].gym');
+  const location = _.get(value, 'data.data.gyms[0]');
+  const locationId = _.get(location, 'gym');
   if (locationId) {
     await getMyGym(locationId);
-    console.log('succes gym fetch')
+    const roles = rolesCursor.get() ? rolesCursor.get() : await getRoles();
+    if (location.role) {
+      const currentRole = _.find(roles, {_id: location.role}) || 'user';
+      userCursor.set('role', currentRole);
+    }
   }
 });
 
@@ -37,12 +45,6 @@ export async function getMe() {
     history.pushState(null, '/login');
   }
   return user;
-}
-
-
-export function setPushNotifications(push) {
-  pushNotificationsCursor.set(push);
-  tree.commit();
 }
 
 export async function setDefaultLocation(data) {

@@ -15,6 +15,7 @@ export async function getMyGym(id) {
   try {
     const location = await getMyGymApi(id);
     myGym.set('gymDetails', location.body);
+    return location.body;
   } catch (err) {
     myGym.set('error', err);
   }
@@ -31,6 +32,6 @@ export async function addGym(data) {
   } catch (err) {
     gymList.set('error', err);
   }
-  myGym.set('isLoading', false);
+  gymList.set('isLoading', false);
   tree.commit();
 }

@@ -3,10 +3,11 @@ import bluebird from 'bluebird';
 import history from 'appHistory';
 import {fetchToken} from 'api/authApi';
 import {getMe} from 'actions/userActions';
-const authentication = tree.select(['authentication']);
-const userCursor = tree.select(['user']);
+import {getRoles} from 'actions/RolesActions';
 
+const authentication = tree.select(['authentication']);
 checkSession();
+getRoles();
 
 export async function getAuthentication(data) {
   const {email, password} = data;
@@ -27,7 +28,6 @@ export async function checkSession() {
     const session = localStorage.getItem('sessionData');
     authentication.set(['sessionData'], session);
     tree.commit();
-    // history.pushState(null, '/dashboard');
   } else {
     // go to login
     teardownSession();
@@ -40,7 +40,7 @@ async function buildSession(session) {
   localStorage.setItem('sessionData', session);
   tree.commit();
   const user = await getMe();
-  history.pushState(null, '/dashboard');
+  // history.pushState(null, '/dashboard');
 }
 
 export async function teardownSession() {
