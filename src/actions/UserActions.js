@@ -16,11 +16,8 @@ userDetailsCurosr.on('update', async (value) => {
   const locationId = _.get(location, 'gym');
   if (locationId) {
     await getMyGym(locationId);
-    const roles = rolesCursor.get() ? rolesCursor.get() : await getRoles();
-    if (location.role) {
-      const currentRole = _.find(roles, {_id: location.role}) || 'user';
-      userCursor.set('role', currentRole);
-    }
+    userCursor.set('role', _.get(location, 'role.name'));
+    tree.commit();
   }
 });
 
