@@ -13,7 +13,7 @@ export default function getInitialState() {
     cursors: {
       roles: null,
       views: {
-        GymList: {},
+        GymList: null,
         GymProfile: {
           Profile: null
         },

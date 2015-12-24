@@ -20,7 +20,6 @@ class SideBar extends React.Component {
     const gym = _.get(this.props, 'user.myGym.gymDetails.name', null);
     const nameFormatted = name ? name.first +' '+name.last : null;
     const role = _.get(this.props, 'user.role', null);
-
     return (
       <div className="nav-bar">
         <div className="current-user">
@@ -32,7 +31,7 @@ class SideBar extends React.Component {
         </div>
 
         {
-          role && role.name === 'instructor' ? // Will have to change to gym owner
+          role !== 'instructor' ? // Will have to change to gym owner
           <GymOwnerLinks /> : role ?
           <AppOwnerLinks /> : null
         }
