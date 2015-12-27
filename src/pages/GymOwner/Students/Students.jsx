@@ -6,11 +6,11 @@ import {Link} from 'react-router';
 import {setAsInstructor} from 'actions/StudentActions';
 
 const renderName = (val, row) => {
-  return <Link key={'student-link'} to={`/student/${row._id}`}>{row.name.first} {row.name.last}</Link>;
+  return <Link to={`/student/${row._id}`}>{row.name.first} {row.name.last}</Link>;
 }
 
 const renderSetAsInstructor = (val, row) => {
-  return <div key={'instructor-action'} onClick={setAsInstructor.bind(this, row._id)}>Make Instructor</div>;
+  return <div onClick={setAsInstructor.bind(this, row._id)}>Make Instructor</div>;
 }
   
 const columns = [
