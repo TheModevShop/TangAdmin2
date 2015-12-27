@@ -27,7 +27,7 @@ export default function GymStudentsFacet() {
     },
     get(data) {
       const myGymId = _.get(data, 'myGym.gymDetails._id');
-
+      
       if (data.students && data.students.stale) {
         loader.invalidateCache();
       }
@@ -35,8 +35,8 @@ export default function GymStudentsFacet() {
       if (!loader.cursor) {
         loader.setCursor(this.cursors.students);
       }
-      const myGym = _.clone(loader.fetch(myGymId));
-      return myGym
+      const students = _.clone(loader.fetch(myGymId));
+      return students
     }
   };
 };

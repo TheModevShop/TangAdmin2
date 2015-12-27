@@ -10,8 +10,7 @@ const myGym = tree.select(['user', 'myGym']);
 export async function setAsInstructor(id) {
   gymStudentsCursor.set({isLoading: true});
   try {
-    console.log(myGym.get())
-    const put = await editUser({
+    const put = await editUser(id, {
       gym: _.get(myGym.get(), 'gymDetails._id'),
       role: '56623e7194aad7801f591ce0'
     });

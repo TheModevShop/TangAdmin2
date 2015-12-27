@@ -15,8 +15,8 @@ const columns = [
     render: renderName
   },
   { 
-    title: 'Address', 
-    prop: 'addressFormatted' 
+    title: 'Email', 
+    prop: 'email' 
   }
 ];
 
@@ -39,7 +39,7 @@ class Coaches extends React.Component {
         {
           instructors.length ?
           <DataTable
-            keys={[ 'name', 'addressFormatted']}
+            keys={['name', 'email']}
             columns={columns}
             initialData={instructors}
             initialPageLength={15}

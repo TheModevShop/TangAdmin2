@@ -1,5 +1,5 @@
 import tree from 'state/StateTree';
-import {editUser, getUser} from 'api/userApi';
+import {editMeApi, getUser} from 'api/userApi';
 import _ from 'lodash';
 import history from 'appHistory';
 import {teardownSession} from 'actions/authenticationActions';
@@ -21,7 +21,7 @@ userDetailsCurosr.on('update', async (value) => {
 
 export async function editMe(data) {
   try {
-    await editUser(data);
+    await editMeApi(data);
     await getMe();
   } catch (err) {
     return err
