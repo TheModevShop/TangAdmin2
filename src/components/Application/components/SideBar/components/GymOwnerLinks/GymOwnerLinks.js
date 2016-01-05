@@ -20,9 +20,6 @@ class GymOwnerLinks extends React.Component {
             <Link to="/students">Students</Link>
           </li> 
           <li> 
-            <Link to="/privates">Privates</Link>
-          </li> 
-          <li> 
             <Link to="/classes">Classes</Link>
           </li>
           <li> 

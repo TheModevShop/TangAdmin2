@@ -20,14 +20,15 @@ class AddClass extends React.Component {
               </Col>
             </div>
             <Row>
-              <form onSubmit={this.submitGym.bind(this)} className="col-xs-12">
+              <form onSubmit={this.submitClass.bind(this)} className="col-xs-12">
                 <Row>
                   <Col xs={12}>
                     <Input id='className' type="text" placeholder='' label='Name' />
-                    <Input type="textarea" label="Description" placeholder='' />
+                    <Input id='classDescription' type="textarea" label="Description" placeholder='' />
                     <Input id='classDate' type="date" placeholder='' label='Date' />
                     <Input id='classStartTime' type="time" placeholder='' label='Class Time' />
-                    <Input id='classCapacity' type="number" placeholder='' label='Class Duration' />
+                    <Input id='classDuration' type="number" placeholder='' label='Class Duration' />
+                    <Input id='classCapacity' type="number" placeholder='' label='Class Capacity' />
                   </Col>
                 </Row>
 
@@ -43,10 +44,19 @@ class AddClass extends React.Component {
       </Grid>
     );
   }
-  
+
+
   submitClass(e) {
     e.preventDefault();
-    const data = {}
+    const data = {
+      name: document.getElementById('className').value,
+      description: document.getElementById('classDescription').value,
+      date: document.getElementById('classDate').value,
+      start: document.getElementById('classStartTime').value,
+      capacity: document.getElementById('classCapacity').value,
+      duration: document.getElementById('classDuration').value,
+      instructorId: null
+    };
     addClass(data);
   }
 }

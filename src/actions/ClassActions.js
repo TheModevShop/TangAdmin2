@@ -1,13 +1,16 @@
 import tree from 'state/StateTree';
 import {postClass} from 'api/classesApi';
+import _ from 'lodash';
+import moment from 'moment';
 
 const addClassViewCursor = tree.select(['views', 'AddClass']);
+const myGym = tree.select(['user', 'myGym']);
 
 export async function addClass(data) {
   addClassViewCursor.set({awaitingSave: true});
   try {
-    const postClass = await postClass(data);
-    // 
+    await postClass(_.get(myGym.get(), 'gymDetails._id'), createClass(data));
+    // set classes as stale
   } catch (err) {
     addClassViewCursor.set('error', err);
   }
@@ -17,16 +20,16 @@ export async function addClass(data) {
 
 function createClass(data) {
   return {
-      name: data.name,
-      date: data.date,
-      start: data.startTime,
-      end: moment(data.startTime, 'H:mm').add(data.duration, 'minutes').format('H:mm'),
-      description: data.description,
-      capacity: data.capacity,
-      private: false,
-      complete: false,
-      enrolled: [],
-      instructorId: data.instructor ? data.startTime : null
-    }
+    name: data.name,
+    date: data.date,
+    start: data.start,
+    end: moment(data.start, 'H:mm').add(parseInt(data.duration), 'minutes').format('H:mm'),
+    description: data.description,
+    capacity: parseInt(data.capacity),
+    private: false,
+    complete: false,
+    enrolled: [],
+    instructorId: data.instructor ? data.startTime : null
+  }
 }
 
