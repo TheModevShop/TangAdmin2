@@ -17,7 +17,7 @@ export function getMyGymApi(id) {
 export async function postGym(data) { 
   console.log(data)
   return new bluebird((resolve, reject) => {
-    xhr('POST', `${BASE}/gyms`, {data}).then((data) => {
+    xhr('POST', `${BASE}/gyms`, {data: data}).then((data) => {
       resolve(data);
     }).catch((err) => {
       reject(err);

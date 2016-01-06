@@ -1,14 +1,13 @@
 import React from 'react';
+import formsy from 'formsy-react';
+import InputField from './components/InputField';
+import Textarea from './components/Textarea';
 import {branch} from 'baobab-react/higher-order';
 import {addGym} from 'actions/GymActions';
-import {Row, Label, Textarea, FormGroup, Form, Col, Grid, Input, Button} from 'react-bootstrap';
+import {Row, Label, FormGroup, Form, Col, Grid, Input, Button} from 'react-bootstrap';
 import './add-gym.less';
 
-class AddGym extends React.Component {
-  constructor(...args) {
-    super(...args);
-    this.state = {};
-  }
+const AddGym = React.createClass({
 
   render() {
     return (
@@ -21,59 +20,53 @@ class AddGym extends React.Component {
               </Col>
             </div>
             <Row>
-              <form onSubmit={this.submitGym.bind(this)} className="col-xs-12">
+              <Formsy.Form onValidSubmit={this.submitGym} onValid={this.enableButton} onInvalid={this.disableButton} className="col-xs-12">
                 <Row>
-                  <Col xs={12}>
-                    <Input id='gymName' type="text" placeholder='' label='Name' />
-                    <Input type="textarea" label="Description" placeholder='' />
-                    <Row>
-                      <Col xs={12} sm={6}>
-                        <Input id='gymPhone' type="text" placeholder='' label='Phone Number' />
-                      </Col>
-                      <Col xs={12} sm={6}>
-                        <Input id='gymEmail' type="text" placeholder='' label='Email Address' />
-                      </Col>
-                    </Row>
-                    <Input id='gymSite' type="text" placeholder='' label='Gym Site' />
-                  </Col>
+                  <InputField className="col-xs-12 " name="name" title="Name" required />
+                  <Textarea className="col-xs-12 " type="textarea" name="description" title="Description" required />
                 </Row>
                 <Row>
-                  <Col xs={6}>
-                    <Input id='addressOne' type="text" placeholder='' label='Address Line 1' />
-                  </Col>
-                  <Col xs={6}>
-                    <Input id='addressTwo' type="text" placeholder='' label='Address Line 2' />
-                  </Col>
+                  <InputField className="col-xs-12 col-sm-6 " name="contact.phone" title="Phone Number" required />
+                  <InputField className="col-xs-12 col-sm-6 " name="contact.email" title="Email Address" required />
                 </Row>
                 <Row>
-                  <Col xs={4} collapseLeft collapseRight >
-                    <Input id='City' type="text" placeholder='' label='City' />
-                  </Col>
-                  <Col xs={4}  collapseRight>
-                    <Input id='State' type="text" placeholder='' label='State' />
-                  </Col>
-                  <Col xs={4}  collapseRight>
-                    <Input id='Zip' type="text" placeholder='' label='Zip' />
-                  </Col>
+                 
+                </Row>
+                <Row>
+                  <InputField className="col-xs-12 col-sm-6 " name="address.street" title="Address Line 1" required />
+                </Row>
+                <Row>
+                  <InputField className="col-xs-12 col-sm-4 " name="address.city" title="City" required />
+                  <InputField className="col-xs-12 col-sm-4 " name="address.state" title="State" required />
+                  <InputField className="col-xs-12 col-sm-4 " name="address.zipcode" title="Zip Code" required />
                 </Row>
                 <Row>
                   <Col xs={12}>
-                    <Button bsStyle="primary" type="submit" value="Submit" bsSize="large" disabled={this.state.disabled}>Submit</Button>
+                    <Button bsStyle="primary" type="submit" value="Submit" bsSize="large" disabled={!this.state.canSubmit}>Submit</Button>
                   </Col>
                 </Row>
-              </form>
+              </Formsy.Form>
             </Row>
           </div>
         </Row>
       </Grid>
     );
-  }
-  submitGym(e) {
-    e.preventDefault();
-    const data = {}
+  },
+  getInitialState() {
+    return { canSubmit: false };
+  },
+  submitGym(data) {
+    var data = JSON.stringify(data);
     addGym(data);
+  },
+  enableButton() {
+    this.setState({ canSubmit: true });
+  },
+  disableButton() {
+    this.setState({ canSubmit: false });
   }
-}
+ 
+});
 
 export default branch(AddGym, {
   cursors: {

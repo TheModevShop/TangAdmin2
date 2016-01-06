@@ -40,7 +40,7 @@
     "eslint-loader": "1.0.0",
     "eslint-plugin-react": "3.4.1",
     "less": "^2.5.1",
-    "history": "^1.12.5",
+    "history": "1.13.x",
     "lodash": "^3.9.3",
     "karma": "0.13.10",
     "karma-chai": "0.1.0",
