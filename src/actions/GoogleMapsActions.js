@@ -8,31 +8,14 @@ const geo = geocoder({
  
 
 export async function getGymGeoPoints(address) {
-
   return new BluebirdPromise((resolve, reject) => {
     geo.find(address, (err, res) => { 
       if (err) {
-        reject(err)
+        reject(err);
       } else {
-        resolve(res)
+        resolve(res);
       } 
     });
-  });
-
-
-
-  return new Promise(function(resolve) {
-    setTimeout(function() {
-      resolve({
-        id: user_id,
-        nickname: 'tlhunter'
-      });
-    }, 100);
-  });
-
-  geo.find(address, (err, res) => { 
-    console.log(res)
-    return res;
   });
 }
 
