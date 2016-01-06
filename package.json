@@ -21,7 +21,10 @@
   "dependencies": {
     "babel-runtime": "^5.6.4",
     "es6-promise": "^3.0.2",
+    "formsy-react": "^0.17.0",
+    "google-geocoder": "^0.1.4",
     "react-data-components": "^0.6.0",
+    "react-google-maps": "^4.7.1",
     "react-select": "^0.9.1",
     "superagent": "^1.4.0"
   },

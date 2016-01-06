@@ -4,10 +4,16 @@ import InputField from './components/InputField';
 import Textarea from './components/Textarea';
 import {branch} from 'baobab-react/higher-order';
 import {addGym} from 'actions/GymActions';
+import {getGymGeoPoints} from 'actions/GoogleMapsActions';
 import {Row, Label, FormGroup, Form, Col, Grid, Input, Button} from 'react-bootstrap';
+import GoogleMap from 'components/GoogleMap';
 import './add-gym.less';
 
-const AddGym = React.createClass({
+class AddGym extends React.Component {
+  constructor(...args) {
+    super(...args);
+    this.state = {};
+  }
 
   render() {
     return (
@@ -19,6 +25,10 @@ const AddGym = React.createClass({
                 <h1>Add Gym</h1>
               </Col>
             </div>
+            <Row>
+              <GoogleMap marker={this.state.geoPoints} />
+              <button onClick={this.getGeoPoint.bind(this)}></button>
+            </Row>
             <Row>
               <Formsy.Form onValidSubmit={this.submitGym} onValid={this.enableButton} onInvalid={this.disableButton} className="col-xs-12">
                 <Row>
@@ -51,22 +61,36 @@ const AddGym = React.createClass({
         </Row>
       </Grid>
     );
-  },
+  }
+
+  async getGeoPoint() {
+    try {
+      const geoPoints = await getGymGeoPoints();
+      this.setState({ geoPoints: geoPoints });
+      console.log(geoPoints)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   getInitialState() {
     return { canSubmit: false };
-  },
+  }
+
   submitGym(data) {
     var data = JSON.stringify(data);
     addGym(data);
-  },
+  }
+
   enableButton() {
     this.setState({ canSubmit: true });
-  },
+  }
+
   disableButton() {
     this.setState({ canSubmit: false });
   }
  
-});
+};
 
 export default branch(AddGym, {
   cursors: {
