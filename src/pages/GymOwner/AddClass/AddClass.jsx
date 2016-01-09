@@ -1,6 +1,7 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {addClass} from 'actions/ClassActions';
+import moment from 'moment';
 import {Row, Col, Grid, Input, Button} from 'react-bootstrap';
 
 class AddClass extends React.Component {
@@ -51,7 +52,7 @@ class AddClass extends React.Component {
     const data = {
       name: document.getElementById('className').value,
       description: document.getElementById('classDescription').value,
-      date: document.getElementById('classDate').value,
+      date: moment(document.getElementById('classDate').value, 'YYYY-MM-DD').set('hour', document.getElementById('classStartTime').value.split(':')[0]).set('minute', document.getElementById('classStartTime').value.split(':')[1]).format(),
       start: document.getElementById('classStartTime').value,
       capacity: document.getElementById('classCapacity').value,
       duration: document.getElementById('classDuration').value,

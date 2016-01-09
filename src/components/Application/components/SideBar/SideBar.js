@@ -31,7 +31,7 @@ class SideBar extends React.Component {
         </div>
 
         {
-          role === 'instructor' ? // Will have to change to gym owner
+          role !== 'instructor' ? // Will have to change to gym owner
           <GymOwnerLinks /> : role ?
           <AppOwnerLinks /> : null
         }

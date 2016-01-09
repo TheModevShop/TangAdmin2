@@ -3,7 +3,7 @@ import geocoder from 'google-geocoder';
 import BluebirdPromise from 'bluebird';
 
 const geo = geocoder({
-  key: 'AIzaSyBaVfqKXcfhWip1siLUKSO7512qXNUqp5U'
+  key: 'AIzaSyBNfnzxRTDyHuR7Ws5tncjX5JN0hz5OMss'
 });
  
 
@@ -13,7 +13,7 @@ export async function getGymGeoPoints(address) {
       if (err) {
         reject(err);
       } else {
-        resolve(res);
+        resolve(res[0].location);
       } 
     });
   });

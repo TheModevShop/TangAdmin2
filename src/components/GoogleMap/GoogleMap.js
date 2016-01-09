@@ -1,26 +1,32 @@
-import {default as React, Component} from "react";
+import React from 'react';
 import {GoogleMap, Marker} from "react-google-maps";
+import {triggerEvent} from "react-google-maps/lib/utils";
+import _ from 'lodash';
 
-export default function Map (props) {
-  return (
-    <section style={{height: "100%"}}>
-      <GoogleMap containerProps={{
-          style: {
-            height: "100%",
-          },
-        }}
-        defaultZoom={3}
-        defaultCenter={{lat: -25.363882, lng: 131.044922}}
-        onClick={props.onMapClick}
-      >
-        {props.markers.map((marker, index) => {
-          return (
-            <Marker
-              {...marker}
-              onRightclick={() => props.onMarkerRightclick(index)} />
-          );
-        })}
-      </GoogleMap>
-    </section>
-  );
-}
+
+class GoogleMapComp extends React.Component {
+  render() {
+    const style = {
+      height: '200px', 
+      width: '100%'
+    };
+    const marker = {
+      position: this.props.marker,
+      key: 'Location Name',
+      defaultAnimation: 2
+    }
+    const center = this.props.marker ? this.props.marker : {lat: 32.715786, lng: -117.158340};
+    return (
+      <section style={{style}}>
+        <GoogleMap containerProps={{style}}
+          ref={(map) => (this._googleMapComponent = map) && setTimeout(() => map.panTo(center), 100)}
+          defaultZoom={3}
+          defaultCenter={{lat: 32.715786, lng: -117.158340}}>
+            <Marker{...marker} />
+        </GoogleMap>
+      </section>
+    );
+  } 
+};
+
+export default GoogleMapComp;

@@ -9,13 +9,9 @@ import {Row, Label, FormGroup, Form, Col, Grid, Input, Button} from 'react-boots
 import GoogleMap from 'components/GoogleMap';
 import './add-gym.less';
 
-class AddGym extends React.Component {
-  constructor(...args) {
-    super(...args);
-    this.state = {};
-  }
-
+var AddGym = React.createClass({
   render() {
+    console.log(this)
     return (
       <Grid fluid>
         <Row>
@@ -26,8 +22,8 @@ class AddGym extends React.Component {
               </Col>
             </div>
             <Row>
-              <GoogleMap marker={this.state.geoPoints} />
-              <button onClick={this.getGeoPoint.bind(this)}></button>
+              <GoogleMap marker={this.state.location} />
+              <button onClick={this.getGeoPoint.bind(this)}>Get Geo Points</button>
             </Row>
             <Row>
               <Formsy.Form onValidSubmit={this.submitGym} onValid={this.enableButton} onInvalid={this.disableButton} className="col-xs-12">
@@ -61,36 +57,36 @@ class AddGym extends React.Component {
         </Row>
       </Grid>
     );
-  }
+  },
 
   async getGeoPoint() {
     try {
-      const geoPoints = await getGymGeoPoints();
-      this.setState({ geoPoints: geoPoints });
-      console.log(geoPoints)
+      const location = await getGymGeoPoints('2941 lamp light ln willoughby hills ohio 44094');
+      console.log(location)
+      this.setState({location: location});
     } catch (err) {
       console.log(err)
     }
-  }
-
-  getInitialState() {
-    return { canSubmit: false };
-  }
+  },
 
   submitGym(data) {
     var data = JSON.stringify(data);
     addGym(data);
-  }
+  },
 
   enableButton() {
     this.setState({ canSubmit: true });
-  }
+  },
+
+  getInitialState() {
+    return { canSubmit: false };
+  },
 
   disableButton() {
     this.setState({ canSubmit: false });
   }
  
-};
+});
 
 export default branch(AddGym, {
   cursors: {
