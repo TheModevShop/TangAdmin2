@@ -11,7 +11,6 @@ import './add-gym.less';
 
 var AddGym = React.createClass({
   render() {
-    console.log(this)
     return (
       <Grid fluid>
         <Row>
@@ -62,7 +61,6 @@ var AddGym = React.createClass({
   async getGeoPoint() {
     try {
       const location = await getGymGeoPoints('2941 lamp light ln willoughby hills ohio 44094');
-      console.log(location)
       this.setState({location: location});
     } catch (err) {
       console.log(err)
@@ -70,8 +68,9 @@ var AddGym = React.createClass({
   },
 
   submitGym(data) {
-    var data = JSON.stringify(data);
-    addGym(data);
+    data.Location = [this.state.location.lng, this.state.location.lat];
+    const gymData = JSON.stringify(data);
+    addGym(gymData);
   },
 
   enableButton() {

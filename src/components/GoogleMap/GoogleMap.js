@@ -19,8 +19,11 @@ class GoogleMapComp extends React.Component {
     return (
       <section style={{style}}>
         <GoogleMap containerProps={{style}}
-          ref={(map) => (this._googleMapComponent = map) && setTimeout(() => map.panTo(center), 100)}
+          ref={(map) => (this._googleMapComponent = map) && setTimeout(() => {
+            map.panTo(center);
+          }, 100)}
           defaultZoom={3}
+          zoom={this.props.marker ? 15 : 3}
           defaultCenter={{lat: 32.715786, lng: -117.158340}}>
             <Marker{...marker} />
         </GoogleMap>
