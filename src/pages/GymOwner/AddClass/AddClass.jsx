@@ -3,12 +3,12 @@ import {branch} from 'baobab-react/higher-order';
 import {addClass} from 'actions/ClassActions';
 import moment from 'moment';
 import {Row, Col, Grid, Input, Button} from 'react-bootstrap';
+import formsy from 'formsy-react';
+import InputField from '../../../components/theme/Forms/InputField';
+import Textarea from '../../../components/theme/Forms/Textarea';
+import './add-class.less';
 
-class AddClass extends React.Component {
-  constructor(...args) {
-    super(...args);
-    this.state = {};
-  }
+const AddClass = React.createClass({
 
   render() {
     return (
@@ -21,46 +21,52 @@ class AddClass extends React.Component {
               </Col>
             </div>
             <Row>
-              <form onSubmit={this.submitClass.bind(this)} className="col-xs-12">
+              <Formsy.Form onValidSubmit={this.submitClass} onValid={this.enableButton} onInvalid={this.disableButton} className="col-xs-12">
+                <Row>
+                  <InputField className="col-xs-12 " type="text" name="name" title="Name" required />
+                  <Textarea className="col-xs-12 " type="textarea" name="description" title="Description" required />
+                </Row>
+                <Row>
+                  <InputField className="col-xs-12 col-sm-6 "  type="date" name="date" title="Date" required />
+                  <InputField className="col-xs-12 col-sm-6 " type="time" name="start" title="Class Time" required />
+                </Row>
+                <Row>
+                  <InputField className="col-xs-12 col-sm-6 "  type="text" name="duration" title="Class Duration (In Minutes)" required />
+                  <InputField className="col-xs-12 col-sm-6 " type="text" name="capactiy" title="Class Class Capacity" required />
+                </Row>
                 <Row>
                   <Col xs={12}>
-                    <Input id='className' type="text" placeholder='' label='Name' />
-                    <Input id='classDescription' type="textarea" label="Description" placeholder='' />
-                    <Input id='classDate' type="date" placeholder='' label='Date' />
-                    <Input id='classStartTime' type="time" placeholder='' label='Class Time' />
-                    <Input id='classDuration' type="number" placeholder='' label='Class Duration' />
-                    <Input id='classCapacity' type="number" placeholder='' label='Class Capacity' />
+                    <Button bsStyle="primary" type="submit" value="Submit" bsSize="large" disabled={!this.state.canSubmit}>Submit</Button>
                   </Col>
                 </Row>
-
-                <Row>
-                  <Col xs={12}>
-                    <Button bsStyle="primary" type="submit" value="Submit" bsSize="large" disabled={this.state.disabled}>Submit</Button>
-                  </Col>
-                </Row>
-              </form>
+              </Formsy.Form>
             </Row>
           </div>
         </Row>
       </Grid>
     );
-  }
+  },
+  getInitialState() {
+    return { canSubmit: false };
+  },
+  submitClass(data) {
+    var today = new moment;
+    var classDate = new moment(data.date);
+    var validDate = ((today > classDate) ? false : true);
+    if (validDate) {
+      addClass(data);
+    } else {
+      console.log('todo');
+    }
 
-
-  submitClass(e) {
-    e.preventDefault();
-    const data = {
-      name: document.getElementById('className').value,
-      description: document.getElementById('classDescription').value,
-      date: moment(document.getElementById('classDate').value, 'YYYY-MM-DD').set('hour', document.getElementById('classStartTime').value.split(':')[0]).set('minute', document.getElementById('classStartTime').value.split(':')[1]).format(),
-      start: document.getElementById('classStartTime').value,
-      capacity: document.getElementById('classCapacity').value,
-      duration: document.getElementById('classDuration').value,
-      instructorId: null
-    };
-    addClass(data);
+  },
+  enableButton() {
+    this.setState({ canSubmit: true });
+  },
+  disableButton() {
+    this.setState({ canSubmit: false });
   }
-}
+});
 
 export default branch(AddClass, {
   cursors: {
