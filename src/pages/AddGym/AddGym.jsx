@@ -1,12 +1,11 @@
 import React from 'react';
 import formsy from 'formsy-react';
-import InputField from './components/InputField';
-import Textarea from './components/Textarea';
+import InputField from './../../components/theme/Forms/InputField';
+import Textarea from './../../components/theme/Forms/Textarea';
 import {branch} from 'baobab-react/higher-order';
 import {addGym} from 'actions/GymActions';
 import {getGymGeoPoints} from 'actions/GoogleMapsActions';
 import {Row, Label, FormGroup, Form, Col, Grid, Input, Button} from 'react-bootstrap';
-import GoogleMap from 'components/GoogleMap';
 import './add-gym.less';
 
 var AddGym = React.createClass({
@@ -21,29 +20,22 @@ var AddGym = React.createClass({
               </Col>
             </div>
             <Row>
-              <GoogleMap marker={this.state.location} />
-              <button onClick={this.getGeoPoint.bind(this)}>Get Geo Points</button>
-            </Row>
-            <Row>
-              <Formsy.Form onValidSubmit={this.submitGym} onValid={this.enableButton} onInvalid={this.disableButton} className="col-xs-12">
+              <Formsy.Form onValidSubmit={this.getGeoPoint} onValid={this.enableButton} onInvalid={this.disableButton} className="col-xs-12">
                 <Row>
                   <InputField className="col-xs-12 " name="name" title="Name" required />
                   <Textarea className="col-xs-12 " type="textarea" name="description" title="Description" required />
                 </Row>
                 <Row>
+                  <InputField className="col-xs-12 address-input" name="address.street" title="Street Address" required />
+                </Row>
+                <Row>
+                  <InputField className="col-xs-12 col-sm-4 address-input" name="address.city" title="City" required />
+                  <InputField className="col-xs-12 col-sm-4 address-input" name="address.state" title="State" required />
+                  <InputField className="col-xs-12 col-sm-4 address-input" name="address.zipcode" title="Zip Code" required />
+                </Row>
+                <Row>
                   <InputField className="col-xs-12 col-sm-6 " name="contact.phone" title="Phone Number" required />
                   <InputField className="col-xs-12 col-sm-6 " name="contact.email" title="Email Address" required />
-                </Row>
-                <Row>
-                 
-                </Row>
-                <Row>
-                  <InputField className="col-xs-12 col-sm-6 " name="address.street" title="Address Line 1" required />
-                </Row>
-                <Row>
-                  <InputField className="col-xs-12 col-sm-4 " name="address.city" title="City" required />
-                  <InputField className="col-xs-12 col-sm-4 " name="address.state" title="State" required />
-                  <InputField className="col-xs-12 col-sm-4 " name="address.zipcode" title="Zip Code" required />
                 </Row>
                 <Row>
                   <Col xs={12}>
@@ -58,18 +50,19 @@ var AddGym = React.createClass({
     );
   },
 
-  async getGeoPoint() {
+  async getGeoPoint(data) {
     try {
-      const location = await getGymGeoPoints('2941 lamp light ln willoughby hills ohio 44094');
-      this.setState({location: location});
+      const location = await getGymGeoPoints(data.address.street + ' ' +  data.address.city + ', ' +  data.address.state + ' ' +  data.address.zipcode);
+      data.Location = [location.lng, location.lat];
+      this.submitGym(data);
     } catch (err) {
       console.log(err)
     }
   },
 
   submitGym(data) {
-    data.Location = [this.state.location.lng, this.state.location.lat];
     const gymData = JSON.stringify(data);
+    console.log(gymData);
     addGym(gymData);
   },
 
