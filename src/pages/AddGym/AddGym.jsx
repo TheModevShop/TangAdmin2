@@ -117,6 +117,14 @@ var AddGym = React.createClass({
                   <InputField className="col-xs-12 col-sm-6 " name="contact.email" title="Email Address" required />
                 </Row>
                 <Row>
+                  <InputField className="col-xs-12 " name="contact.website" title="Website" required />
+                </Row>
+                <Row>
+                  <InputField className="col-xs-12 col-sm-4 " name="privateSessionPrice" title="Private Session Price" />
+                  <InputField className="col-xs-12 col-sm-4 " name="cancellationPolicy.price" title="Cancellation Fee" required />
+                  <InputField className="col-xs-12 col-sm-4 " name="cancellationPolicy.time" title="Cancellation Time" required />
+                </Row>
+                <Row>
                   <Col xs={12}>
                     <label>Hours</label>
                   </Col>
