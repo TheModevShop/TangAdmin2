@@ -18,8 +18,16 @@ const columns = [
     render: renderName
   },
   { 
-    title: 'Address', 
-    prop: 'addressFormatted' 
+    title: 'Street Address', 
+    prop: 'street' 
+  },
+  { 
+    title: 'City and Zip', 
+    prop: 'cityFormatted' 
+  },
+  { 
+    title: 'State', 
+    prop: 'state' 
   }
 ];
 
@@ -41,7 +49,7 @@ class Gyms extends React.Component {
         {
           gyms.length ?
           <DataTable
-            keys={[ 'name', 'addressFormatted']}
+            keys={[ 'name', 'street', 'city and zip code', 'state', ]}
             columns={columns}
             initialData={gyms}
             initialPageLength={15}
@@ -56,7 +64,9 @@ class Gyms extends React.Component {
   formatData() {
     let gyms = _.get(this.props, 'gyms.allGyms') || [];
     gyms = _.map(gyms, (gym) => {
-      gym.addressFormatted = `${gym.address.street}, ${gym.address.city}, ${gym.address.state} ${gym.address.zipcode} ` 
+      gym.cityFormatted = `${gym.address.city} ${gym.address.zipcode}`;
+      gym.state = `${gym.address.state}`;
+      gym.street = `${gym.address.street}`;
       return gym;
     });
     return gyms;
