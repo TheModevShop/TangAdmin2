@@ -121,7 +121,7 @@ var AddGym = React.createClass({
                 </Row>
                 <Row>
                   <InputField className="col-xs-12 col-sm-4 " name="privateSessionPrice" title="Private Session Price" />
-                  <InputField className="col-xs-12 col-sm-4 " name="cancellationPolicy.price" title="Cancellation Fee" required />
+                  <InputField className="col-xs-12 col-sm-4 " name="cancellationPolicy.percent" title="Cancellation Fee" required />
                   <InputField className="col-xs-12 col-sm-4 " name="cancellationPolicy.time" title="Cancellation Time" required />
                 </Row>
                 <Row>
@@ -137,8 +137,8 @@ var AddGym = React.createClass({
                       </Col> 
                     </Row>
                     <Row>
-                      <InputField className="col-xs-12 col-sm-6 " name="contact.phone" title="Open" type="time" />
-                      <InputField className="col-xs-12 col-sm-6 " name="contact.phone" title="Close" type="time" />
+                      <InputField className="col-xs-12 col-sm-6 " name="hours.mon_1_open" title="Open" type="time" />
+                      <InputField className="col-xs-12 col-sm-6 " name="hours.mon_1_close" title="Close" type="time" />
                     </Row>
                   </Col>
                   <Col xs={6}>
@@ -148,8 +148,8 @@ var AddGym = React.createClass({
                       </Col> 
                     </Row>
                     <Row>
-                      <InputField className="col-xs-12 col-sm-6 " name="contact.phone" title="Open" type="time" />
-                      <InputField className="col-xs-12 col-sm-6 " name="contact.phone" title="Close" type="time" />
+                      <InputField className="col-xs-12 col-sm-6 " name="hours.tue_1_open" title="Open" type="time" />
+                      <InputField className="col-xs-12 col-sm-6 " name="hours.tue_1_close" title="Close" type="time" />
                     </Row>
                   </Col>
                 </Row>
@@ -161,8 +161,8 @@ var AddGym = React.createClass({
                       </Col> 
                     </Row>
                     <Row>
-                      <InputField className="col-xs-12 col-sm-6 " name="contact.phone" title="Open" type="time" />
-                      <InputField className="col-xs-12 col-sm-6 " name="contact.phone" title="Close" type="time" />
+                      <InputField className="col-xs-12 col-sm-6 " name="hours.wed_1_open" title="Open" type="time" />
+                      <InputField className="col-xs-12 col-sm-6 " name="hours.wed_1_close" title="Close" type="time" />
                     </Row>
                   </Col>
                   <Col xs={6}>
@@ -172,8 +172,8 @@ var AddGym = React.createClass({
                       </Col> 
                     </Row>
                     <Row>
-                      <InputField className="col-xs-12 col-sm-6 " name="contact.phone" title="Open" type="time" />
-                      <InputField className="col-xs-12 col-sm-6 " name="contact.phone" title="Close" type="time" />
+                      <InputField className="col-xs-12 col-sm-6 " name="hours.thu_1_open" title="Open" type="time" />
+                      <InputField className="col-xs-12 col-sm-6 " name="hours.thu_1_close" title="Close" type="time" />
                     </Row>
                   </Col>
                 </Row>
@@ -185,8 +185,8 @@ var AddGym = React.createClass({
                       </Col> 
                     </Row>
                     <Row>
-                      <InputField className="col-xs-12 col-sm-6 " name="contact.phone" title="Open" type="time" />
-                      <InputField className="col-xs-12 col-sm-6 " name="contact.phone" title="Close" type="time" />
+                      <InputField className="col-xs-12 col-sm-6 " name="hours.fri_1_open" title="Open" type="time" />
+                      <InputField className="col-xs-12 col-sm-6 " name="hours.fri_1_close" title="Close" type="time" />
                     </Row>
                   </Col>
                   <Col xs={6}>
@@ -196,8 +196,8 @@ var AddGym = React.createClass({
                       </Col> 
                     </Row>
                     <Row>
-                      <InputField className="col-xs-12 col-sm-6 " name="contact.phone" title="Open" type="time" />
-                      <InputField className="col-xs-12 col-sm-6 " name="contact.phone" title="Close" type="time" />
+                      <InputField className="col-xs-12 col-sm-6 " name="hours.sat_1_open" title="Open" type="time" />
+                      <InputField className="col-xs-12 col-sm-6 " name="hours.sat_1_close" title="Close" type="time" />
                     </Row>
                   </Col>
                   </Row>
@@ -209,8 +209,8 @@ var AddGym = React.createClass({
                         </Col> 
                       </Row>
                       <Row>
-                        <InputField className="col-xs-12 col-sm-6 " name="contact.phone" title="Open" type="time" />
-                        <InputField className="col-xs-12 col-sm-6 " name="contact.phone" title="Close" type="time" />
+                        <InputField className="col-xs-12 col-sm-6 " name="hours.sun_1_open" title="Open" type="time" />
+                        <InputField className="col-xs-12 col-sm-6 " name="hours.sun_1_close" title="Close" type="time" />
                       </Row>
                     </Col>
                   </Row>
@@ -249,7 +249,9 @@ var AddGym = React.createClass({
   },
 
   submitGym(data) {
-
+    data.privateSessionPrice = Number(data.privateSessionPrice);
+    data.cancellationPolicy.percent = Number(data.cancellationPolicy.percent);
+    data.cancellationPolicy.time = Number(data.cancellationPolicy.time);
     const gymData = JSON.stringify(data);
     console.log(gymData);
     addGym(gymData);
