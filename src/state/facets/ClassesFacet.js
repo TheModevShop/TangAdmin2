@@ -7,9 +7,9 @@ const loader = new RESTLoader({
     return `${BASE}/gyms/${id}/sessions`;
   },
   successTransformer: (data) => {
-    console.log(data)
     return {
-      allClasses: data.body
+      allClasses: data.body,
+      locations: ['user', 'details', 'gyms'],
     };
   },
   errorTransformer: (err) => {
@@ -24,6 +24,7 @@ export default function LocationScheduleFacet() {
   return {
     cursors: {
       classes: ['views', 'ClassList'],
+      myGym: ['user', 'myGym']
     },
     get(data) {
       if (data.classes && data.classes.stale) {
@@ -32,7 +33,7 @@ export default function LocationScheduleFacet() {
       if (!loader.cursor) {
         loader.setCursor(this.cursors.classes);
       }
-      const classes = _.clone(loader.fetch());
+      const classes = _.clone(loader.fetch(_.get(data.myGym, 'gymDetails._id')));
       return classes
     }
   };
