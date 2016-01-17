@@ -17,7 +17,7 @@ export default function getInitialState() {
         GymProfile: {
           Profile: null
         },
-        GymInstructors: null,
+        Instructors: null,
         GymStudents: null,
         AddGym: {},
         CreateAccount: {

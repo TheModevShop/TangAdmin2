@@ -19,15 +19,14 @@ const loader = new RESTLoader({
   }
 });
 
-export default function GymInstructorsFacet() {
+export default function InstructorsFacet() {
   return {
     cursors: {
       myGym: ['user', 'myGym'],
-      instructors: ['views', 'GymInstructors'],
+      instructors: ['views', 'Instructors'],
     },
     get(data) {
       const myGymId = _.get(data, 'myGym.gymDetails._id');
-      debugger; 
       if (data.instructors && data.instructors.stale) {
         loader.invalidateCache();
       }

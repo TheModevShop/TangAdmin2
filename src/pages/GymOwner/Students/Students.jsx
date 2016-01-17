@@ -39,7 +39,7 @@ class Students extends React.Component {
     const students = _.get(this.props, 'students.allStudents') || [];
 
     return (
-      <div className="coaches-table-wrapper panel panel-primary">
+      <div className="students-table-wrapper panel panel-primary">
         <div className="row panel-heading">
           <Col xs={12}>
             <h1>Users</h1>

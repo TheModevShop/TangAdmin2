@@ -5,7 +5,7 @@ import {Row, Col, Grid, Panel} from 'react-bootstrap';
 import {Link} from 'react-router';
 
 const renderName = (val, row) => {
-  return <Link to={`/instructor/${row._id}`}>{row.name.first} {row.name.last}</Link>;
+  return <Link to={`/instructors/${row._id}`}>{row.name.first} {row.name.last}</Link>;
 }
   
 const columns = [
@@ -21,7 +21,7 @@ const columns = [
 ];
 
 
-class Coaches extends React.Component {
+class Instructors extends React.Component {
   constructor(...args) {
     super(...args);
     this.state = {};
@@ -30,10 +30,10 @@ class Coaches extends React.Component {
     const instructors = _.get(this.props, 'instructors.allInstructors') || [];
 
     return (
-      <div className="coaches-table-wrapper panel panel-primary">
+      <div className="instructors-table-wrapper panel panel-primary">
         <div className="row panel-heading">
           <Col xs={12}>
-            <h1>Coaches</h1>
+            <h1>Instructors</h1>
           </Col>
         </div>
         {
@@ -46,14 +46,14 @@ class Coaches extends React.Component {
             initialSortBy={{ prop: 'name', order: 'descending' }}
             pageLengthOptions={[ 15, 20, 50 ]}
           /> : 
-          <div>No Coaches Yet</div>
+          <div>No Instructors Yet</div>
         }
        </div>
     );
   }
 }
-export default branch(Coaches, {
+export default branch(Instructors, {
   facets: {
-    instructors: 'GymInstructors'
+    instructors: 'Instructors'
   }
 });
