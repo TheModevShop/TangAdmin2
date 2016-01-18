@@ -17,7 +17,7 @@ class ClassProfile extends React.Component {
   render() {
     const profile = _.get(this.props, 'classProfile.classProfile') || {};
     return (
-        profile.address ?
+        profile.name ?
         <div className="class-profile">
            <Grid fluid>
             <Row>

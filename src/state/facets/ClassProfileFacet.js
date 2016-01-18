@@ -3,8 +3,8 @@ import RESTLoader from '../loaders/RESTLoader';
 import {BASE} from 'constants';
 
 const loader = new RESTLoader({
-  getResourceUrl: (id) => {
-    return `${BASE}/gyms/${id}/sessions/${id}`;
+  getResourceUrl: (gymId, sessionId) => {
+    return `${BASE}/gyms/${gymId}/sessions/${sessionId}`;
   },
   successTransformer: (data) => {
     return {
@@ -23,19 +23,20 @@ const loader = new RESTLoader({
 export default function LocationScheduleFacet() {
   return {
     cursors: {
-      classes: ['views', 'ClassList'],
+      classProfile: ['views', 'ClassProfile', 'Profile'],
       myGym: ['user', 'myGym']
     },
     get(data) {
       const id = window.location.href.split('/').pop();
-      
       if (data.classProfile && data.classProfile.stale) {
         loader.invalidateCache();
       }
       if (!loader.cursor) {
         loader.setCursor(this.cursors.classProfile);
       }
-      const classProfile = _.clone(loader.fetch(_.get(data.myGym, 'gymDetails._id')));
+      const gymId = _.get(data.myGym, 'gymDetails._id');
+      const classProfile = _.clone(loader.fetch(gymId, id));
+      console.log(classProfile);
       return classProfile
     }
   };
