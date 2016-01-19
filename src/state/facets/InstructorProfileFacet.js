@@ -3,39 +3,43 @@ import RESTLoader from '../loaders/RESTLoader';
 import {BASE} from 'constants';
 
 const loader = new RESTLoader({
-  getResourceUrl: (id) => {
-    return `${BASE}/gyms/${id}/instructors`;
+  getResourceUrl: (gymId, instructorId) => {
+    debugger;
+    return `${BASE}/gyms/${gymId}/instructors/${instructorId}`;
   },
   successTransformer: (data) => {
     return {
-      allInstructors: data.body
+      instructorProfile: data.body,
+      locations: ['user', 'details', 'gyms']
     };
   },
   errorTransformer: (err) => {
     return {
-      allInstructors: [],
       error: err
     };
   }
 });
 
-export default function InstructorProfileFacet() {
+export default function LocationScheduleFacet() {
   return {
     cursors: {
       myGym: ['user', 'myGym'],
-      instructors: ['views', 'InstructorProfile'],
+      instructorProfile: ['views', 'InstructorProfile', 'Profile'],
     },
     get(data) {
-      const myGymId = _.get(data, 'myGym.gymDetails._id');
-      if (data.instructors && data.instructors.stale) {
+      const id = window.location.href.split('/').pop();
+      if (data.instructorProfile && data.instructorProfile.stale) {
         loader.invalidateCache();
       }
 
       if (!loader.cursor) {
-        loader.setCursor(this.cursors.instructors);
+        loader.setCursor(this.cursors.instructorProfile);
       }
-      const instructors = _.clone(loader.fetch(myGymId));
-      return instructors
+      debugger;
+      const gymId = _.get(data.myGym, 'gymDetails._id');
+      const instructorProfile = _.clone(loader.fetch(gymId, id));
+      console.log(instructorProfile);
+      return instructorProfile;
     }
   };
 };

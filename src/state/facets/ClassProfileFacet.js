@@ -14,7 +14,6 @@ const loader = new RESTLoader({
   },
   errorTransformer: (err) => {
     return {
-      sessions: [],
       error: err
     };
   }
@@ -37,7 +36,7 @@ export default function LocationScheduleFacet() {
       const gymId = _.get(data.myGym, 'gymDetails._id');
       const classProfile = _.clone(loader.fetch(gymId, id));
       console.log(classProfile);
-      return classProfile
+      return classProfile;
     }
   };
 };

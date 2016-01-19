@@ -11,6 +11,6 @@ function getComponents(location, cb) {
 export default (
   <Route>
     <Route pageName="instructors" path="/Instructors" getComponents={getComponents} />
-    <Route pageName="instructors" path="/instructors/:id" component={InstructorProfile} />
+    <Route pageName="instructors" path="/Instructors/:id" component={InstructorProfile} />
   </Route>
 );
