@@ -3,7 +3,7 @@ import {postClass} from 'api/classesApi';
 const activeClass = tree.select(['views', 'ClassProfile']);
 import _ from 'lodash';
 import moment from 'moment';
-const AddClass = tree.select(['views', 'AddClass']);
+const ClassList = tree.select(['views', 'ClassList']);
 const myGym = tree.select(['user', 'myGym']);
 
 export function setActiveClass() {
@@ -12,17 +12,17 @@ export function setActiveClass() {
 }
 
 export async function addClass(data) {
-  AddClass.set({isLoading: true});
+  ClassList.set({isLoading: true});
   try {
     const post = await postClass(_.get(myGym.get(), 'gymDetails._id'), createClass(data));
-    AddClass.set('stale', true);
+    ClassList.set('stale', true);
   } catch (err) {
-    AddClass.set('error', err);
+    ClassList.set('error', err);
   }
-  AddClass.set('isLoading', false);
+  ClassList.set('isLoading', false);
   tree.commit();
 }
 
 function createClass(data) {
-  return JSON.Stringify(data);
+  return JSON.stringify(data);
 }
