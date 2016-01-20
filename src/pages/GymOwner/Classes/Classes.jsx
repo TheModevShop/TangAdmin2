@@ -75,9 +75,9 @@ class Classes extends React.Component {
   formatData() {
     let classes = _.get(this.props, 'classes.allClasses') || [];
     classes = _.map(classes, (classItem) => {
-      classItem.date = `${classItem.data}`;
-      classItem.start = `${classItem.start}`;
-      classItem.end = `${classItem.end}`;
+      classItem.date = `${classItem.date}`;
+      classItem.start = `${classItem.time.start}`;
+      classItem.end = `${classItem.time.end}`;
       classItem.capacity = `${classItem.capacity}`;
       classItem.private = `${classItem.private}`;
       classItem.enrolled = `${classItem.enrolled.length ? classItem.enrolled.length : 10 }`;
