@@ -42,13 +42,13 @@ class Students extends React.Component {
       <div className="students-table-wrapper panel panel-primary">
         <div className="row panel-heading">
           <Col xs={12}>
-            <h1>Users</h1>
+            <h1>Students</h1>
           </Col>
         </div>
         {
           students.length ?
           <DataTable
-            keys={[ 'name', 'email']}
+            keys={[ '_id']}
             columns={columns}
             initialData={students}
             initialPageLength={15}
