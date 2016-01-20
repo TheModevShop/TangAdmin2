@@ -4,37 +4,36 @@ import {BASE} from 'constants';
 
 const loader = new RESTLoader({
   getResourceUrl: (id) => {
-    return `${BASE}/gyms/${id}/sessions?private=false`;
+    return `${BASE}/gyms/${id}/sessions?private=true`;
   },
   successTransformer: (data) => {
     return {
-      allClasses: data.body,
+      allPrivates: data.body,
       locations: ['user', 'details', 'gyms'],
     };
   },
   errorTransformer: (err) => {
     return {
-      sessions: [],
       error: err
     };
   }
 });
 
-export default function ClassesFacet() {
+export default function PrivatesFacet() {
   return {
     cursors: {
-      classes: ['views', 'ClassList'],
+      privates: ['views', 'PrivatesList'],
       myGym: ['user', 'myGym']
     },
     get(data) {
-      if (data.classes && data.classes.stale) {
+      if (data.privates && data.privates.stale) {
         loader.invalidateCache();
       }
       if (!loader.cursor) {
-        loader.setCursor(this.cursors.classes);
+        loader.setCursor(this.cursors.privates);
       }
-      const classes = _.clone(loader.fetch(_.get(data.myGym, 'gymDetails._id')));
-      return classes
+      const privates = _.clone(loader.fetch(_.get(data.myGym, 'gymDetails._id')));
+      return privates
     }
   };
 };

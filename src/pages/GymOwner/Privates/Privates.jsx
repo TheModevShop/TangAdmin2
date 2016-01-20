@@ -4,11 +4,11 @@ import moment from 'moment';
 import {DataTable} from 'react-data-components';
 import {Row, Col, Grid, Panel} from 'react-bootstrap';
 import {Link} from 'react-router';
-import "./classes.less";
+import "./privates.less";
 import _ from 'lodash';
 
 const renderName = (val, row) => {
-  return <Link to={`/classes/${row._id}`}>{row.name}</Link>;
+  return <Link to={`/privates/${row._id}`}>{row.name}</Link>;
 }
 
 const columns = [
@@ -39,7 +39,7 @@ const columns = [
   }
 ];
 
-class Classes extends React.Component {
+class Privates extends React.Component {
   constructor(...args) {
     super(...args);
     this.state = {};
@@ -51,7 +51,7 @@ class Classes extends React.Component {
       <div className="classes-table-wrapper panel panel-primary">
         <div className="row panel-heading">
           <Col xs={12}>
-            <h1>Classes</h1>
+            <h1>Privates</h1>
           </Col>
         </div>
         {
@@ -70,7 +70,7 @@ class Classes extends React.Component {
   }
 
   formatData() {
-    let classes = _.get(this.props, 'classes.allClasses') || [];
+    let classes = _.get(this.props, 'privates.allPrivates') || [];
     classes = _.map(classes, (classItem) => {
       classItem.date = `${moment(classItem.date).format('MM/DD/YYYY')}`;
       classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
@@ -83,8 +83,8 @@ class Classes extends React.Component {
   }
 }
 
-export default branch(Classes, {
+export default branch(Privates, {
   facets: {
-    classes: 'Classes'
+    privates: 'Privates'
   }
 });

@@ -34,12 +34,12 @@ const AddClass = React.createClass({
                 </Row>
                 <Row>
                   <InputField className="col-xs-12 col-sm-4 " type="text" name="capactiy" title="Class Capacity"  />
-                  <InputField className="col-xs-12 col-sm-3 "  type="checkbox" name="Private" title="Private Class?"  />
                   <SelectField className="col-xs-12 col-sm-5 "  name="Instructor" title="Instructor" options={this.getInstructors()} />
                 </Row>
                 <Row>
                   <Col xs={12}>
                     <Button bsStyle="primary" type="submit" value="Submit" bsSize="large" disabled={!this.state.canSubmit}>Submit</Button>
+
                   </Col>
                 </Row>
               </Formsy.Form>
@@ -74,16 +74,18 @@ const AddClass = React.createClass({
       ]
     };
   },
-  submitClass(data) {
-    var today = new moment;
-    var classDate = new moment(data.date);
-    // var validDate = ((today > classDate) ? false : true);
+  async submitClass(data) {
     var validDate = true;
     if (validDate) {
-      console.log(data);
-      addClass(data);
+      // do not remove the manipulation
+      data.date = moment(data.date).set('hour', data.time.start.split(':')[0]).set('minute', data.time.start.split(':')[1]).format();
+      data.private = false;
+      const response = await addClass(data);
+      if (response.name) {
+        console.log('success')
+      }
     } else {
-      console.log('todo');
+
     }
 
   },

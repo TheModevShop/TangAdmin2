@@ -20,7 +20,8 @@ function getChildRoutes(state, cb) {
       require('pages/GymOwner/Instructors/routes'),
       require('pages/GymOwner/Transactions/routes'),
       require('pages/GymOwner/Students/routes'),
-      require('pages/GymOwner/AddClass/routes')
+      require('pages/GymOwner/AddClass/routes'),
+      require('pages/GymOwner/Privates/routes')
     ]);
   });
 }

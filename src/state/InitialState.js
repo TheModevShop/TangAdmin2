@@ -24,8 +24,13 @@ export default function getInitialState() {
           awaitingSave: false,
           serverResponse: {}
         },
-        AddClass: null,
-        ClassList: null
+        AddClass: {
+          awaitingSave: false,
+          error: false,
+          success: true,
+        },
+        ClassList: null,
+        PrivatesList: null
       },
       user: {
         details: {},
