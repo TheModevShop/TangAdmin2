@@ -75,12 +75,14 @@ const AddClass = React.createClass({
     };
   },
   async submitClass(data) {
-    var validDate = true;
+    var today = new moment;
+    var classDate = new moment(data.date);
+    var validDate = ((today > classDate) ? false : true);
     if (validDate) {
-      // do not remove the manipulation
       data.date = moment(data.date).set('hour', data.time.start.split(':')[0]).set('minute', data.time.start.split(':')[1]).format();
       data.private = false;
       data.distinctDate = moment(data.date).format('YYYY-MM-DD')
+      data = JSON.stringify(data);
       const response = await addClass(data);
       if (response.name) {
         console.log('success')

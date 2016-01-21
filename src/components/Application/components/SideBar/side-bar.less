@@ -1,53 +1,37 @@
 .nav-bar {
-  top: 0px;
+  top: 100px;
   bottom:0;
   position: fixed;
   left: 0;
   width: @appNavWidth;
-  background-color: @charcoal;
+  background-color: #F2F2F2;
   height: 100%;
-  .current-user {
-    height: @appHeaderHeight;
-    width: 100%;
-    background-color: @salmon;
-    overflow: hidden;
-    padding: 10px 20px;
-    .img {
-      float: left;
-      width: 40px;
-      height: 40px;
-      border-radius: 100%;
-      background-color: #000;
-      margin-right: 10px;
-      background-size: cover;
-    }
-    .title-group {
-      float: left;
-    }
-    .name {
-      color: #fff;
-      width: 100%;
-    }
-  }
   ul {
-    padding: 0;
-    margin-top: 15px;
+    margin-top: 30px;
     li {
+      margin: 5px 0;
+      padding: 15px 30px;
+      &:first-child {
+        margin-top: 0;
+      }
       a {
-        color: @silver;
-        padding: 15px @containerPadding;
+        font-family: 'default_regular';
+        color: #4D4D4D;
+        padding: 12px 0 12px 55px;
         display: block;
         height: 100%;
         width: 100%;
         text-decoration: none;
         cursor: pointer;
+        font-size: 1.2em;
       }
-      &:hover {
-        background-color: @charcoalTwenty;
-        a {
-          color: #fff;
-          text-decoration: none;
-        }
+      &:before {
+        content: '';
+        width: 40px;
+        height: 40px;
+        display: inline-block;
+        background-color: #ddd;
+        position: absolute;
       }
     }
   }

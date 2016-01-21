@@ -1,0 +1,95 @@
+.table-wrapper {
+	.table-header {
+		padding: 0 0 30px;
+		a.btn {
+			background-color: #999;
+			padding: 6px 30px;
+			color: #fff;
+			font-family: "default_light";
+			font-size: 1.1em;
+			float: right;
+			&:hover {
+				background-color: #777;
+			}
+		}
+	}
+	.table-body {
+		label {
+			margin-right: 10px;
+			font-family: "default_regular";
+		}
+		input[type="search"],
+		select {
+			color: #444;
+			height: 30px;
+			padding: 0 12px;
+			border-width: 2px;
+			letter-spacing: .5px;
+			border-radius: 0;
+			background-color: #fff;
+			border: 1px solid #ccc;
+			box-shadow: none;
+			outline: none;
+		}
+		.select-box {
+			float: left;
+		}
+		.search-box {
+			float: right;
+		}
+		table {
+			margin-top: 20px;
+			border: 1px solid #E6E6E6;
+			border-radius: 5px;
+			border-collapse: initial;
+			font-family: "default_regular";
+			th,
+			td {
+				border: none;
+				font-size: 1em;
+				padding: 20px;
+				border-bottom: 1px solid #E6E6E6;
+				vertical-align: middle;
+			}
+			.btn {
+				background-color: #E6E6E6;
+				padding: 6px 20px;
+				color: #333;
+				font-family: "default_light";
+				font-size: 1.1em;
+				text-align: right;
+				&:hover {
+					background-color: #d6d6d6;
+				}
+			}
+		}
+		.pagination-container {
+			text-align: center;
+			.pagination {
+			    overflow: auto;
+			    margin: 0;
+			    > .active > a, 
+			    > .active > a:focus, 
+			    > .active > a:hover, 
+			    > .active > span, 
+			    > .active > span:focus, 
+			    > .active > span:hover {
+			        z-index: 2;
+			        color: #333;
+			        background-color: #E6E6E6;
+			        border-color: #E6E6E6;
+			        cursor: default;
+			    }
+			}
+		}
+	}
+	.no-results {
+		display: block;
+		margin: 0 auto;
+		text-align: center;
+		padding: 80px 0;
+		font-family: "default_italic";
+		color: #666;
+		font-size: 1.2em;
+	}
+}

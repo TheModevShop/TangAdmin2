@@ -2,6 +2,7 @@ import React from 'react';
 import {root} from 'baobab-react/higher-order';
 import tree from 'state/StateTree';
 import SideBar from './components/SideBar';
+import Header from './components/Header';
 import Footer from './components/Footer';
 import _ from 'lodash';
 import './app.less';
@@ -14,8 +15,12 @@ class App extends React.Component {
       }
       return accum;
     }, '');
-    return (
+    return (      
       <div className={classNames.trim()+'-wrapper ' + 'main-container'}>
+      <div className="app-header">
+        <Header />
+      </div>
+
         {
           classNames.trim() !== 'login' ? 
           <SideBar /> : null

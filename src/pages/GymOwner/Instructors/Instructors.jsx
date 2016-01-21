@@ -4,19 +4,23 @@ import {DataTable} from 'react-data-components';
 import {Row, Col, Grid, Panel} from 'react-bootstrap';
 import {Link} from 'react-router';
 
-const renderName = (val, row) => {
-  return <Link to={`/instructors/${row._id}`}>{row.name.first} {row.name.last}</Link>;
+const renderBtn = (val, row) => {
+  return <Link className='btn' to={`/instructors/${row._id}`}>Edit</Link>;
 }
   
 const columns = [
   { 
     title: 'Name', 
-    prop: 'name', 
-    render: renderName
+    prop: 'name'
   },
   { 
     title: 'Email', 
     prop: 'email' 
+  },
+  {
+    title: '',
+    prop: null,
+    render: renderBtn
   }
 ];
 
@@ -30,10 +34,13 @@ class Instructors extends React.Component {
     const instructors = _.get(this.props, 'instructors.allInstructors') || [];
 
     return (
-      <div className="instructors-table-wrapper panel panel-primary">
-        <div className="row panel-heading">
-          <Col xs={12}>
+      <div className="table-wrapper">
+        <div className="row table-header">
+          <Col xs={12} sm={6}>
             <h1>Instructors</h1>
+          </Col>
+          <Col xs={12} sm={6}>
+            <Link className="btn" to={`/add-class`}>Invite Instructor</Link>
           </Col>
         </div>
         {
@@ -45,8 +52,9 @@ class Instructors extends React.Component {
             initialPageLength={15}
             initialSortBy={{ prop: 'name', order: 'descending' }}
             pageLengthOptions={[ 15, 20, 50 ]}
+            className="table-body"
           /> : 
-          <div>No Instructors Yet</div>
+          <div className="no-results">No Instructors Yet</div>
         }
        </div>
     );

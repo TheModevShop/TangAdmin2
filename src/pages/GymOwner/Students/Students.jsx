@@ -5,19 +5,18 @@ import {Row, Col, Grid, Panel} from 'react-bootstrap';
 import {Link} from 'react-router';
 import {setAsInstructor} from 'actions/StudentActions';
 
-const renderName = (val, row) => {
-  return <Link to={`/student/${row._id}`}>{row.name.first} {row.name.last}</Link>;
+const renderBtn = (val, row) => {
+  return <Link className='btn' to={`/student/${row._id}`}>Edit</Link>;
 }
 
 const renderSetAsInstructor = (val, row) => {
-  return <div onClick={setAsInstructor.bind(this, row._id)}>Make Instructor</div>;
+  return <div className='btn' onClick={setAsInstructor.bind(this, row._id)}>Make Instructor</div>;
 }
   
 const columns = [
   { 
     title: 'Name', 
-    prop: 'name', 
-    render: renderName
+    prop: 'name'
   },
   { 
     title: 'Email', 
@@ -26,6 +25,11 @@ const columns = [
   { 
     title: 'Set As Instructor', 
     render: renderSetAsInstructor
+  },
+  {
+    title: '',
+    prop: null,
+    render: renderBtn
   }
 ];
 
@@ -39,10 +43,13 @@ class Students extends React.Component {
     const students = _.get(this.props, 'students.allStudents') || [];
 
     return (
-      <div className="students-table-wrapper panel panel-primary">
-        <div className="row panel-heading">
-          <Col xs={12}>
+      <div className="table-wrapper">
+        <div className="row table-header">
+          <Col xs={12} sm={6}>
             <h1>Students</h1>
+          </Col>
+          <Col xs={12} sm={6}>
+            <Link className="btn" to={`/add-student`}>Add Student</Link>
           </Col>
         </div>
         {
@@ -54,8 +61,9 @@ class Students extends React.Component {
             initialPageLength={15}
             initialSortBy={{ prop: 'name', order: 'descending' }}
             pageLengthOptions={[ 15, 20, 50 ]}
+            className="table-body"
           /> : 
-          <div>No Students Yet</div>
+          <div className="no-results">No Students Yet</div>
         }
        </div>
     );

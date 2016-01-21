@@ -1,21 +1,20 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {DataTable} from 'react-data-components';
-import {Row, Col, Grid, Panel} from 'react-bootstrap';
+import {Row, Col, Grid, Panel, Button} from 'react-bootstrap';
 import {Link} from 'react-router';
 import "./gyms.less";
 import _ from 'lodash';
 
 
-const renderName = (val, row) => {
-  return <Link to={`/gyms/${row._id}`}>{row.name}</Link>;
+const renderBtn = (val, row) => {
+  return <Link className='btn' to={`/gyms/${row._id}`}>Edit</Link>;
 }
 
 const columns = [
   { 
     title: 'Name', 
-    prop: 'name', 
-    render: renderName
+    prop: 'name'
   },
   { 
     title: 'Street Address', 
@@ -28,6 +27,11 @@ const columns = [
   { 
     title: 'State', 
     prop: 'state' 
+  },
+  {
+    title: '',
+    prop: null,
+    render: renderBtn
   }
 ];
 
@@ -40,10 +44,13 @@ class Gyms extends React.Component {
   render() {
     const gyms = this.formatData();
     return (
-      <div className="gyms-table-wrapper panel panel-primary">
-        <div className="row panel-heading">
-          <Col xs={12}>
+      <div className="table-wrapper">
+        <div className="row table-header">
+          <Col xs={12} sm={6}>
             <h1>Gyms</h1>
+          </Col>
+          <Col xs={12} sm={6}>
+            <Link className="btn" to={`/add-gym`}>Add Gym</Link>
           </Col>
         </div>
         {
@@ -55,7 +62,9 @@ class Gyms extends React.Component {
             initialPageLength={15}
             initialSortBy={{ prop: 'name', order: 'descending' }}
             pageLengthOptions={[ 15, 20, 50 ]}
-          /> : null
+            className="table-body"
+          /> :
+          <div className="no-results">No Gyms Yet</div>
         }
        </div>
     );

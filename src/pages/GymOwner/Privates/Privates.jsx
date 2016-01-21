@@ -7,15 +7,14 @@ import {Link} from 'react-router';
 import "./privates.less";
 import _ from 'lodash';
 
-const renderName = (val, row) => {
-  return <Link to={`/privates/${row._id}`}>{row.name}</Link>;
+const renderBtn = (val, row) => {
+  return <Link className='btn' to={`/privates/${row._id}`}>Edit</Link>;
 }
 
 const columns = [
   { 
     title: 'Name', 
-    prop: 'name', 
-    render: renderName
+    prop: 'name'
   },
   { 
     title: 'Date', 
@@ -36,6 +35,11 @@ const columns = [
   {
     title: 'Enrolled',
     prop: 'enrolled'
+  },
+  {
+    title: '',
+    prop: null,
+    render: renderBtn
   }
 ];
 
@@ -48,12 +52,15 @@ class Privates extends React.Component {
   render() {
     const classes = this.formatData();
     return (
-      <div className="classes-table-wrapper panel panel-primary">
-        <div className="row panel-heading">
-          <Col xs={12}>
-            <h1>Privates</h1>
-          </Col>
-        </div>
+      <div className="table-wrapper">
+      <div className="row table-header">
+        <Col xs={12} sm={6}>
+          <h1>Private Classes</h1>
+        </Col>
+        <Col xs={12} sm={6}>
+          <Link className="btn" to={`/add-class`}>Add Private Class</Link>
+        </Col>
+      </div>
         {
           classes.length ?
           <DataTable
@@ -63,7 +70,9 @@ class Privates extends React.Component {
             initialPageLength={15}
             initialSortBy={{ prop: 'name', order: 'descending' }}
             pageLengthOptions={[ 15, 20, 50 ]}
-          /> : null
+            className="table-body"
+          /> : 
+          <div className="no-results">No Private Classes Yet</div>
         }
        </div>
     );

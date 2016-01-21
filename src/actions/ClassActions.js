@@ -17,7 +17,7 @@ export async function addClass(data) {
   let post;
   AddClass.set(['awaitingSave'], true);
   try {
-   post = await postClass(_.get(myGym.get(), 'gymDetails._id'), createClass(data));
+    post = await postClass(_.get(myGym.get(), 'gymDetails._id'), data);
     ClassList.set('stale', true);
     AddClass.set(['error'], false);
   } catch (err) {
@@ -26,8 +26,4 @@ export async function addClass(data) {
   AddClass.set(['awaitingSave'], false);
   tree.commit();
   return post.body;
-}
-
-function createClass(data) {
-  return JSON.stringify(data);
 }

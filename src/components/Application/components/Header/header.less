@@ -1,0 +1,41 @@
+.app-header {
+	top: 0;
+	position: absolute;
+	left: 0;
+	width: 100%;
+	background-color: #333;
+	height: 100px;
+	z-index: 1;
+	.current-user {
+	  overflow: hidden;
+	  padding: 25px 20px;
+	  float: right;
+	  height: 100px;
+	  .title-group,
+	  .img {
+	  	display: inline-block;
+	  	vertical-align: middle;
+	  }
+	  .img {
+	    width: 50px;
+	    height: 50px;
+	    border-radius: 100%;
+	    background-color: #000;
+	    margin-left: 10px;
+	    background-size: cover;
+	  }
+	  .title-group {
+	  	text-align: right;
+	  	.name {
+	  	  color: #fff;
+	  	  font-size: 1.2em;
+	  	  margin-bottom: 3px;
+	  	}
+	  	.gym {
+	  		color: #efefef;
+	  		font-size: 0.9em;
+	  	}
+	  }
+	  
+	}
+}
