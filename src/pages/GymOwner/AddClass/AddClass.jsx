@@ -53,8 +53,14 @@ const AddClass = React.createClass({
     return { canSubmit: false };
   },
   getInstructors() {
+    console.log
     return {
-      instructors: _.get(this.props.instructors, 'allInstructors', [])
+      instructors: _.map(_.get(this.props.instructors, 'allInstructors', []), (session) => {
+        return {
+          name: `${session.name.first} ${session.name.last}`,
+          id: session._id
+        }
+      })
     };
   },
   async submitClass(data) {
