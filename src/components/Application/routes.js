@@ -1,6 +1,7 @@
 import React from 'react';
 import {Route} from 'react-router';
 import {checkSession} from 'actions/authenticationActions';
+import {getRoles} from 'actions/RolesActions';
 
 function getComponent(location, cb) {
   require.ensure([], (require) => {
@@ -8,7 +9,9 @@ function getComponent(location, cb) {
   });
 }
 
-function getChildRoutes(state, cb) {
+async function getChildRoutes(state, cb) {
+  await checkSession();
+  await getRoles();
   require.ensure([], (require) => {
     cb(null, [
       require('pages/Login/routes'),
@@ -26,7 +29,7 @@ function getChildRoutes(state, cb) {
   });
 }
 
-function onEnter(nextState, replaceState, callback) {
+async function onEnter(nextState, replaceState, callback) {
   callback();
 }
 

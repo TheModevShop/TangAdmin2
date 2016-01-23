@@ -54,24 +54,7 @@ const AddClass = React.createClass({
   },
   getInstructors() {
     return {
-      instructors :[
-        {
-          name: "Jon Hutchison",
-          id: 0
-        },
-        {
-          name: "Jon Hutchison",
-          id: 1
-        },
-        {
-          name: "Jon Hutchison",
-          id: 2
-        },
-        {
-          name: "Jon Hutchison",
-          id: 3
-        }
-      ]
+      instructors: _.get(this.props.instructors, 'allInstructors', [])
     };
   },
   async submitClass(data) {
@@ -102,6 +85,9 @@ const AddClass = React.createClass({
 export default branch(AddClass, {
   cursors: {
     view: ['views', 'AddClass']
+  },
+  facets: {
+    instructors: 'Instructors'
   }
 });
 
