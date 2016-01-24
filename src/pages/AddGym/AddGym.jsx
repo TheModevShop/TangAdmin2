@@ -9,7 +9,7 @@ import HoursComponent from './components/hours';
 import PhotosComponent from './components/photos';
 import './add-gym.less';
 
-
+const dataObj = {name: null, description: null, address: {street: null, city: null, state: null, zipcode: null}, contact:{email: null, phone: null, website: null}, privateSessionPrice: null, cancellationPolicy: {percent: null, time: null}, hours: {mon_open: null, mon_close: null, tue_open: null, tue_close: null, wed_open: null, wed_close: null, thu_open: null, thu_close: null, fri_open: null, fir_close: null, sat_open: null, sat_close: null, sun_open: null, sun_close: null}};
 
 class AddGym extends React.Component {
   constructor(...args) {
@@ -17,10 +17,10 @@ class AddGym extends React.Component {
     this.setTab = this.setTab.bind(this);
     this.disableButton = this.disableButton.bind(this);
     this.enableButton = this.enableButton.bind(this);
+    this.formData = this.gymData ? this.gymData : dataObj;
     this.state = {
       activeTab: 'overview',
-      canSubmit: false,
-      files: []
+      canSubmit: false
     }
   }
 
@@ -34,17 +34,17 @@ class AddGym extends React.Component {
             <div onClick={this.setTab.bind(this, 'photos')} className="tab tab-3 photos-tab">Photos</div>
           </Col>
         </div>
-        <Formsy.Form onValidSubmit={this.getGeoPoint} onValid={this.enableButton} onInvalid={this.disableButton} className="row">
+        <Formsy.Form onValidSubmit={this.getGeoPoint.bind(this)} onValid={this.enableButton} onInvalid={this.disableButton} className="row">
             <Col xs={12}>
               {
                 this.state.activeTab === 'overview' ?
-                <OverviewComponent /> : 
+                <OverviewComponent data={this.formData}/> : 
                 this.state.activeTab === 'hours' ?
-                <HoursComponent /> :
+                <HoursComponent data={this.formData}/> :
                 this.state.activeTab === 'photos' ?
-                <PhotosComponent /> : null
+                <PhotosComponent data={this.formData}/> : null
               }
-              <Button type="submit" value="Submit" disabled={!this.state.canSubmit}>Update</Button>
+              <Button type="submit" value="Submit" disabled={!this.state.canSubmit}>Submit</Button>
             </Col>
         </Formsy.Form>
       </Grid>
@@ -56,22 +56,42 @@ class AddGym extends React.Component {
   }
 
   async getGeoPoint(data) {
-    try {
-      const location = await getGymGeoPoints(data.address.street + ' ' +  data.address.city + ', ' +  data.address.state + ' ' +  data.address.zipcode);
-      data.Location = [location.lng, location.lat];
+    if (this.state.activeTab === 'overview') {
+      try {
+        const location = await getGymGeoPoints(data.address.street + ' ' +  data.address.city + ', ' +  data.address.state + ' ' +  data.address.zipcode);
+        data.Location = [location.lng, location.lat];
+        this.submitGym(data);
+      } catch (err) {
+        console.log(err)
+      }
+    } else {
       this.submitGym(data);
-    } catch (err) {
-      console.log(err)
     }
+    
   }
 
   submitGym(data) {
-    data.privateSessionPrice = Number(data.privateSessionPrice);
-    data.cancellationPolicy.percent = Number(data.cancellationPolicy.percent);
-    data.cancellationPolicy.time = Number(data.cancellationPolicy.time);
-    const gymData = JSON.stringify(data);
-    console.log(gymData);
-    addGym(gymData);
+    if (this.state.activeTab === 'overview') {
+        this.formData.name = data.name;
+        this.formData.description = data.description;
+        this.formData.address.street = data.address.street;
+        this.formData.address.city = data.address.city;
+        this.formData.address.state = data.address.state;
+        this.formData.address.zipcode = data.address.zipcode;
+        this.formData.contact.phone = data.contact.phone;
+        this.formData.contact.email = data.contact.email;
+        this.formData.contact.website = data.contact.website;
+        this.formData.privateSessionPrice = Number(data.privateSessionPrice);
+        this.formData.cancellationPolicy.percent = Number(data.cancellationPolicy.percent);
+        this.formData.cancellationPolicy.time = Number(data.cancellationPolicy.time);
+        this.setState({activeTab: 'hours'});
+    } else if (this.state.activeTab === 'hours') {
+      this.formData.hours = data.hours;
+      this.setState({activeTab: 'photos'});
+    } else if (this.state.activeTab === 'photos') {
+      const gymData = JSON.stringify(this.formData);
+      addGym(gymData);
+    }
   }
 
   enableButton() {

@@ -1,5 +1,6 @@
 form {
-	button.btn.btn-default {
+	button.btn.btn-default,
+	.btn {
 		padding: 12px 55px;
 		letter-spacing: 1px;
 		margin-top: 20px;
@@ -11,8 +12,12 @@ form {
 		&.disabled,
 		&[disabled] {
 			cursor: pointer;
-		    opacity: 1;
-		    filter: alpha(opacity=100);
+		    opacity: .8;
+		    filter: alpha(opacity=80);
+		    background-color: #666;
+		    &:hover {
+		    	background-color: #666;
+		    }
 		}
 		&:hover {
 			background-color: @salmonDark;
