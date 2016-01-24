@@ -10,13 +10,13 @@ const userCursor = tree.select(['user']);
 const userDetailsCurosr = tree.select(['user', 'details']);
 
 userDetailsCurosr.on('update', async (value) => {
-  const location = _.get(value, 'data.data.gyms[0]');
-  const locationId = _.get(location, 'gym');
-  if (locationId) {
-    await getMyGym(locationId);
-    userCursor.set('role', location.role.name);
-    tree.commit();
-  }
+  // const location = _.get(value, 'data.data.gyms[0]');
+  // const locationId = _.get(location, 'gym');
+  // if (locationId) {
+  //   await getMyGym(locationId);
+  //   userCursor.set('role', location.role.name);
+  //   tree.commit();
+  // }
 });
 
 export async function editMe(data) {
@@ -29,17 +29,31 @@ export async function editMe(data) {
 }
 
 export async function getMe() {
-  const user = await getUser();
-  if (user.body._id) {
-    userCursor.set(['details'], user.body);
-    tree.commit();
-    return user.body;
-  } else {
-    userCursor.set(['details'], null);
-    teardownSession();
+  try {
+    const user = await getUser();
+    const location = _.get(user, 'body.gyms[0]');
+    const locationId = _.get(location, 'gym');
+    await getMyGym(locationId);
+    await getRoles();
+    if (locationId) {
+      await getMyGym(locationId);
+      userCursor.set('role', location.role.name);
+      tree.commit();
+    }
+
+    if (user.body._id) {
+      userCursor.set(['details'], user.body);
+      tree.commit();
+      return user.body;
+    } else {
+      userCursor.set(['details'], null);
+      teardownSession();
+      history.pushState(null, '/login');
+    }
+    return user;
+  } catch(err) {
     history.pushState(null, '/login');
   }
-  return user;
 }
 
 export async function setDefaultLocation(data) {

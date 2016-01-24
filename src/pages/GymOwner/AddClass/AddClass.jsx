@@ -53,35 +53,23 @@ const AddClass = React.createClass({
     return { canSubmit: false };
   },
   getInstructors() {
+    console.log
     return {
-      instructors :[
-        {
-          name: "Jon Hutchison",
-          id: 0
-        },
-        {
-          name: "Jon Hutchison",
-          id: 1
-        },
-        {
-          name: "Jon Hutchison",
-          id: 2
-        },
-        {
-          name: "Jon Hutchison",
-          id: 3
+      instructors: _.map(_.get(this.props.instructors, 'allInstructors', []), (session) => {
+        return {
+          name: `${session.name.first} ${session.name.last}`,
+          id: session._id
         }
-      ]
+      })
     };
   },
   async submitClass(data) {
-    var today = new moment;
-    var classDate = new moment(data.date);
-    var validDate = ((today > classDate) ? false : true);
+    const classTime = moment(data.date).set('hour', data.time.start.split(':')[0]).set('minute', data.time.start.split(':')[1]).format()
+    const validDate = moment().isBefore(moment(classTime))
     if (validDate) {
-      data.date = moment(data.date).set('hour', data.time.start.split(':')[0]).set('minute', data.time.start.split(':')[1]).format();
+      data.date = moment(data.date);
+      data.dateAndTime = moment(data.date);
       data.private = false;
-      data.distinctDate = moment(data.date).format('YYYY-MM-DD')
       data = JSON.stringify(data);
       const response = await addClass(data);
       if (response.name) {
@@ -103,6 +91,9 @@ const AddClass = React.createClass({
 export default branch(AddClass, {
   cursors: {
     view: ['views', 'AddClass']
+  },
+  facets: {
+    instructors: 'Instructors'
   }
 });
 

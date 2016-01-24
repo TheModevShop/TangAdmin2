@@ -26,7 +26,7 @@ function getChildRoutes(state, cb) {
   });
 }
 
-function onEnter(nextState, replaceState, callback) {
+async function onEnter(nextState, replaceState, callback) {
   callback();
 }
 

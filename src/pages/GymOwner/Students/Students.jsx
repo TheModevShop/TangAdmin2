@@ -12,11 +12,15 @@ const renderBtn = (val, row) => {
 const renderSetAsInstructor = (val, row) => {
   return <div className='btn' onClick={setAsInstructor.bind(this, row._id)}>Make Instructor</div>;
 }
+
+const renderName = (val, row) => {
+  return <div>{row.name.first} {row.name.last}</div>;
+}
   
 const columns = [
   { 
     title: 'Name', 
-    prop: 'name'
+    render: renderName
   },
   { 
     title: 'Email', 

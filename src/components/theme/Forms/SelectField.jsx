@@ -12,7 +12,7 @@ const SelectField = React.createClass({
     const errorMessage = this.getErrorMessage();
     const optionsList = _.map(this.props.options.instructors, (option) => {
       return (
-        <option key={option.id} value={option.name}>
+        <option key={option.id} value={option.id}>
           {option.name}
         </option>
       );

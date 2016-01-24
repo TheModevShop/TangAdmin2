@@ -7,11 +7,15 @@ import {Link} from 'react-router';
 const renderBtn = (val, row) => {
   return <Link className='btn' to={`/instructors/${row._id}`}>Edit</Link>;
 }
+
+const renderName = (val, row) => {
+  return <div>{row.name.first} {row.name.last}</div>;
+}
   
 const columns = [
   { 
     title: 'Name', 
-    prop: 'name'
+    render: renderName
   },
   { 
     title: 'Email', 
