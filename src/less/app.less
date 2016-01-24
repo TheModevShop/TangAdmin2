@@ -6,6 +6,8 @@
 @import './fonts.less';
 @import './text.less';
 @import './color.less';
+@import './forms.less';
+@import './tabs.less';
 @import './tables.less';
 
 html {
@@ -31,53 +33,4 @@ h3 {
 .navbar-brand img {
 	display: inline-block;
 	height: 26px;
-}
-
-.panel {
-	padding: 30px;
-	.panel-heading {
-		margin: -30px;
-		padding: 30px 15px;
-		&.row {
-			margin-bottom: 30px;
-		}
-	}
-	&.panel-info,
-	&.panel-primary {
-		border-color: @borderColor;
-		> .panel-heading {
-			background-color: @charcoal;
-			color: #fff;
-			border-color: @borderColor;
-		}
-		form button {
-			background-color: @salmon;
-			border-color: @salmonDark;
-			&:hover {
-				background-color: @salmonDark;
-			}
-			&:active {
-				background-color: @salmonDark;
-				&:focus {
-					background-color: @salmonDark;
-				}
-			}
-		}
-	}
-}
-.form-control {
-	border-radius: 0;
-	box-shadow: 0;
-}
-
-.form-control[type="checkbox"] {
-	width: auto;
-	height: auto;
-	margin-top: 10px;
-}
-
-label {
-	font-family: 'default_bold';
-	-webkit-font-smoothing: antialiased;
-	font-size: 1.1em;
 }

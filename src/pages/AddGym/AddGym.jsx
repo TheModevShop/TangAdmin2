@@ -26,14 +26,15 @@ class AddGym extends React.Component {
 
   render() {
     return (
-      <Grid fluid>
-        <div className="tabs">
-          <div onClick={this.setTab.bind(this, 'overview')} className="tab-1">Overview</div>
-          <div onClick={this.setTab.bind(this, 'hours')} className="tab-2">hours</div>
-          <div onClick={this.setTab.bind(this, 'photos')} className="tab-3">photos</div>
+      <Grid fluid className={this.state.activeTab}>
+        <div className="row tabs">
+          <Col xs={12}>
+            <div onClick={this.setTab.bind(this, 'overview')} className="tab tab-1 overview-tab">Overview</div>
+            <div onClick={this.setTab.bind(this, 'hours')} className="tab tab-2 hours-tab">Hours of Operation</div>
+            <div onClick={this.setTab.bind(this, 'photos')} className="tab tab-3 photos-tab">Photos</div>
+          </Col>
         </div>
-        <Formsy.Form onValidSubmit={this.getGeoPoint} onValid={this.enableButton} onInvalid={this.disableButton} className="col-xs-12">
-          <Row>
+        <Formsy.Form onValidSubmit={this.getGeoPoint} onValid={this.enableButton} onInvalid={this.disableButton} className="row">
             <Col xs={12}>
               {
                 this.state.activeTab === 'overview' ?
@@ -43,9 +44,8 @@ class AddGym extends React.Component {
                 this.state.activeTab === 'photos' ?
                 <PhotosComponent /> : null
               }
-              <Button bsStyle="primary" type="submit" value="Submit" bsSize="large" disabled={!this.state.canSubmit}>Submit</Button>
+              <Button type="submit" value="Submit" disabled={!this.state.canSubmit}>Update</Button>
             </Col>
-          </Row>
         </Formsy.Form>
       </Grid>
     );

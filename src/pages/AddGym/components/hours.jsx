@@ -8,93 +8,73 @@ import './../add-gym.less';
 var HoursComponent = React.createClass({
 	render() {
 		return (
-			<div>
-<Row className="hours">
-  <Col xs={6}>
-    <Row>
-      <Col className="hours-day-label" xs={12}>
-        Monday
-      </Col> 
-    </Row>
-    <Row>
-      <InputField className="col-xs-12 col-sm-6 " name="hours.mon_1_open" title="Open" type="time" />
-      <InputField className="col-xs-12 col-sm-6 " name="hours.mon_1_close" title="Close" type="time" />
-    </Row>
-  </Col>
-  <Col xs={6}>
-    <Row>
-      <Col className="hours-day-label" xs={12}>
-        Tuesday
-      </Col> 
-    </Row>
-    <Row>
-      <InputField className="col-xs-12 col-sm-6 " name="hours.tue_1_open" title="Open" type="time" />
-      <InputField className="col-xs-12 col-sm-6 " name="hours.tue_1_close" title="Close" type="time" />
-    </Row>
-  </Col>
-</Row>
-<Row className="hours">
-  <Col xs={6}>
-    <Row>
-      <Col className="hours-day-label" xs={12}>
-        Wednesday
-      </Col> 
-    </Row>
-    <Row>
-      <InputField className="col-xs-12 col-sm-6 " name="hours.wed_1_open" title="Open" type="time" />
-      <InputField className="col-xs-12 col-sm-6 " name="hours.wed_1_close" title="Close" type="time" />
-    </Row>
-  </Col>
-  <Col xs={6}>
-    <Row>
-      <Col className="hours-day-label" xs={12}>
-        Thursday
-      </Col> 
-    </Row>
-    <Row>
-      <InputField className="col-xs-12 col-sm-6 " name="hours.thu_1_open" title="Open" type="time" />
-      <InputField className="col-xs-12 col-sm-6 " name="hours.thu_1_close" title="Close" type="time" />
-    </Row>
-  </Col>
-</Row>
-<Row className="hours">
-  <Col xs={6}>
-    <Row>
-      <Col className="hours-day-label" xs={12}>
-        Friday
-      </Col> 
-    </Row>
-    <Row>
-      <InputField className="col-xs-12 col-sm-6 " name="hours.fri_1_open" title="Open" type="time" />
-      <InputField className="col-xs-12 col-sm-6 " name="hours.fri_1_close" title="Close" type="time" />
-    </Row>
-  </Col>
-  <Col xs={6}>
-    <Row>
-      <Col className="hours-day-label" xs={12}>
-        Saturday
-      </Col> 
-    </Row>
-    <Row>
-      <InputField className="col-xs-12 col-sm-6 " name="hours.sat_1_open" title="Open" type="time" />
-      <InputField className="col-xs-12 col-sm-6 " name="hours.sat_1_close" title="Close" type="time" />
-    </Row>
-  </Col>
- </Row>
-<Row className="hours">
-<Col xs={6}>
-  <Row>
-    <Col className="hours-day-label" xs={12}>
-      Sunday
-    </Col> 
-  </Row>
-  <Row>
-    <InputField className="col-xs-12 col-sm-6 " name="hours.sun_1_open" title="Open" type="time" />
-    <InputField className="col-xs-12 col-sm-6 " name="hours.sun_1_close" title="Close" type="time" />
-  </Row>
-</Col>
-</Row>
-	        </div>
+			<Row>
+				<Col xs={12}>
+					<Row>
+						<Col xs={12} className="day-container">
+							<Label>Monday</Label>
+							<InputField name="hours.mon_1_open" title="" type="time" />
+							<div className="seperator">–</div>
+							<InputField name="hours.mon_1_close" title="" type="time" />
+							<InputField name="mon_closed" type="checkbox" className="checkbox " title="Closed" />
+						</Col>
+					</Row>
+					<Row>
+						<Col xs={12} className="day-container">
+							<Label>Tuesday</Label>
+							<InputField name="hours.tue_1_open" title="" type="time" />
+							<div className="seperator">–</div>
+							<InputField name="hours.tue_1_close" title="" type="time" />
+							<InputField name="tue_closed" type="checkbox" className="checkbox " title="Closed" />
+						</Col>
+					</Row>
+					<Row>
+						<Col xs={12} className="day-container">
+							<Label>Wednesday</Label>
+							<InputField name="hours.wed_1_open" title="" type="time" />
+							<div className="seperator">–</div>
+							<InputField name="hours.wed_1_close" title="" type="time" />
+							<InputField name="wed_closed" type="checkbox" className="checkbox " title="Closed" />
+						</Col>
+					</Row>
+					<Row>
+						<Col xs={12} className="day-container">
+							<Label>Thursday</Label>
+							<InputField name="hours.thu_1_open" title="" type="time" />
+							<div className="seperator">–</div>
+							<InputField name="hours.thu_1_close" title="" type="time" />
+							<InputField name="thu_closed" type="checkbox" className="checkbox " title="Closed" />
+						</Col>
+					</Row>
+					<Row>
+						<Col xs={12} className="day-container">
+							<Label>Friday</Label>
+							<InputField name="hours.fri_1_open" title="" type="time" />
+							<div className="seperator">–</div>
+							<InputField name="hours.fri_1_close" title="" type="time" />
+							<InputField name="fri_closed" type="checkbox" className="checkbox " title="Closed" />
+						</Col>
+					</Row>
+					<Row>
+						<Col xs={12} className="day-container">
+							<Label>Saturday</Label>
+							<InputField name="hours.sat_1_open" title="" type="time" />
+							<div className="seperator">–</div>
+							<InputField name="hours.sat_1_close" title="" type="time" />
+							<InputField name="sat_closed" type="checkbox" className="checkbox " title="Closed" />
+						</Col>
+					</Row>
+					<Row>
+						<Col xs={12} className="day-container">
+							<Label>Sunday</Label>
+							<InputField name="hours.sun_1_open" title="" type="time" />
+							<div className="seperator">–</div>
+							<InputField name="hours.sun_1_close" title="" type="time" />
+							<InputField name="sun_closed" type="checkbox" className="checkbox " title="Closed" />
+						</Col>
+					</Row>
+				</Col>
+			</Row>
 		);
 	}
 });
