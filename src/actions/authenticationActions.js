@@ -3,10 +3,8 @@ import bluebird from 'bluebird';
 import history from 'appHistory';
 import {fetchToken} from 'api/authApi';
 import {getMe} from 'actions/userActions';
-import {getRoles} from 'actions/RolesActions';
 
 const authentication = tree.select(['authentication']);
-getRoles();
 
 export async function getAuthentication(data) {
   const {email, password} = data;
