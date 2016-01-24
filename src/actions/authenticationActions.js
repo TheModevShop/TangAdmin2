@@ -6,6 +6,7 @@ import {getMe} from 'actions/userActions';
 import {getRoles} from 'actions/RolesActions';
 
 const authentication = tree.select(['authentication']);
+getRoles();
 
 export async function getAuthentication(data) {
   const {email, password} = data;

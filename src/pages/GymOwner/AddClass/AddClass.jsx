@@ -64,11 +64,11 @@ const AddClass = React.createClass({
     };
   },
   async submitClass(data) {
-    var classTime = moment(data.date).set('hour', data.time.start.split(':')[0]).set('minute', data.time.start.split(':')[1]).format()
-    var validDate = moment().isBefore(moment(classTime))
-
+    const classTime = moment(data.date).set('hour', data.time.start.split(':')[0]).set('minute', data.time.start.split(':')[1]).format()
+    const validDate = moment().isBefore(moment(classTime))
     if (validDate) {
-      data.date = moment.utc(data.date);
+      data.date = moment(data.date);
+      data.dateAndTime = moment(data.date);
       data.private = false;
       data = JSON.stringify(data);
       const response = await addClass(data);
