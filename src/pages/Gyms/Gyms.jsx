@@ -45,7 +45,7 @@ class Gyms extends React.Component {
     const gyms = this.formatData();
     return (
       <div className="table-wrapper">
-        <div className="row table-header">
+        <div className="row header">
           <Col xs={12} sm={6}>
             <h1>Gyms</h1>
           </Col>

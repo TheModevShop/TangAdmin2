@@ -1,7 +1,9 @@
 import bluebird from 'bluebird';
 import xhr from 'utility/xhr';
+import tree from 'state/StateTree';
 import {BASE} from '../constants';
 
+const gym = tree;
 
 export function getMyGymApi(id) {
   return new bluebird((resolve, reject) => {

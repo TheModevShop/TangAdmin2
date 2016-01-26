@@ -1,6 +1,6 @@
 import React from 'react';
-import InputField from './../../../components/theme/Forms/InputField';
-import Textarea from './../../../components/theme/Forms/Textarea';
+import InputField from './../../../components/Application/components/Forms/InputField';
+import Textarea from './../../../components/Application/components/Forms/Textarea';
 import {Row, Label, FormGroup, Form, Col, Grid, Input, Button} from 'react-bootstrap';
 import {getGymGeoPoints} from 'actions/GoogleMapsActions';
 import './../add-gym.less';

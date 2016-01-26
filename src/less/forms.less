@@ -74,3 +74,26 @@ form {
 		}
 	}
 }
+
+.response-msg {
+	padding: 25px;
+	text-align: center;
+	font-family: 'default_regular';
+	color: #fff;
+	margin-top: 40px;
+	span, p {
+		display: inline-block;
+		font-size: 1.2em;
+		vertical-align: middle;
+	}
+	span {
+		margin-right: 10px;
+		font-size: 1.6em;
+	}
+	&.msg-success {
+		background-color: @salmon;
+	}
+	&.msg-error {
+		background-color: #666;
+	}
+}

@@ -4,6 +4,7 @@ import {branch} from 'baobab-react/higher-order';
 import {addGym} from 'actions/GymActions';
 import {getGymGeoPoints} from 'actions/GoogleMapsActions';
 import {Row, Col, Grid, Button} from 'react-bootstrap';
+import RspMsg from './../../components/Application/components/Forms/message';
 import OverviewComponent from './components/overview';
 import HoursComponent from './components/hours';
 import PhotosComponent from './components/photos';
@@ -47,6 +48,11 @@ class AddGym extends React.Component {
               <Button type="submit" value="Submit" disabled={!this.state.canSubmit}>Submit</Button>
             </Col>
         </Formsy.Form>
+        {
+          this.props.addGym.response ?
+            <RspMsg response={this.props.addGym.response} /> 
+          : null
+        }
       </Grid>
     );
   }

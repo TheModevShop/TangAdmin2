@@ -1,7 +1,5 @@
 import tree from 'state/StateTree';
 import _ from 'lodash';
-import moment from 'moment';
-
 import {postClass} from 'api/classesApi';
 const activeClass = tree.select(['views', 'ClassProfile']);
 const AddClass = tree.select(['views', 'AddClass']);
@@ -19,9 +17,9 @@ export async function addClass(data) {
   try {
     post = await postClass(_.get(myGym.get(), 'gymDetails._id'), data);
     ClassList.set('stale', true);
-    AddClass.set(['error'], false);
+    AddClass.set(['response'], {'success': true, 'message': 'Your class information has been successfully submitted!'});
   } catch (err) {
-    AddClass.set(['error'], err);
+    AddClass.set(['response'], {'success': false, 'message': 'There was an error submitting your information.'});
   }
   AddClass.set(['awaitingSave'], false);
   tree.commit();

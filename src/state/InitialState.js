@@ -5,8 +5,6 @@ req.keys().forEach((path) => {
   facets[fileName.replace('Facet.js', '')] = req(path)();
 });
 
-
-
 export default function getInitialState() {
   const sessionData = localStorage.getItem('sessionData');
   return {
@@ -19,7 +17,12 @@ export default function getInitialState() {
         },
         Instructors: null,
         GymStudents: null,
-        AddGym: {},
+        AddGym: {
+          awaitingSave: false,
+          error: false,
+          success: true,
+          response: null
+        },
         CreateAccount: {
           awaitingSave: false,
           serverResponse: {}
@@ -28,6 +31,7 @@ export default function getInitialState() {
           awaitingSave: false,
           error: false,
           success: true,
+          response: null
         },
         ClassList: null,
         PrivatesList: null

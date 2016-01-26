@@ -4,23 +4,23 @@ import {addClass} from 'actions/ClassActions';
 import moment from 'moment';
 import {Row, Col, Grid, Input, Button} from 'react-bootstrap';
 import formsy from 'formsy-react';
-import InputField from '../../../components/theme/Forms/InputField';
-import Textarea from '../../../components/theme/Forms/Textarea';
-import SelectField from '../../../components/theme/Forms/SelectField';
+import InputField from './../../../components/Application/components/Forms/InputField';
+import Textarea from './../../../components/Application/components//Forms/Textarea';
+import SelectField from '../../../components/Application/components/Forms/SelectField';
+import RspMsg from './../../../components/Application/components/Forms/message';
 import './add-class.less';
 
 const AddClass = React.createClass({
-
   render() {
     return (
       <Grid fluid>
+        <div className="row header">
+          <Col xs={12}>
+            <h1>Add Class</h1>
+          </Col>
+        </div>
         <Row>
-          <div className="panel panel-info col-xs-12 col-lg-10 col-xs-offset-0 col-lg-offset-1">
-            <div className="row panel-heading">
-              <Col xs={12}>
-                <h1>Add Class</h1>
-              </Col>
-            </div>
+          <div className="col-xs-12 col-lg-10 col-xs-offset-0 col-lg-offset-1">
             <Row>
               <Formsy.Form onValidSubmit={this.submitClass} onValid={this.enableButton} onInvalid={this.disableButton} className="col-xs-12">
                 <Row>
@@ -33,17 +33,21 @@ const AddClass = React.createClass({
                   <InputField className="col-xs-12 col-sm-3 " type="time" name="time.end" title="End Time" required />
                 </Row>
                 <Row>
-                  <InputField className="col-xs-12 col-sm-4 " type="text" name="capactiy" title="Class Capacity"  />
-                  <SelectField className="col-xs-12 col-sm-5 "  name="Instructor" title="Instructor" options={this.getInstructors()} />
+                  <InputField className="col-xs-12 col-sm-5 " type="text" name="capactiy" title="Class Capacity"  />
+                  <SelectField className="col-xs-12 col-sm-7 "  name="Instructor" title="Instructor" options={this.getInstructors()} />
                 </Row>
                 <Row>
                   <Col xs={12}>
-                    <Button bsStyle="primary" type="submit" value="Submit" bsSize="large" disabled={!this.state.canSubmit}>Submit</Button>
-
+                    <Button type="submit" value="Submit" disabled={!this.state.canSubmit}>Submit</Button>
                   </Col>
                 </Row>
               </Formsy.Form>
             </Row>
+            {
+              this.props.view.response ?
+                <RspMsg response={this.props.view.response} /> 
+              : null
+            }
           </div>
         </Row>
       </Grid>
@@ -72,11 +76,8 @@ const AddClass = React.createClass({
       data.private = false;
       data = JSON.stringify(data);
       const response = await addClass(data);
-      if (response.name) {
-        console.log('success')
-      }
     } else {
-
+      this.props.view.response = {'success': false, 'message': 'Invalid Date!'};
     }
 
   },
