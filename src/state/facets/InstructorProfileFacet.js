@@ -5,7 +5,7 @@ import {BASE} from 'constants';
 const loader = new RESTLoader({
   getResourceUrl: (gymId, instructorId) => {
     debugger;
-    return `${BASE}/gyms/${gymId}/instructors/${instructorId}`;
+    return `${BASE}/gyms/${gymId}/instructors/${instructorId}/profile`;
   },
   successTransformer: (data) => {
     return {

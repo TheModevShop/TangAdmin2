@@ -26,6 +26,7 @@
     "react-data-components": "^0.6.0",
     "react-dropzone": "^3.3.0",
     "react-dropzone-component": "^0.8.1",
+    "react-file-input": "^0.2.5",
     "react-google-maps": "^4.7.1",
     "react-select": "^0.9.1",
     "superagent": "^1.4.0"
