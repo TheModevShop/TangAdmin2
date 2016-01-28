@@ -7,12 +7,13 @@ const InputField = React.createClass({
     this.setValue(event.currentTarget[this.props.type === 'checkbox' ? 'checked' : 'value']);
   },
   render() {
-    const className = 'form-group ' + (this.props.className || ' ') + (this.showRequired() ? 'required ' : this.showError() ? 'error ' : null);
+    const className = 'form-group ' + (this.props.className || ' ') + (this.showRequired() ? 'required ' : this.showError() ? 'error ' : '');
     const errorMessage = this.getErrorMessage();
     return (
       <div className={className}>
         <label htmlFor={this.props.name}>{this.props.title}</label>
         <input
+          disabled={this.props.disabled}
           className="form-control"
           type={this.props.type}
           name={this.props.name}

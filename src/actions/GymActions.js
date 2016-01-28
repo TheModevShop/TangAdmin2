@@ -26,9 +26,16 @@ export async function getMyGym(id) {
 
 export async function addGym(data) {
   AddGym.set(['awaitingSave'], true);
+  const dataStr = JSON.stringify(data);
+
+  for(var prop in data) {
+     AddGym.set(['data'], prop);
+  }
+
   try {
-    const post = await postGym(data);
+    const post = await postGym(dataStr);
     GymList.set('stale', true); // this will cause to refetch
+    AddGym.set(['data'], {id: id})
     AddGym.set(['response'], {'success': true, 'message': 'Your gym information has been successfully submitted!'});
   } catch (err) {
     AddGym.set(['response'], {'success': false, 'message': 'There was an error submitting your information.'});

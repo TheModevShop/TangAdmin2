@@ -4,7 +4,7 @@ import formsy from 'formsy-react';
 const Textarea = React.createClass({
   mixins: [Formsy.Mixin],
   changeValue(event) {
-    this.setValue(event.currentTarget[this.props.type === 'checkbox' ? 'checked' : 'value']);
+    this.setValue(event.currentTarget['value']);
   },
   render() {
     const className = 'form-group ' + (this.props.className || ' ') + (this.showRequired() ? ' required' : this.showError() ? ' error' : null);

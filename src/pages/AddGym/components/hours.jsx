@@ -1,82 +1,51 @@
 import React from 'react';
-import InputField from './../../../components/Application/components/Forms/InputField';
-import Textarea from './../../../components/Application/components/Forms/Textarea';
-import {Row, Label, FormGroup, Form, Col, Grid, Input, Button} from 'react-bootstrap';
-import {getGymGeoPoints} from 'actions/GoogleMapsActions';
-import './../add-gym.less';
+import {Row, Col, Button} from 'react-bootstrap';
+import DayModule from './day';
+import _ from 'lodash';
 
-var HoursComponent = React.createClass({
+class HoursComponent extends React.Component {
+	constructor(...args) {
+		super(...args);
+		this.state = {
+		  canSubmit: false
+		}
+	}
+
 	render() {
+		const data = this.props.params.data.hours;
+		const days = { "days": [{"name": "Monday", "abbr": "mon", "open": data.mon_open, "close": data.mon_close}, {"name": "Tuesday", "abbr": "tue", "open": data.tue_open, "close": data.tue_close}, {"name": "Wednesday", "abbr": "wed", "open": data.wed_open, "close": data.wed_close}, {"name": "Thursday", "abbr": "thu", "open": data.thu_open, "close": data.thu_close}, {"name": "Friday", "abbr": "fri", "open": data.fri_open, "close": data.fri_close}, {"name": "Saturday", "abbr": "sat", "open": data.sat_open, "close": data.sat_close}, {"name": "Sunday", "abbr": "sun", "open": data.sun_open, "close": data.sun_close}]};
+		const daysList = _.map(days.days, (day) => {
+			      return (
+			        <DayModule params={day} key={day.abbr} />
+			      );
+			    });
+
 		return (
-			<Row>
-				<Col xs={12}>
+			<Formsy.Form onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.enableButton.bind(this)} className="row">
+			    <Col xs={12}>
 					<Row>
-						<Col xs={12} className="day-container">
-							<Label>Monday</Label>
-							<InputField name="hours.mon_1_open" title="" type="time" />
-							<div className="seperator">–</div>
-							<InputField name="hours.mon_1_close" title="" type="time" />
-							<InputField name="mon_closed" type="checkbox" className="checkbox " title="Closed" />
+						<Col xs={12}>
+							{daysList}
 						</Col>
 					</Row>
-					<Row>
-						<Col xs={12} className="day-container">
-							<Label>Tuesday</Label>
-							<InputField name="hours.tue_1_open" title="" type="time" />
-							<div className="seperator">–</div>
-							<InputField name="hours.tue_1_close" title="" type="time" />
-							<InputField name="tue_closed" type="checkbox" className="checkbox " title="Closed" />
-						</Col>
-					</Row>
-					<Row>
-						<Col xs={12} className="day-container">
-							<Label>Wednesday</Label>
-							<InputField name="hours.wed_1_open" title="" type="time" />
-							<div className="seperator">–</div>
-							<InputField name="hours.wed_1_close" title="" type="time" />
-							<InputField name="wed_closed" type="checkbox" className="checkbox " title="Closed" />
-						</Col>
-					</Row>
-					<Row>
-						<Col xs={12} className="day-container">
-							<Label>Thursday</Label>
-							<InputField name="hours.thu_1_open" title="" type="time" />
-							<div className="seperator">–</div>
-							<InputField name="hours.thu_1_close" title="" type="time" />
-							<InputField name="thu_closed" type="checkbox" className="checkbox " title="Closed" />
-						</Col>
-					</Row>
-					<Row>
-						<Col xs={12} className="day-container">
-							<Label>Friday</Label>
-							<InputField name="hours.fri_1_open" title="" type="time" />
-							<div className="seperator">–</div>
-							<InputField name="hours.fri_1_close" title="" type="time" />
-							<InputField name="fri_closed" type="checkbox" className="checkbox " title="Closed" />
-						</Col>
-					</Row>
-					<Row>
-						<Col xs={12} className="day-container">
-							<Label>Saturday</Label>
-							<InputField name="hours.sat_1_open" title="" type="time" />
-							<div className="seperator">–</div>
-							<InputField name="hours.sat_1_close" title="" type="time" />
-							<InputField name="sat_closed" type="checkbox" className="checkbox " title="Closed" />
-						</Col>
-					</Row>
-					<Row>
-						<Col xs={12} className="day-container">
-							<Label>Sunday</Label>
-							<InputField name="hours.sun_1_open" title="" type="time" />
-							<div className="seperator">–</div>
-							<InputField name="hours.sun_1_close" title="" type="time" />
-							<InputField name="sun_closed" type="checkbox" className="checkbox " title="Closed" />
-						</Col>
-					</Row>
-				</Col>
-			</Row>
+					<Button type="submit" value="Submit" disabled={!this.state.canSubmit}>Update</Button>
+			    </Col>
+			</Formsy.Form>
 		);
 	}
-});
+
+	submit(data) {
+		const updated = this.props.params.data.hours;
+		debugger;
+	}
+
+	enableButton() {
+		this.setState({ canSubmit: true });
+	}
+
+	disableButton() {
+		this.setState({ canSubmit: false });
+	}
+};
 
 export default HoursComponent;

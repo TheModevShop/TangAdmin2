@@ -10,7 +10,7 @@ const SelectField = React.createClass({
   render() {
     const className = 'form-group ' + (this.props.className || ' ') + (this.showRequired() ? 'required ' : this.showError() ? 'error ' : null);
     const errorMessage = this.getErrorMessage();
-    const optionsList = _.map(this.props.options.instructors, (option) => {
+    const optionsList = _.map(this.props.options.data, (option) => {
       return (
         <option key={option.id} value={option.id}>
           {option.name}

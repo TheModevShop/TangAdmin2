@@ -1,18 +1,20 @@
 .add-gym.pages {
+	.map {
+		margin-bottom: 20px;
+	}
 	.hours {
 		span.label {
 			width: 90px;
 			margin-right: 20px;
 			margin-bottom: 0;
 		}
-		.form-group.checkbox {
+		.checkbox {
 			margin: 0;
 			width: auto;
 			margin-left: 20px;
 			label,
 			input {
 				display: inline-block;
-				float: right;
 				margin: 0;
 				padding: 0;
 				text-align: left;
@@ -22,10 +24,18 @@
 			input {
 				margin-right: 10px;
 			}
+			input,
+			span {
+				vertical-align: middle;
+			}
 		}
 		.form-group {
-			width: 150px;
 			margin-bottom: 0;
+			input:not([type="checkbox"]) {
+				width: 150px;
+				margin-bottom: 0;
+
+			}
 		}
 		.day-container {
 			margin-bottom: 20px;
