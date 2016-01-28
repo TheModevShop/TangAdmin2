@@ -27,7 +27,6 @@ Formsy.addValidationRule('isMoreThan', function (values, value, otherField) {
 class Day extends React.Component {
 	constructor(...args) {
 		super(...args);
-		this.closed = this.closed.bind(this)
 		this.state = {closed: false};
 	}
 

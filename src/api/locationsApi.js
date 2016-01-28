@@ -28,6 +28,18 @@ export async function postGym(data) {
   });
 }
 
+export async function postGymUpdate(data, id) { 
+  console.log(data)
+  return new bluebird((resolve, reject) => {
+    xhr('PUT', `${BASE}/gyms/${id}`, {data: data}).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+      console.log('err')
+    });
+  });
+}
+
 // POST - Creates new Gym (Needs admin auth)
 
 // name - required

@@ -34,6 +34,14 @@ class LocationInfo extends React.Component {
             </Col>
           </Row>
           <Row>
+            <Col xs={12}>
+              <h2>Website</h2>
+              <div>
+                <span>{profile.contact.website}</span>
+              </div>
+            </Col>
+          </Row>
+          <Row>
             <LocationHours profile={profile}/>
           </Row>
         </Col>

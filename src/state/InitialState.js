@@ -19,7 +19,44 @@ export default function getInitialState() {
         GymStudents: null,
         AddGym: {
           awaitingSave: false,
-          data: {name: null, description: null, address: {street: null, city: null, state: null, zipcode: null}, contact: {email: null, phone: null, website: null}, hours:{mon_open: null, mon_close: null, tue_open: null, tue_close: null, wed_open: null, wed_close: null, thu_open: null, thu_close: null, fri_open: null, fri_close: null, sat_open: null, sat_close: null, sun_open: null, sun_close: null}, privateSessionPrice: null, cancellationPolicy: {percent: null, time: null}, location: []},
+          overview: {
+            name: null, 
+            description: null, 
+            address: {
+              street: null, 
+              city: null, 
+              state: null, 
+              zipcode: null
+            }, 
+            contact: {
+              email: null, 
+              phone: null, 
+              website: null
+            },
+            privateSessionPrice: null, 
+            cancellationPolicy: {
+              percent: null, 
+              time: null
+            },
+            location: []
+          },
+          hours:{
+            mon_open: null, 
+            mon_close: null, 
+            tue_open: null, 
+            tue_close: null, 
+            wed_open: null, 
+            wed_close: null, 
+            thu_open: null, 
+            thu_close: null, 
+            fri_open: null, 
+            fri_close: null, 
+            sat_open: null, 
+            sat_close: null, 
+            sun_open: null, 
+            sun_close: null
+          },
+          images: {},
           error: false,
           success: true,
           response: null

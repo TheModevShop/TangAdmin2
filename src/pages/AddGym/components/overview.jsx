@@ -2,24 +2,25 @@ import React from 'react';
 import InputField from './../../../components/Application/components/Forms/InputField';
 import Textarea from './../../../components/Application/components/Forms/Textarea';
 import SelectField from './../../../components/Application/components/Forms/SelectField';
-import {addGym} from 'actions/GymActions';
+import {addGym, updateGym} from 'actions/GymActions';
 import GoogleMap from 'components/GoogleMap';
 import {getGymGeoPoints} from 'actions/GoogleMapsActions';
 import {Row, Col, Button} from 'react-bootstrap';
+import tree from 'state/StateTree';
 
 class OverviewComponent extends React.Component {
 	constructor(...args) {
 		super(...args);
+		this.AddGym = tree.select(['views', 'AddGym']);
 		this.state = {
-		  canSubmit: false,
-		  location: [0,0]
+		  canSubmit: false
 		}
 	}
 
 	render() {
 		const data = this.props.params;
 		return (
-			<Formsy.Form ref="form" onValidSubmit={this.getGeoPoint.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.enableButton.bind(this)} className="row">
+			<Formsy.Form ref="form" onValidSubmit={this.getGeoPoint.bind(this, false)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} className="row">
 			    <Col xs={12}>
 					<Row>
 					  <InputField 
@@ -42,7 +43,8 @@ class OverviewComponent extends React.Component {
 					</Row>
 					<Row>
 						<Col xs={12} className="map">
-							
+							<GoogleMap marker={this.state.location} />
+							<Button onClick={this.getGeoPoint.bind(this, true)}>Get Geo Points</Button>
 						</Col>
 					</Row>
 					<Row>
@@ -167,19 +169,28 @@ class OverviewComponent extends React.Component {
 		};
 	}
 
-	async getGeoPoint(data) {
+	async getGeoPoint(btn, form) {
 	  try {
-		const location = await getGymGeoPoints(data.address.street + ' ' +  data.address.city + ', ' +  data.address.state + ' ' +  data.address.zipcode);
-		data.Location = [location.lng, location.lat];
-		this.state.location = data.location;
-		this.submit(data);
+	  	if (btn) {
+	  		this.refs.form.updateModel();
+	  		const data = this.refs.form.model;
+	  		let location = await getGymGeoPoints(data["address.street"] + ' ' +  data["address.city"] + ', ' +  data["address.state"] + ' ' +  data["address.zipcode"]);
+	  		this.setState({location: location});
+	  	} else {
+	  		let location = await getGymGeoPoints(form.address.street + ' ' +  form.address.city + ', ' +  form.address.state + ' ' +  form.address.zipcode);
+	  		form.location = [location.lng, location.lat];
+	  		this.AddGym.set(['overview'], form);
+	  		const gymId = this.AddGym.get(['id']);
+	  		form._id = gymId;
+	  		if (gymId) {
+	  			updateGym(form, gymId);
+	  		} else {
+	  			addGym(form);
+	  		}
+	  	}
 	  } catch (err) {
 	    console.log(err)
 	  }
-	}
-
-	async submit(data) {
-		addGym(data);
 	}
 
 	enableButton() {

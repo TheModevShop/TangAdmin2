@@ -20,6 +20,8 @@ class AddGym extends React.Component {
   }
 
   render() {
+    const profile = _.get(this.props, 'gymProfile.gymProfile') || {};
+    this.props.addGym.id = profile._id;
     return (
       <Grid fluid className={this.state.activeTab}>
         <div className="row header">
@@ -37,11 +39,11 @@ class AddGym extends React.Component {
 
         {
             this.state.activeTab === 'overview' ?
-                <OverviewComponent params={this.props.addGym.data}/> : 
+                <OverviewComponent params={profile ? profile : this.props.addGym.overview} /> : 
             this.state.activeTab === 'hours' ?
-                <HoursComponent params={this.props.addGym.data}/> :
+                <HoursComponent params={profile ? (profile.hours ? profile.hours : this.props.addGym.hours) : this.props.addGym.hours} /> :
             this.state.activeTab === 'photos' ?
-                <PhotosComponent data={this.props.addGym.data}/> : null
+                <PhotosComponent data={profile ? (profile.images ? profile.images : this.props.addGym.images) : this.props.addGym.images} /> : null
         }
 
         {
@@ -54,86 +56,17 @@ class AddGym extends React.Component {
   }
 
   setTab(tab) {
+    this.props.addGym.response = null;
     this.setState({activeTab: tab});
   }
 
-  
-
-    valid() {
-        if (this.state.activeTab === 'overview') {
-            this.refs.gymForm.updateModel();
-            let data = this.refs.gymForm.model;
-
-            this.formData.name = data.name;
-            this.formData.description = data.description;
-            this.formData.address.street = data.street;
-            this.formData.address.city = data.city;
-            this.formData.address.state = data.state;
-            this.formData.address.zipcode = data.zipcode;
-            this.formData.contact.phone = data.phone;
-            this.formData.contact.email = data.email;
-            this.formData.contact.website = data.website;
-            this.formData.privateSessionPrice = Number(data.privateSessionPrice);
-            this.formData.cancellationPolicy.percent = Number(data.percent);
-            this.formData.cancellationPolicy.time = Number(data.time);
-            this.formData.hours = this.formData.hours;
-
-            let count = 0;
-
-            for(var prop in data) {
-                if(!data[prop]) {
-                    ++count;
-                }
-            }
-
-            if (count === 0) {
-                this.setState({formComplete: {overview: true, hours: this.state.formComplete.hours}});
-            } else {
-                this.disableButton();
-                this.setState({formComplete: {overview: false, hours: this.state.formComplete.hours}});
-            }
-
-            
-        } else if (this.state.activeTab === 'hours') {
-            this.refs.gymForm.updateModel();
-            let data = this.refs.gymForm.model;
-            this.formData.hours = data;
-            let count = 0;
-
-            for(var prop in data) {
-                if(!data[prop]) {
-                    ++count;
-                }
-            }
-
-            if (count < 13 ) {
-                this.setState({formComplete: {hours: true, overview: this.state.formComplete.overview}});
-            } else {
-                this.disableButton();
-                this.setState({formComplete: {hours: false, overview: this.state.formComplete.overview}});
-            }
-        }
-
-        if (this.state.formComplete.hours && this.state.formComplete.overview) {
-            this.enableButton;
-        } 
-    }
-
-
-
-    invalid() {
-        this.disableButton();
-        if (this.state.activeTab === 'overview') {
-            this.setState({formComplete: {overview: false, hours: this.state.formComplete.hours}});
-        } else if (this.state.activeTab === 'hours') {
-            this.setState({formComplete: {hours: false, overview: this.state.formComplete.overview}});
-        }
-    }
- 
 }
 
 export default branch(AddGym, {
   cursors: {
     addGym: ['views', 'AddGym']
+  },
+  facets: {
+    gymProfile: 'GymProfile'
   }
 });

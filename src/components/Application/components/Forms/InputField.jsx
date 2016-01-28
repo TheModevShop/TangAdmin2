@@ -17,8 +17,7 @@ const InputField = React.createClass({
           className="form-control"
           type={this.props.type}
           name={this.props.name}
-          onChange={this.changeValue}
-          onBlur={this.checkBlur}
+          onChange={this.props.onChange ? this.props.onChange : this.changeValue}
           value={this.getValue()}
           checked={this.props.type === 'checkbox' && this.getValue() ? 'checked' : null}
         />
