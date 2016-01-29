@@ -36,8 +36,7 @@ async function buildSession(session) {
   authentication.set(['sessionData'], session);
   localStorage.setItem('sessionData', session);
   tree.commit();
-  const user = await getMe();
-  // history.pushState(null, '/dashboard');
+  getMe();
 }
 
 export async function teardownSession() {
