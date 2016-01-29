@@ -21,144 +21,149 @@ class OverviewComponent extends React.Component {
 		const data = this.props.params;
 		return (
 			<Formsy.Form ref="form" onValidSubmit={this.getGeoPoint.bind(this, false)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} className="row">
-			    <Col xs={12}>
-					<Row>
-					  <InputField 
-					  	className="col-xs-12 " 
-					  	name="name" 
-					  	title="Name" 
-					  	type="text"
-					  	validations="isExisty"
-					  	value={data.name ? data.name : ""} 
-					  	validationError="Please enter a Gym Name!" 
-					  	required />
-					  <Textarea 
-					  	className="col-xs-12 "
-					  	name="description"
-					  	title="Description"
-					  	value={data.description ? data.description : ""} 
-					  	validations="isExisty"
-					  	validationError="Please enter a description for your gym!"
-					  	required />
-					</Row>
-					<Row>
-						<Col xs={12} className="map">
-							<GoogleMap marker={this.state.location} />
-							<Button onClick={this.getGeoPoint.bind(this, true)}>Get Geo Points</Button>
-						</Col>
-					</Row>
-					<Row>
-					  <InputField 
-					  	className="col-xs-12 address-input " 
-					  	name="address.street" 
-					  	value={data.address.street ? data.address.street : ""} 
-					  	title="Street Address"
-					  	validations="isExisty"
-					  	validationError="Please enter a street address for your gym!"
-					  	required />
-					</Row>
-					<Row>
-					  <InputField 
-					  	className="col-xs-12 col-sm-4 address-input " 
-					  	value={data.address.city ? data.address.city : ""} 
-					  	name="address.city" 
-					  	title="City"
-					  	validations="isExisty"
-					  	validationError="Please enter a city for your gym!"
-					  	required />
-					  <SelectField 
-					  	className="col-xs-12 col-sm-4 address-input " 
-					  	name="address.state" 
-					  	title="State" 
-					  	value={data.address.state ? data.address.state : ""} 
-					  	options={this.getStates()} 
-					  	validations="isExisty"
-					  	validationError="Please select a state for your gym!"
-					  	required />
-					  <InputField
-					  	className="col-xs-12 col-sm-4 address-input " 
-					  	name="address.zipcode" 
-					  	title="Zip Code" 
-					  	value={data.address.zipcode ? data.address.zipcode : ""}
-					  	validations={{
-							isInt: true,
-							maxLength: 5
-						}}
-					  	validationError="Please enter a valid zip code!" 
-					  	required />
-					</Row>
-					<Row>
-					  <InputField 
-					  	className="col-xs-12 col-sm-6 " 
-					  	type="tel" 
-					  	name="contact.phone" 
-					  	value={data.contact.phone ? data.contact.phone : ""} 
-					  	title="Phone Number"
-				  	  	validations={{
-				  			isNumeric: true,
-				  			maxLength: 10
-				  		}}
-				  	  	validationError="Please enter a valid phone number (no dashes or parenthesis)!" 
-					  	required />
-					  <InputField
-					   className="col-xs-12 col-sm-6 " 
-					   type="email" 
-					   name="contact.email" 
-					   value={data.contact.email ? data.contact.email : ""} 
-					   title="Email Address" 
-					   validations={{
-							isEmail: true,
-							maxLength: 50
-						}}
-						validationError="Please enter a valid email address!" 
-					   required />
-					</Row>
-					<Row>
-					  <InputField 
-					  	className="col-xs-12 " 
-					  	type="text" 
-					  	name="contact.website" 
-					  	title="Website" 
-					  	value={data.contact.website ? data.contact.website : ""} 
-					  	validations={{
-					  	  matchRegexp: /https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s\/]{2,}|www\.[^\s]+\.[^\s\/]{2,}/
-					  	}}
-					  	validationError="Please enter a valid url!" 
-					  	required />
-					</Row>
-					<Row>
-					  <InputField 
-					  	className="col-xs-12 col-sm-4 " 
-					  	name="privateSessionPrice" 
-					  	value={data.privateSessionPrice ? data.privateSessionPrice : ""} 
-					  	title="Private Session Price" 
-					  	validations={{
-				  			isNumeric: true
-				  		}}
-				  		validationError="Please enter a number!" />
-					  <InputField 
-					  	className="col-xs-12 col-sm-4 " 
-					  	name="cancellationPolicy.percent" 
-					  	title="Cancellation Fee" 
-					  	value={data.cancellationPolicy.percent ? data.cancellationPolicy.percent : ""} 
-					  	required
-					  	validations={{
-				  			isNumeric: true
-				  		}}
-				  		validationError="Please enter a number!" />
-					  <InputField 
-					  	className="col-xs-12 col-sm-4 " 
-					  	name="cancellationPolicy.time" 
-					  	title="Cancellation Time" 
-					  	value={data.cancellationPolicy.time ? data.cancellationPolicy.time : ""} 
-					  	validations={{
-				  			isNumeric: true
-				  		}}
-				  		validationError="Please enter a number!"
-					  	required />
-					</Row>
-					<Button type="submit" value="Submit" disabled={!this.state.canSubmit}>Update</Button>
-			    </Col>
+				{
+					data.address ? 
+					    <Col xs={12}>
+							<Row>
+							  <InputField 
+							  	className="col-xs-12 " 
+							  	name="name" 
+							  	title="Name" 
+							  	type="text"
+							  	validations="isExisty"
+							  	value={data.name ? data.name : ""} 
+							  	validationError="Please enter a Gym Name!" 
+							  	required />
+							  <Textarea 
+							  	className="col-xs-12 "
+							  	name="description"
+							  	title="Description"
+							  	value={data.description ? data.description : ""} 
+							  	validations="isExisty"
+							  	validationError="Please enter a description for your gym!"
+							  	required />
+							</Row>
+							<Row>
+								<Col xs={12} className="map">
+									<GoogleMap marker={this.state.location} />
+									<Button onClick={this.getGeoPoint.bind(this, true)}>Get Geo Points</Button>
+								</Col>
+							</Row>
+							<Row>
+							  <InputField 
+							  	className="col-xs-12 address-input " 
+							  	name="address.street" 
+							  	value={data.address.street ? data.address.street : ""} 
+							  	title="Street Address"
+							  	validations="isExisty"
+							  	validationError="Please enter a street address for your gym!"
+							  	required />
+							</Row>
+							<Row>
+							  <InputField 
+							  	className="col-xs-12 col-sm-4 address-input " 
+							  	value={data.address.city ? data.address.city : ""} 
+							  	name="address.city" 
+							  	title="City"
+							  	validations="isExisty"
+							  	validationError="Please enter a city for your gym!"
+							  	required />
+							  <SelectField 
+							  	className="col-xs-12 col-sm-4 address-input " 
+							  	name="address.state" 
+							  	title="State" 
+							  	value={data.address.state ? data.address.state : ""} 
+							  	options={this.getStates()} 
+							  	validations="isExisty"
+							  	validationError="Please select a state for your gym!"
+							  	required />
+							  <InputField
+							  	className="col-xs-12 col-sm-4 address-input " 
+							  	name="address.zipcode" 
+							  	title="Zip Code" 
+							  	value={data.address.zipcode ? data.address.zipcode : ""}
+							  	validations={{
+									isInt: true,
+									maxLength: 5
+								}}
+							  	validationError="Please enter a valid zip code!" 
+							  	required />
+							</Row>
+							<Row>
+							  <InputField 
+							  	className="col-xs-12 col-sm-6 " 
+							  	type="tel" 
+							  	name="contact.phone" 
+							  	value={data.contact.phone ? data.contact.phone : ""} 
+							  	title="Phone Number"
+						  	  	validations={{
+						  			isNumeric: true,
+						  			maxLength: 10
+						  		}}
+						  	  	validationError="Please enter a valid phone number (no dashes or parenthesis)!" 
+							  	required />
+							  <InputField
+							   className="col-xs-12 col-sm-6 " 
+							   type="email" 
+							   name="contact.email" 
+							   value={data.contact.email ? data.contact.email : ""} 
+							   title="Email Address" 
+							   validations={{
+									isEmail: true,
+									maxLength: 50
+								}}
+								validationError="Please enter a valid email address!" 
+							   required />
+							</Row>
+							<Row>
+							  <InputField 
+							  	className="col-xs-12 " 
+							  	type="text" 
+							  	name="contact.website" 
+							  	title="Website" 
+							  	value={data.contact.website ? data.contact.website : ""} 
+							  	validations={{
+							  	  matchRegexp: /https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s\/]{2,}|www\.[^\s]+\.[^\s\/]{2,}/
+							  	}}
+							  	validationError="Please enter a valid url!" 
+							  	required />
+							</Row>
+							<Row>
+							  <InputField 
+							  	className="col-xs-12 col-sm-4 " 
+							  	name="privateSessionPrice" 
+							  	value={data.privateSessionPrice ? data.privateSessionPrice : ""} 
+							  	title="Private Session Price" 
+							  	validations={{
+						  			isNumeric: true
+						  		}}
+						  		validationError="Please enter a number!" />
+							  <InputField 
+							  	className="col-xs-12 col-sm-4 " 
+							  	name="cancellationPolicy.percent" 
+							  	title="Cancellation Fee" 
+							  	value={data.cancellationPolicy.percent ? data.cancellationPolicy.percent : ""} 
+							  	required
+							  	validations={{
+						  			isNumeric: true
+						  		}}
+						  		validationError="Please enter a number!" />
+							  <InputField 
+							  	className="col-xs-12 col-sm-4 " 
+							  	name="cancellationPolicy.time" 
+							  	title="Cancellation Time" 
+							  	value={data.cancellationPolicy.time ? data.cancellationPolicy.time : ""} 
+							  	validations={{
+						  			isNumeric: true
+						  		}}
+						  		validationError="Please enter a number!"
+							  	required />
+							</Row>
+							<Button type="submit" value="Submit" disabled={!this.state.canSubmit}>Update</Button>
+					    </Col>
+					: null
+				}
+			    
 			</Formsy.Form>
 		);
 	}

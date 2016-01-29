@@ -8,7 +8,7 @@ import _ from 'lodash';
 
 
 const renderBtn = (val, row) => {
-  return <Link className='btn' to={`/gyms/${row._id}`}>Edit</Link>;
+  return <Link className='btn' to={`/gyms/${row._id}`}>View</Link>;
 }
 
 const columns = [

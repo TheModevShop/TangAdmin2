@@ -39,11 +39,11 @@ class AddGym extends React.Component {
 
         {
             this.state.activeTab === 'overview' ?
-                <OverviewComponent params={profile ? profile : this.props.addGym.overview} /> : 
+                <OverviewComponent params={profile.name ? profile : this.props.addGym.overview} /> : 
             this.state.activeTab === 'hours' ?
-                <HoursComponent params={profile ? (profile.hours ? profile.hours : this.props.addGym.hours) : this.props.addGym.hours} /> :
+                <HoursComponent params={profile.name ? (profile.hours ? profile.hours : this.props.addGym.hours) : this.props.addGym.hours} /> :
             this.state.activeTab === 'photos' ?
-                <PhotosComponent data={profile ? (profile.images ? profile.images : this.props.addGym.images) : this.props.addGym.images} /> : null
+                <PhotosComponent data={profile.name ? (profile.images ? profile.images : this.props.addGym.images) : this.props.addGym.images} /> : null
         }
 
         {
