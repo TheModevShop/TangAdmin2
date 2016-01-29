@@ -1,8 +1,6 @@
 import tree from 'state/StateTree';
-import {getMyGymApi, postGym, postGymUpdate} from 'api/locationsApi';
+import {getMyGymApi} from 'api/locationsApi';
 const activeGym = tree.select(['views', 'GymProfile']);
-const GymList = tree.select(['views', 'GymList']);
-const AddGym = tree.select(['views', 'AddGym']);
 const MyGym = tree.select(['user', 'myGym']);
 
 export function setActiveGym() {
@@ -22,38 +20,4 @@ export async function getMyGym(id) {
   MyGym.set('isLoading', false);
   tree.commit();
   MyGym.get();
-}
-
-export async function addGym(data) {
-  AddGym.set(['awaitingSave'], true);
-
-  const dataStr = JSON.stringify(data);
-
-  try {
-    const post = await postGym(dataStr);
-    GymList.set('stale', true); // this will cause to refetch
-    AddGym.set(['id'], post.body._id)
-    AddGym.set(['response'], {'success': true, 'message': 'Your gym information has been successfully submitted!'});
-  } catch (err) {
-    AddGym.set(['response'], {'success': false, 'message': 'There was an error submitting your information.'});
-  }
-
-  AddGym.set(['awaitingSave'], false);
-  tree.commit();
-}
-
-export async function updateGym(data, gymId) {
-  AddGym.set(['awaitingSave'], true);
-
-  const dataStr = JSON.stringify(data);
-
-  try {
-    const post = await postGymUpdate(dataStr, gymId);
-    GymList.set('stale', true); // this will cause to refetch
-    AddGym.set(['response'], {'success': true, 'message': 'Your gym information has been successfully submitted!'});
-  } catch (err) {
-    AddGym.set(['response'], {'success': false, 'message': 'There was an error submitting your information.'});
-  }
-  AddGym.set(['awaitingSave'], false);
-  tree.commit();
 }

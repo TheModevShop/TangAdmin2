@@ -32,7 +32,6 @@ class Day extends React.Component {
 
 	render() {
 		const params = this.props.params;
-		const self = this;
 		const input1 = params.abbr + "_open";
 		const input2 = params.abbr + "_close";
 
@@ -41,28 +40,28 @@ class Day extends React.Component {
 				<Label>{params.name}</Label>
 				<InputField
 					name={input1} 
-					disabled={self.state.closed ? "disabled" : false} 
+					disabled={this.state.closed ? "disabled" : false} 
 					title=""
 					validations={"isLessThan:" + input2}
 					validationError="Your opening time is after your closing time!" 
-					className={self.state.closed ? "disabled" : ""} 
-					value={self.state.closed ? '' : params.open} 
+					className={this.state.closed ? "disabled" : ""} 
+					value={this.state.closed ? '' : params.open} 
 					type="time" />
 				<div className="seperator">–</div>
 				<InputField
 					name={input2}
-					disabled={self.state.closed ? "disabled" : false} 
+					disabled={this.state.closed ? "disabled" : false} 
 					validations={"isMoreThan:" + input1}
 					validationError="Your closing time is before your opening time!"
 					title=""
-					className={self.state.closed ? "disabled" : ""} 
-					value={self.state.closed ? '' : params.close} 
+					className={this.state.closed ? "disabled" : ""} 
+					value={this.state.closed ? '' : params.close} 
 					type="time" />
 				<Input
 					label="Closed"
 					name={params.abbr + "_closed"} 
 					type="checkbox" 
-					onChange={self.closed.bind(this)} 
+					onChange={this.closed.bind(this)} 
 					className="checkbox " 
 					title="Closed" />
 			</Col>

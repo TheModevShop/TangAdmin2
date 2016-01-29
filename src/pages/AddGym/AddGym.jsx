@@ -1,7 +1,7 @@
 import React from 'react';
 import Formsy from 'formsy-react';
 import {branch} from 'baobab-react/higher-order';
-import {addGym} from 'actions/GymActions';
+import {clearResponse} from 'actions/AddGymActions';
 import {Row, Col, Grid, Button} from 'react-bootstrap';
 import RspMsg from './../../components/Application/components/Forms/message';
 import OverviewComponent from './components/overview';
@@ -13,15 +13,13 @@ import './add-gym.less';
 class AddGym extends React.Component {
   constructor(...args) {
     super(...args);
-    this.setTab = this.setTab.bind(this);
     this.state = {
       activeTab: 'overview'
     }
   }
 
   render() {
-    const profile = _.get(this.props, 'gymProfile.gymProfile') || {};
-    this.props.addGym.id = profile._id;
+    const gym = this.props.addGym;
     return (
       <Grid fluid className={this.state.activeTab}>
         <div className="row header">
@@ -39,11 +37,11 @@ class AddGym extends React.Component {
 
         {
             this.state.activeTab === 'overview' ?
-                <OverviewComponent params={profile.name ? profile : this.props.addGym.overview} /> : 
+                <OverviewComponent overview={gym.overview} /> : 
             this.state.activeTab === 'hours' ?
-                <HoursComponent params={profile.name ? (profile.hours ? profile.hours : this.props.addGym.hours) : this.props.addGym.hours} /> :
+                <HoursComponent gymId={_.get(gym.overview, '_id')} hours={gym.hours} /> :
             this.state.activeTab === 'photos' ?
-                <PhotosComponent data={profile.name ? (profile.images ? profile.images : this.props.addGym.images) : this.props.addGym.images} /> : null
+                <PhotosComponent gymId={_.get(gym.overview, '_id')} photos={gym.images} /> : null
         }
 
         {
@@ -56,7 +54,7 @@ class AddGym extends React.Component {
   }
 
   setTab(tab) {
-    this.props.addGym.response = null;
+    clearResponse();
     this.setState({activeTab: tab});
   }
 
@@ -65,8 +63,5 @@ class AddGym extends React.Component {
 export default branch(AddGym, {
   cursors: {
     addGym: ['views', 'AddGym']
-  },
-  facets: {
-    gymProfile: 'GymProfile'
   }
 });
