@@ -81,7 +81,7 @@ class Privates extends React.Component {
   formatData() {
     let classes = _.get(this.props, 'privates.allPrivates') || [];
     classes = _.map(classes, (classItem) => {
-      classItem.date = `${moment(classItem.date).format('MM/DD/YYYY')}`;
+      classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
       classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
       classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
       classItem.capacity = `${classItem.capacity}`;
