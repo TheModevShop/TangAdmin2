@@ -4,6 +4,7 @@ import moment from 'moment';
 import {DataTable} from 'react-data-components';
 import {Row, Col, Grid, Panel} from 'react-bootstrap';
 import {Link} from 'react-router';
+import Spinner from 'components/Spinner';
 import "./classes.less";
 import _ from 'lodash';
 
@@ -51,6 +52,7 @@ class Classes extends React.Component {
 
   render() {
     const classes = this.formatData();
+    const isLoading = _.get(this.props, 'classes.isLoading') || false;
     return (
       <div className="table-wrapper">
         <div className="row table-header">
@@ -62,6 +64,8 @@ class Classes extends React.Component {
           </Col>
         </div>
         {
+          isLoading ? 
+            <Spinner /> :
           classes.length ?
             <DataTable
               keys={['_id']}
@@ -81,7 +85,7 @@ class Classes extends React.Component {
 
   formatData() {
     let classes = _.get(this.props, 'classes.allClasses') || [];
-    classes = _.map(classes, (classItem) => {
+    classes = _.map(_.cloneDeep(classes), (classItem) => {
       classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
       classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
       classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;

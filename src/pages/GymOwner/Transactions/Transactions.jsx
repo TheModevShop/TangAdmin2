@@ -2,6 +2,7 @@ import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {DataTable} from 'react-data-components';
 import {Row, Col, Grid, Panel} from 'react-bootstrap';
+import Spinner from 'components/Spinner';
 
 const renderBtn = (val, row) => {
   return <Link className='btn' to={`/transactions/${row._id}`}>Edit</Link>;
@@ -27,6 +28,7 @@ class Transactions extends React.Component {
 
   render() {
     const transactions = [];
+    const isLoading = _.get(this.props, 'transactions.isLoading') || false;
     return (
       <div className="table-wrapper">
         <div className="row table-header">
@@ -35,6 +37,8 @@ class Transactions extends React.Component {
           </Col>
         </div>
         {
+          isLoading ? 
+          <Spinner /> :
           transactions.length ?
           <DataTable
             keys={[ 'name']}

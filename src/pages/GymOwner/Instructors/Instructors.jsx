@@ -3,6 +3,7 @@ import {branch} from 'baobab-react/higher-order';
 import {DataTable} from 'react-data-components';
 import {Row, Col, Grid, Panel} from 'react-bootstrap';
 import {Link} from 'react-router';
+import Spinner from 'components/Spinner';
 
 const renderBtn = (val, row) => {
   return <Link className='btn' to={`/instructors/${row._id}`}>Edit</Link>;
@@ -36,6 +37,7 @@ class Instructors extends React.Component {
   }
   render() {
     const instructors = _.get(this.props, 'instructors.allInstructors') || [];
+    const isLoading = _.get(this.props, 'instructors.isLoading') || false;
 
     return (
       <div className="table-wrapper">
@@ -48,6 +50,8 @@ class Instructors extends React.Component {
           </Col>
         </div>
         {
+          isLoading ? 
+          <Spinner /> :
           instructors.length ?
           <DataTable
             keys={['name', 'email']}

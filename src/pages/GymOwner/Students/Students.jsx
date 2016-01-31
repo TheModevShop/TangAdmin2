@@ -4,6 +4,7 @@ import {DataTable} from 'react-data-components';
 import {Row, Col, Grid, Panel} from 'react-bootstrap';
 import {Link} from 'react-router';
 import {setAsInstructor} from 'actions/StudentActions';
+import Spinner from 'components/Spinner';
 
 const renderBtn = (val, row) => {
   return <Link className='btn' to={`/student/${row._id}`}>Edit</Link>;
@@ -45,6 +46,7 @@ class Students extends React.Component {
   }
   render() {
     const students = _.get(this.props, 'students.allStudents') || [];
+    const isLoading = _.get(this.props, 'students.isLoading') || false;
 
     return (
       <div className="table-wrapper">
@@ -57,9 +59,11 @@ class Students extends React.Component {
           </Col>
         </div>
         {
+          isLoading ? 
+          <Spinner /> :
           students.length ?
           <DataTable
-            keys={[ '_id']}
+            keys={['_id']}
             columns={columns}
             initialData={students}
             initialPageLength={15}

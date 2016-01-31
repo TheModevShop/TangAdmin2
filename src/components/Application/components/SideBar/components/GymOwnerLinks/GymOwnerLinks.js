@@ -11,22 +11,22 @@ class GymOwnerLinks extends React.Component {
     return (
         <ul>
           <li> 
-            <Link to="/dashboard">Dashboard</Link> 
+            <Link activeClassName="active" to="/dashboard">Dashboard</Link> 
           </li>
           <li> 
-            <Link to="/instructors">Instructors</Link>
+            <Link activeClassName="active" to="/instructors">Instructors</Link>
           </li> 
           <li> 
-            <Link to="/students">Students</Link>
+            <Link activeClassName="active" to="/students">Students</Link>
           </li> 
           <li> 
-            <Link to="/privates">Privates</Link>
+            <Link activeClassName="active" to="/privates">Privates</Link>
           </li> 
           <li> 
-            <Link to="/classes">Classes</Link>
+            <Link activeClassName="active" to="/classes">Classes</Link>
           </li>
           <li> 
-            <Link to="/add-class">Add Class</Link>
+            <Link activeClassName="active" to="/add-class">Add Class</Link>
           </li>
         </ul>
     );

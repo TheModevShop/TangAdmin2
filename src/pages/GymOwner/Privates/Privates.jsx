@@ -3,6 +3,7 @@ import {branch} from 'baobab-react/higher-order';
 import moment from 'moment';
 import {DataTable} from 'react-data-components';
 import {Row, Col, Grid, Panel} from 'react-bootstrap';
+import Spinner from 'components/Spinner';
 import {Link} from 'react-router';
 import "./privates.less";
 import _ from 'lodash';
@@ -51,6 +52,7 @@ class Privates extends React.Component {
 
   render() {
     const classes = this.formatData();
+    const isLoading = _.get(this.props, 'privates.isLoading') || false;
     return (
       <div className="table-wrapper">
       <div className="row table-header">
@@ -62,6 +64,8 @@ class Privates extends React.Component {
         </Col>
       </div>
         {
+          isLoading ? 
+          <Spinner /> :
           classes.length ?
           <DataTable
             keys={['_id']}
@@ -80,7 +84,7 @@ class Privates extends React.Component {
 
   formatData() {
     let classes = _.get(this.props, 'privates.allPrivates') || [];
-    classes = _.map(classes, (classItem) => {
+    classes = _.map(_.cloneDeep(classes), (classItem) => {
       classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
       classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
       classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
