@@ -1,34 +1,35 @@
-form {
-	button.btn.btn-default,
-	.btn {
-		padding: 12px 55px;
-		letter-spacing: 1px;
-		margin-top: 20px;
-		background-color: @salmon;
-		border: none;
-		color: #fff;
-		text-transform: uppercase;
-		font-family: 'default_regular';
-		&.disabled,
-		&[disabled] {
-			cursor: pointer;
-		    opacity: .8;
-		    filter: alpha(opacity=80);
-		    background-color: #666;
-		    &:hover {
-		    	background-color: #666;
-		    }
-		}
-		&:hover {
+button.btn.btn-default,
+.btn {
+	padding: 12px 55px;
+	letter-spacing: 1px;
+	margin-top: 20px;
+	background-color: @salmon;
+	border: none;
+	color: #fff;
+	text-transform: uppercase;
+	font-family: 'default_regular';
+	&.disabled,
+	&[disabled] {
+		cursor: pointer;
+	    opacity: .8;
+	    filter: alpha(opacity=80);
+	    background-color: #666;
+	    &:hover {
+	    	background-color: #666;
+	    }
+	}
+	&:hover {
+		background-color: @salmonDark;
+	}
+	&:active {
+		background-color: @salmonDark;
+		&:focus {
 			background-color: @salmonDark;
-		}
-		&:active {
-			background-color: @salmonDark;
-			&:focus {
-				background-color: @salmonDark;
-			}
 		}
 	}
+}
+
+form {
 	.form-control {
 		padding: 10px 15px;
 		border-radius: 3px;
