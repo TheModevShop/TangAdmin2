@@ -22,6 +22,10 @@ const PhotosComponent = React.createClass({
         });
     },
 
+    onDelete(files) {
+        
+    },
+
     onSubmit() {
       console.log(this.state.images)
     },

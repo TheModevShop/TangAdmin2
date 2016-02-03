@@ -1,38 +1,33 @@
 .instructor-profile {
-  .row {
-    margin-bottom: 15px;
-  }
-  h2 {
-    font-size: 24px;
-    margin: 0 0 5px; 
-  }
-  .main-img img,
-  .sup-img img{
-    border: 1px solid #ccc;
-    width: 100%;
-  }
-  .main-img img {
-    height: 200px;
-  }
-  .sup-img img{
-    height: 100px;
-    margin-bottom: 15px;
-  }
   .info-container {
-    span {
-      color: #666;
-      font-size: 1.05em;
-      line-height: 20px;
+    margin: 30px -15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 30px;
+    img {
+        width: 80px;
+        height: 80px;
+        background: #ccc;
+        margin-right: 20px;
     }
-    .address-container {
-      > span {
-        display: block;
-      }
+    div,
+    img {
+      vertical-align: middle;
+      display: inline-block;
+
     }
-    .day-label {
-      font-weight: bold;
-      margin-top: 5px;
+    span.name {
+      font-size: 1.6em;
+      margin-bottom: 7px;
       display: block;
+    }
+    span.email {
+      font-size: 1.2em;
+      display: block;
+    }
+  }
+  .form-container {
+    input {
+      margin: 1px;
     }
   }
 }
