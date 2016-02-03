@@ -17,6 +17,7 @@ class InstructorProfile extends React.Component {
   }
   render() {
     const profile = _.get(this.props, 'instructorProfile.instructorProfile') || {};
+    const roles = _.get(this.props, 'roles.roles') || {};
     return (
         profile.name ?
         <Grid fluid className="instructor-profile">
@@ -31,7 +32,7 @@ class InstructorProfile extends React.Component {
                 <InstructorInfo profile={profile} />
               </Row>
               <Row className="form-container">
-                <InstructorForm profile={profile} />
+                <InstructorForm profile={profile} roles={roles}/>
               </Row>
             </div>
           </Row>
@@ -43,6 +44,7 @@ class InstructorProfile extends React.Component {
 
 export default branch(InstructorProfile, {
   facets: {
-    instructorProfile: 'InstructorProfile'
+    instructorProfile: 'InstructorProfile',
+    roles: 'Roles'
   }
 });

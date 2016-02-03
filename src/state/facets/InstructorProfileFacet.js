@@ -37,7 +37,6 @@ export default function LocationScheduleFacet() {
 
       const gymId = _.get(data.myGym, 'gymDetails._id');
       const instructorProfile = _.clone(loader.fetch(gymId, id));
-      console.log(instructorProfile);
       return instructorProfile;
     }
   };

@@ -3,12 +3,12 @@ import RESTLoader from '../loaders/RESTLoader';
 import {BASE} from 'constants';
 
 const loader = new RESTLoader({
-  getResourceUrl: (id) => {
-    return `${BASE}/users/${id}`;
+  getResourceUrl: () => {
+    return `${BASE}/roles`;
   },
   successTransformer: (data) => {
     return {
-      studentProfile: data.body
+      roles: data.body
     };
   },
   errorTransformer: (err) => {
@@ -21,19 +21,19 @@ const loader = new RESTLoader({
 export default function LocationScheduleFacet() {
   return {
     cursors: {
-      studentProfile: ['views', 'StudentProfile', 'Profile']
+      studentProfile: ['views', 'StudentProfile', 'Roles'],
+      instructorProfile: ['views', 'InstructorProfile', 'Roles'],
     },
     get(data) {
-      const id = window.location.href.split('/').pop();
-      
-      if (data.studentProfile && data.studentProfile.stale) {
+      if (data.Roles && data.roles.stale) {
         loader.invalidateCache();
       }
       if (!loader.cursor) {
         loader.setCursor(this.cursors.studentProfile);
+        loader.setCursor(this.cursors.instructorProfile);
       }
-      const studentProfile = _.clone(loader.fetch(id));
-      return studentProfile
+      const roles = _.clone(loader.fetch());
+      return roles
     }
   };
 };

@@ -4,7 +4,7 @@ import {BASE} from 'constants';
 
 const loader = new RESTLoader({
   getResourceUrl: (id) => {
-    return `${BASE}/gyms/${id}/students`; // NEED API TO GET USERS
+    return `${BASE}/gyms/${id}/students`;
   },
   successTransformer: (data) => {
     return {

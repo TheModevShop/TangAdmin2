@@ -3,7 +3,6 @@ import {branch} from 'baobab-react/higher-order';
 import {DataTable} from 'react-data-components';
 import {Row, Col, Grid, Panel} from 'react-bootstrap';
 import {Link} from 'react-router';
-import {setAsInstructor} from 'actions/StudentActions';
 import Spinner from 'components/Spinner';
 
 const renderName = (val, row) => {

@@ -2,6 +2,7 @@ import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {Row, Col, Grid} from 'react-bootstrap';
 import StudentInfo from './components/StudentInfo';
+import StudentForm from './components/StudentForm';
 import {setActiveStudent} from 'actions/StudentActions';
 import _ from 'lodash';
 import './student-profile.less';
@@ -16,24 +17,26 @@ class StudentProfile extends React.Component {
   }
   render() {
     const profile = _.get(this.props, 'studentProfile.studentProfile') || {};
+    const roles = _.get(this.props, 'roles.roles') || {};
     return (
-        profile.address ?
-        <div className="student-profile">
-           <Grid fluid>
-            <Row>
-              <div className="panel panel-info col-xs-12 col-sm-10 col-sm-offset-1">
-                <div className="row panel-heading">
-                  <Col xs={12}>
-                    <h1>{profile.name}</h1>
-                  </Col>
-                </div>
-                <Row className="info-container">
-                  <StudentInfo profile={profile} />
-                </Row>
+        profile.name ?
+        <Grid fluid className="student-profile">
+          <Row>
+            <div className="col-xs-12">
+              <div className="row">
+                <Col xs={12}>
+                  <h1>Edit Student</h1>
+                </Col>
               </div>
-            </Row>
-          </Grid>
-        </div> : null
+              <Row className="info-container">
+                <StudentInfo profile={profile} />
+              </Row>
+              <Row className="form-container">
+                <StudentForm profile={profile} roles={roles}/>
+              </Row>
+            </div>
+          </Row>
+        </Grid> : null
     );
   }
 
@@ -41,6 +44,7 @@ class StudentProfile extends React.Component {
 
 export default branch(StudentProfile, {
   facets: {
-    studentProfile: 'StudentProfile'
+    studentProfile: 'StudentProfile',
+    roles: 'Roles'
   }
 });
