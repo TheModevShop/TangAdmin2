@@ -6,7 +6,7 @@ req.keys().forEach((path) => {
 });
 
 export default function getInitialState() {
-  const sessionData = localStorage.getItem('sessionData');
+  const sessionData = null;
   return {
     cursors: {
       roles: null,
@@ -22,7 +22,7 @@ export default function getInitialState() {
         AddGym: {
           awaitingSave: false,
           overview: {},
-          hours:{},
+          hours: {},
           images: {},
           error: false,
           success: true,
