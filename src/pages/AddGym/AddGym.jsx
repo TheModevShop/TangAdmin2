@@ -7,6 +7,7 @@ import RspMsg from './../../components/Application/components/Forms/message';
 import OverviewComponent from './components/overview';
 import HoursComponent from './components/hours';
 import PhotosComponent from './components/photos';
+import OwnerComponent from './components/owner';
 import _ from 'lodash';
 import './add-gym.less';
 
@@ -32,6 +33,7 @@ class AddGym extends React.Component {
             <div onClick={this.setTab.bind(this, 'overview')} className="tab tab-1 overview-tab">Overview</div>
             <div onClick={this.setTab.bind(this, 'hours')} className="tab tab-2 hours-tab">Hours of Operation</div>
             <div onClick={this.setTab.bind(this, 'photos')} className="tab tab-3 photos-tab">Photos</div>
+            <div onClick={this.setTab.bind(this, 'gym-owner')} className="tab tab-4 gym-owner-tab">Gym Owner</div>
           </Col>
         </div>
 
@@ -41,7 +43,10 @@ class AddGym extends React.Component {
             this.state.activeTab === 'hours' ?
                 <HoursComponent gymId={_.get(gym.overview, '_id')} hours={gym.hours} /> :
             this.state.activeTab === 'photos' ?
-                <PhotosComponent gymId={_.get(gym.overview, '_id')} photos={gym.images} /> : null
+                <PhotosComponent gymId={_.get(gym.overview, '_id')} photos={gym.images} /> :
+            this.state.activeTab === 'gym-owner' ?
+                <OwnerComponent gymId={_.get(gym.overview, '_id')} owner={gym.owner} /> 
+            : null
         }
 
         {

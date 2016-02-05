@@ -5,12 +5,9 @@ import {Row, Col, Grid, Panel} from 'react-bootstrap';
 import {Link} from 'react-router';
 import Spinner from 'components/Spinner';
 
-const renderBtn = (val, row) => {
-  return <Link className='btn' to={`/instructors/${row._id}`}>Edit</Link>;
-}
 
 const renderName = (val, row) => {
-  return <div>{row.name.first} {row.name.last}</div>;
+  return <Link to={`/instructors/${row._id}`}>{row.name.first} {row.name.last}</Link>;
 }
   
 const columns = [
@@ -23,9 +20,16 @@ const columns = [
     prop: 'email' 
   },
   {
-    title: '',
-    prop: null,
-    render: renderBtn
+    title: 'Classes', 
+    prop: 'classes' 
+  },
+  {
+    title: 'Privates', 
+    prop: 'privates' 
+  },
+  {
+    title: 'Balance', 
+    prop: 'balance' 
   }
 ];
 
@@ -42,11 +46,8 @@ class Instructors extends React.Component {
     return (
       <div className="table-wrapper">
         <div className="row table-header">
-          <Col xs={12} sm={6}>
+          <Col xs={12}>
             <h1>Instructors</h1>
-          </Col>
-          <Col xs={12} sm={6}>
-            <Link className="btn" to={`/add-class`}>Invite Instructor</Link>
           </Col>
         </div>
         {

@@ -4,39 +4,36 @@ import {BASE} from 'constants';
 
 const loader = new RESTLoader({
   getResourceUrl: (id) => {
-    return `${BASE}/gyms/${id}/students`;
+    return `${BASE}/users/${id}`;
   },
   successTransformer: (data) => {
     return {
-      allStudents: data.body
+      studentProfile: data.body
     };
   },
   errorTransformer: (err) => {
     return {
-      allStudents: [],
       error: err
     };
   }
 });
 
-export default function GymStudentsFacet() {
+export default function LocationScheduleFacet() {
   return {
     cursors: {
-      myGym: ['user', 'myGym'],
-      students: ['views', 'GymStudents'],
+      studentProfile: ['views', 'StudentProfile', 'Profile']
     },
     get(data) {
-      const myGymId = _.get(data, 'myGym.gymDetails._id');
+      const id = window.location.href.split('/').pop();
       
-      if (data.students && data.students.stale) {
+      if (data.studentProfile && data.studentProfile.stale) {
         loader.invalidateCache();
       }
-      
       if (!loader.cursor) {
-        loader.setCursor(this.cursors.students);
+        loader.setCursor(this.cursors.studentProfile);
       }
-      const students = _.clone(loader.fetch(myGymId));
-      return students
+      const studentProfile = _.clone(loader.fetch(id));
+      return studentProfile
     }
   };
 };

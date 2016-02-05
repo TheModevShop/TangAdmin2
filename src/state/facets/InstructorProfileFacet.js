@@ -4,7 +4,6 @@ import {BASE} from 'constants';
 
 const loader = new RESTLoader({
   getResourceUrl: (gymId, instructorId) => {
-    debugger;
     return `${BASE}/gyms/${gymId}/instructors/${instructorId}/profile`;
   },
   successTransformer: (data) => {
@@ -35,10 +34,9 @@ export default function LocationScheduleFacet() {
       if (!loader.cursor) {
         loader.setCursor(this.cursors.instructorProfile);
       }
-      debugger;
+
       const gymId = _.get(data.myGym, 'gymDetails._id');
       const instructorProfile = _.clone(loader.fetch(gymId, id));
-      console.log(instructorProfile);
       return instructorProfile;
     }
   };

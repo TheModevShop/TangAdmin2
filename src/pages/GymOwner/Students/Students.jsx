@@ -3,19 +3,10 @@ import {branch} from 'baobab-react/higher-order';
 import {DataTable} from 'react-data-components';
 import {Row, Col, Grid, Panel} from 'react-bootstrap';
 import {Link} from 'react-router';
-import {setAsInstructor} from 'actions/StudentActions';
 import Spinner from 'components/Spinner';
 
-const renderBtn = (val, row) => {
-  return <Link className='btn' to={`/student/${row._id}`}>Edit</Link>;
-}
-
-const renderSetAsInstructor = (val, row) => {
-  return <div className='btn' onClick={setAsInstructor.bind(this, row._id)}>Make Instructor</div>;
-}
-
 const renderName = (val, row) => {
-  return <div>{row.name.first} {row.name.last}</div>;
+  return <Link to={`/students/${row._id}`}>{row.name.first} {row.name.last}</Link>;
 }
   
 const columns = [
@@ -27,14 +18,17 @@ const columns = [
     title: 'Email', 
     prop: 'email' 
   },
-  { 
-    title: 'Set As Instructor', 
-    render: renderSetAsInstructor
+  {
+    title: 'Classes', 
+    prop: 'classes' 
   },
   {
-    title: '',
-    prop: null,
-    render: renderBtn
+    title: 'Privates', 
+    prop: 'privates' 
+  },
+  {
+    title: 'Balance', 
+    prop: 'balance' 
   }
 ];
 
@@ -51,11 +45,8 @@ class Students extends React.Component {
     return (
       <div className="table-wrapper">
         <div className="row table-header">
-          <Col xs={12} sm={6}>
+          <Col xs={12}>
             <h1>Students</h1>
-          </Col>
-          <Col xs={12} sm={6}>
-            <Link className="btn" to={`/add-student`}>Add Student</Link>
           </Col>
         </div>
         {

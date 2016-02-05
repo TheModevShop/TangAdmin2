@@ -1,5 +1,6 @@
 import React from 'react';
 import {Route} from 'react-router';
+import StudentProfile from './../StudentProfile';
 
 function getComponents(location, cb) {
   require.ensure([], (require) => {
@@ -10,5 +11,6 @@ function getComponents(location, cb) {
 export default (
   <Route>
     <Route pageName="students" path="/students" getComponents={getComponents} />
+    <Route pageName="instructors" path="/students/:id" component={StudentProfile} />
   </Route>
 );
