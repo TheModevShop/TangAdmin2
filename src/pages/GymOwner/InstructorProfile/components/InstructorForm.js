@@ -18,8 +18,7 @@ class InstructorForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    
-    setAsInstructor(this.state.userId, this.state.role);
+    editRole(this.state.userId, this.state.role);
   }
 
   render() {

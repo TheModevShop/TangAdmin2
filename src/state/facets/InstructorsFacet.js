@@ -23,7 +23,7 @@ export default function InstructorsFacet() {
   return {
     cursors: {
       myGym: ['user', 'myGym'],
-      instructors: ['views', 'Instructors'],
+      instructors: ['views', 'GymInstructors'],
     },
     get(data) {
       const myGymId = _.get(data, 'myGym.gymDetails._id');

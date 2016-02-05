@@ -6,7 +6,7 @@ req.keys().forEach((path) => {
 });
 
 export default function getInitialState() {
-  const sessionData = null;
+  const sessionData = localStorage.getItem('sessionData');
   return {
     cursors: {
       roles: null,
@@ -15,9 +15,8 @@ export default function getInitialState() {
         GymProfile: {
           Profile: null
         },
-        Instructors: null,
+        GymInstructors: null,
         GymStudents: null,
-
 
         AddGym: {
           awaitingSave: false,
@@ -28,9 +27,6 @@ export default function getInitialState() {
           success: true,
           response: null
         },
-
-
-
         CreateAccount: {
           awaitingSave: false,
           serverResponse: {}
