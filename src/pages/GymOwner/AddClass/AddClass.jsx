@@ -24,17 +24,24 @@ const AddClass = React.createClass({
             <Row>
               <Formsy.Form onValidSubmit={this.submitClass} onValid={this.enableButton} onInvalid={this.disableButton} className="col-xs-12">
                 <Row>
-                  <InputField className="col-xs-12 " type="text" name="name" title="Name" required />
-                  <Textarea className="col-xs-12 " type="textarea" name="description" title="Description"  />
+                  <InputField className="col-xs-12 " type="text" name="name" title="Class Name" required />
                 </Row>
                 <Row>
-                  <InputField className="col-xs-12 col-sm-6 "  type="date" name="date" title="Date" required />
-                  <InputField className="col-xs-12 col-sm-3 " type="time" name="time.start" title="Start Time" required />
-                  <InputField className="col-xs-12 col-sm-3 " type="time" name="time.end" title="End Time" required />
+                  <Textarea className="col-xs-12 " type="textarea" name="description" title="Class Description" />
                 </Row>
                 <Row>
-                  <InputField className="col-xs-12 col-sm-5 " type="text" name="capactiy" title="Class Capacity"  />
-                  <SelectField className="col-xs-12 col-sm-7 "  name="Instructor" title="Instructor" options={this.getInstructors()} />
+                  <SelectField className="col-xs-12 "  name="Instructor" title="Instructor" options={this.getInstructors()} />
+                </Row>
+                <Row>
+                  <InputField className="col-xs-12 "  type="date" name="date" title="Date" required />
+                </Row>
+                <Row>
+                  <InputField className="col-xs-12 col-sm-6 " type="time" name="time.start" title="Start Time" required />
+                  <InputField className="col-xs-12 col-sm-6 " type="time" name="time.end" title="End Time" required />
+                </Row>
+                <Row>
+                  <InputField className="col-xs-12 col-sm-6 " type="text" name="price" title="Price"  />
+                  <InputField className="col-xs-12 col-sm-6 " type="text" name="capactiy" title="Capacity"  />
                 </Row>
                 <Row>
                   <Col xs={12}>

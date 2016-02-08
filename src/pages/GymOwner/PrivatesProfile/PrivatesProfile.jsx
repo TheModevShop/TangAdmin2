@@ -21,8 +21,8 @@ class ClassProfile extends React.Component {
         <div className="class-profile">
            <Grid fluid>
             <Row>
-              <div className="panel panel-info col-xs-12 col-sm-10 col-sm-offset-1">
-                <div className="row panel-heading">
+              <div className=" col-xs-12 col-sm-10 col-sm-offset-1">
+                <div className="row heading">
                   <Col xs={12}>
                     <h1>{profile.name}</h1>
                   </Col>
