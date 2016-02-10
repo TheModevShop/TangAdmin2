@@ -1,12 +1,13 @@
+@import './select.less';
+
 button.btn.btn-default,
 .btn {
-	padding: 12px 55px;
+	padding: 10px 45px;
 	letter-spacing: 1px;
 	margin-top: 20px;
 	background-color: @salmon;
 	border: none;
 	color: #fff;
-	text-transform: uppercase;
 	font-family: 'default_regular';
 	&.disabled,
 	&[disabled] {
@@ -44,6 +45,10 @@ button.btn.btn-default,
 	}
 }
 
+.header {
+	margin-bottom: 30px;
+}
+
 form {
 	.form-control {
 		padding: 10px 15px;
@@ -74,6 +79,9 @@ form {
 		width: auto;
 		height: auto;
 		margin-top: 10px;
+	}
+	.btn {
+		text-transform: uppercase;
 	}
 	label,
 	.label {

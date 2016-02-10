@@ -20,7 +20,7 @@ const AddClass = React.createClass({
           </Col>
         </div>
         <Row>
-          <div className="col-xs-12 col-lg-10 col-xs-offset-0 col-lg-offset-1">
+          <div className="col-xs-12 col-lg-10">
             <Row>
               <Formsy.Form onValidSubmit={this.submitClass} onValid={this.enableButton} onInvalid={this.disableButton} className="col-xs-12">
                 <Row>

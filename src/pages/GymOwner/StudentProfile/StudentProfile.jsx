@@ -4,6 +4,7 @@ import {Row, Col, Grid} from 'react-bootstrap';
 import StudentInfo from './components/StudentInfo';
 import StudentForm from './components/StudentForm';
 import {setActiveStudent} from 'actions/StudentActions';
+import RspMsg from './../../../components/Application/components/Forms/message';
 import _ from 'lodash';
 import './student-profile.less';
 
@@ -12,9 +13,7 @@ class StudentProfile extends React.Component {
     super(...args);
     this.state = {};
   }
-  componentWillMount() {
-    setActiveStudent();
-  }
+
   render() {
     const profile = _.get(this.props, 'studentProfile.studentProfile') || {};
     const roles = _.get(this.props, 'roles.roles') || {};
@@ -36,6 +35,11 @@ class StudentProfile extends React.Component {
               </Row>
             </div>
           </Row>
+          {
+            this.props.studentProfileView.response ?
+              <RspMsg response={this.props.studentProfileView.response} /> 
+            : null
+          }
         </Grid> : null
     );
   }
@@ -46,5 +50,8 @@ export default branch(StudentProfile, {
   facets: {
     studentProfile: 'StudentProfile',
     roles: 'Roles'
+  },
+  cursors: {
+    studentProfileView: ['views', 'StudentProfile']
   }
 });

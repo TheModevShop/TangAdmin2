@@ -3,6 +3,7 @@ import {branch} from 'baobab-react/higher-order';
 import {Row, Col, Grid} from 'react-bootstrap';
 import InstructorInfo from './components/InstructorInfo';
 import InstructorForm from './components/InstructorForm';
+import RspMsg from './../../../components/Application/components/Forms/message';
 import {setActiveInstructor} from 'actions/InstructorActions';
 import _ from 'lodash';
 import './instructor-profile.less';
@@ -11,9 +12,6 @@ class InstructorProfile extends React.Component {
   constructor(...args) {
     super(...args);
     this.state = {};
-  }
-  componentWillMount() {
-    setActiveInstructor();
   }
   render() {
     const profile = _.get(this.props, 'instructorProfile.instructorProfile') || {};
@@ -36,6 +34,11 @@ class InstructorProfile extends React.Component {
               </Row>
             </div>
           </Row>
+          {
+            this.props.instructorProfileView.response ?
+              <RspMsg response={this.props.instructorProfileView.response} /> 
+            : null
+          }
         </Grid> : null
     );
   }
@@ -46,5 +49,8 @@ export default branch(InstructorProfile, {
   facets: {
     instructorProfile: 'InstructorProfile',
     roles: 'Roles'
+  },
+  cursors: {
+    instructorProfileView: ['views', 'InstructorProfile']
   }
 });

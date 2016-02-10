@@ -2,10 +2,11 @@ import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import moment from 'moment';
 import {DataTable} from 'react-data-components';
-import {Row, Col, Grid, Panel, Input, Modal, Button} from 'react-bootstrap';
+import {Row, Col, Input, Button} from 'react-bootstrap';
 import Spinner from 'components/Spinner';
 import {Link} from 'react-router';
-import InputField from './../../../components/Application/components/Forms/InputField';
+import Select from 'react-select';
+import CustomModal from './../../../components/Application/components/Modal/Modal';
 import "./privates.less";
 import _ from 'lodash';
 
@@ -14,7 +15,7 @@ import _ from 'lodash';
 class Privates extends React.Component {
   constructor(...args) {
     super(...args);
-    this.state = {showModal: false, selections: []};
+    this.state = {selections: []};
   }
 
   toggleSelection(id) {
@@ -30,27 +31,33 @@ class Privates extends React.Component {
   }
 
   delete() {
-    console.log(this.state.selections)
+    console.log(this.state.selections);
+    this.refs.modal.close();
   }
+
   replicate() {
-    console.log(this.state.selections)
+    console.log(this.state.selections);
+    this.refs.modal.close();
   }
-  close() {
-    this.setState({ showModal: false });
+  
+  logChange(val) {
+    console.log("Selected: " + val);
   }
-  open() {
-    this.setState({ showModal: true });
+  
+  activateModal(action, fn) {
+    this.refs.modal.open(action, this.state.selections.length, fn);
   }
 
   render() {
     const classes = this.formatData();
     const isLoading = _.get(this.props, 'privates.isLoading') || false;
+    
     const renderName = (val, row) => {
       return <Link to={`/privates/${row._id}`}>{row.name}</Link>;
     }
 
     const renderCheck = (val, row) => {
-      return <Input type="checkbox" name="delete" onChange={this.toggleSelection.bind(this, row._id)}/>;
+      return <Input type="checkbox" name="delete" label=" " onChange={this.toggleSelection.bind(this, row._id)}/>;
     }
 
     const columns = [
@@ -83,51 +90,61 @@ class Privates extends React.Component {
         prop: 'enrolled'
       }
     ];
+
+    const classNames = _.map(_.cloneDeep(classes), (classItem) => { return {'value': classItem.name, 'label': classItem.name}});
+    const instructorNames = _.map(_.cloneDeep(classes), (classItem) => { return {'value': 'TODO', 'label': 'TODO'}});
+
     return (
       <div className="table-wrapper">
-      <div className="row table-header">
-        <Col xs={12} sm={6}>
-          <h1>Private Classes</h1>
-        </Col>
-        <Col xs={12} sm={6}>
-          <Link className="btn" to={`/add-class`}>Add Private Class</Link>
-          { this.state.selections.length ?
-            <div>
-              <div className="btn" onClick={this.open.bind(this, 'delete')}>Delete</div>
-              <div className="btn" onClick={this.open.bind(this, 'replicate')}>Replicate</div>
-            </div>
+        <div className="row table-header">
+          <Col xs={12} sm={6}>
+            <h1>Private Classes</h1>
+          </Col>
+          <Col xs={12} sm={6}>
+            <Link className="btn" to={`/add-class`}>Add Private Class</Link>
+          </Col>
+        </div>
+        <div className="row table-filter-container">
+          <Col xs={12} sm={7}>
+              <Select
+                className=""
+                name="form-field-name"
+                options={classNames}
+                onChange={this.logChange.bind(this)}
+                placeholder="Classes" />
+              <Select
+                className=""
+                name="form-field-name"
+                options={instructorNames}
+                placeholder="Instructors"
+                onChange={this.logChange.bind(this)} />
+              <Input type="Date" onChange={this.logChange.bind(this)} placeholder="Select Date" />
+          </Col>
+          { 
+            this.state.selections.length ?
+              <Col xs={12} sm={5}>
+                <Button onClick={this.activateModal.bind(this, 'delete', this.delete.bind(this))}>Delete</Button>
+                <Button onClick={this.activateModal.bind(this, 'replicate', this.replicate.bind(this))}>Replicate</Button>
+              </Col>
             : null
           }
-        </Col>
-      </div>
+        </div>
         {
           isLoading ? 
-          <Spinner /> :
-          classes.length ?
-          <DataTable
-            keys={['_id']}
-            columns={columns}
-            initialData={classes}
-            initialPageLength={15}
-            initialSortBy={{ prop: 'name', order: 'descending' }}
-            pageLengthOptions={[ 15, 20, 50 ]}
-            className="table-body"
-          /> : 
-          <div className="no-results">No Private Classes Yet</div>
+            <Spinner /> :
+            classes.length ?
+              <DataTable
+                keys={['_id']}
+                columns={columns}
+                initialData={classes}
+                initialPageLength={15}
+                initialSortBy={{ prop: 'name', order: 'descending' }}
+                pageLengthOptions={[ 15, 20, 50 ]}
+                className="table-body" /> 
+            : 
+              <div className="no-results">No Private Classes Yet</div>
         }
-        <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
-           <Modal.Header>
-             <Modal.Title>Modal heading</Modal.Title>
-           </Modal.Header>
-           <Modal.Body>
-              <p>Are you sure you want to [blank] {this.state.selections.length} items?</p>
-              <div className="btn-container">
-                <div className="btn" onClick={this.delete.bind(this)}>Submit</div>
-                <div className="btn" onClick={this.replicate.bind(this)}>Submit</div>
-                <div className="btn cancel-btn" onClick={this.close.bind(this)}>Cancel</div>
-              </div>
-           </Modal.Body>
-         </Modal>
+        <CustomModal ref="modal"/>
        </div>
     );
   }

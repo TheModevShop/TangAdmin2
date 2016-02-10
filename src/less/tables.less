@@ -1,4 +1,94 @@
 .table-wrapper {
+	.table-header {
+		margin-bottom: 25px;
+		.btn {
+			margin: 0;
+			float: right;
+			background-color: #999;
+			&:hover {
+				background-color: @salmon;
+				color: #fff;
+			}
+			&:active {
+				background-color: @salmon;
+				color: #fff;
+				&:focus {
+					background-color: @salmon;
+					color: #fff;
+				}
+			}
+		}
+	}
+	.table-filter-container {
+		margin-bottom: 20px;
+		> div > div {
+			margin-right: 10px;
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+		.Select,
+		input {
+			width: 32%;
+			float: left;
+		}
+		.Select .Select-control,
+		input {
+			height: 40px;
+			.Select-placeholder {
+				line-height: 38px;
+				color: #666;
+				letter-spacing: 0.5px;
+				font-family: "default_bold";
+			}
+		}
+		.Select .Select-control {
+			background-color: #e6e6e6;
+		}
+		.Select .Select-menu-outer {
+			border-radius: 0;
+			border-color: #999;
+			.Select-option {
+				padding: 12px;
+				&:last-child {
+					border-radius: 0;
+				}
+				&.is-focused {
+				  background-color: @salmon;
+				  color: #fff;
+				}
+			}
+			.Select-noresults {
+				padding: 12px;
+			}
+		}
+		.is-focused:not(.is-open) > .Select-control {
+		  border-color: @salmon;
+		  box-shadow: none;
+		}
+		.btn {
+			float: right;
+			margin: 0;
+			margin-left: 10px;
+			background-color: #e6e6e6;
+			color: #333;
+			padding: 10px 0;
+			width: 110px;
+			&:hover {
+				background-color: @salmon;
+				color: #fff;
+			}
+			&:active {
+				background-color: @salmon;
+				color: #fff;
+				&:focus {
+					background-color: @salmon;
+					color: #fff;
+				}
+			}
+		}
+
+	}
 	.table-body {
 		label {
 			margin-right: 10px;
@@ -23,6 +113,49 @@
 		.search-box {
 			float: right;
 		}
+		.checkbox {
+			label {
+				width: 20px;
+				margin: 20px auto;
+				position: relative;
+				padding: 0;
+				display: block;
+				input[type=checkbox] {
+					visibility: hidden;
+					&:checked + span:after {
+						content: '';
+						position: absolute;
+						width: 12px;
+						height: 7px;
+						background: 0 0;
+						top: 4px;
+						left: 3px;
+						border: 3px solid @salmon;
+						border-top: none;
+						border-right: none;
+						-webkit-transform: rotate(-45deg);
+						-moz-transform: rotate(-45deg);
+						-o-transform: rotate(-45deg);
+						-ms-transform: rotate(-45deg);
+						transform: rotate(-45deg);
+					}
+				}
+				span {
+					cursor: pointer;
+					position: absolute;
+					width: 20px;
+					height: 20px;
+					top: 0;
+					border-radius: 3px;
+					border: 1px solid #bcbcbc;
+					&:hover::after {
+						background-color: #e9e9e9;
+					}
+				}
+			}
+		}
+
+
 		table {
 			margin-top: 20px;
 			border: 1px solid #E6E6E6;

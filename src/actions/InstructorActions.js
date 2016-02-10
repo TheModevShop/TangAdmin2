@@ -5,12 +5,8 @@ import _ from 'lodash';
 const myGym = tree.select(['user', 'myGym']);
 const gymStudentsCursor = tree.select(['views', 'GymStudents']);
 const gymInstructorsCursor = tree.select(['views', 'GymInstructors']);
-const activeInstructor = tree.select(['views', 'InstructorProfile']);
+const InstructorProfile = tree.select(['views', 'InstructorProfile']);
 
-export function setActiveInstructor() {
-  activeInstructor.set({stale: true});
-  tree.commit();
-}
 
 export async function editRole(userId, roleId) {
   gymInstructorsCursor.set({stale: true});
@@ -19,9 +15,11 @@ export async function editRole(userId, roleId) {
       gym: _.get(myGym.get(), 'gymDetails._id'),
       role: roleId
     });
+    InstructorProfile.set(['response'], {'success': true, 'message': 'Your profile has been successfully updated!'});
     gymInstructorsCursor.set({stale: true});
     gymStudentsCursor.set('stale', true); // this will cause to refetch
   } catch (err) {
+  	InstructorProfile.set(['response'], {'success': false, 'message': 'There was an error updating your profile!'});
     gymInstructorsCursor.set('error', err);
   }
   gymInstructorsCursor.set('isLoading', false);
