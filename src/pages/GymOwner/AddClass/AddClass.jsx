@@ -30,7 +30,7 @@ const AddClass = React.createClass({
                   <Textarea className="col-xs-12 " type="textarea" name="description" title="Class Description" />
                 </Row>
                 <Row>
-                  <SelectField className="col-xs-12 "  name="Instructor" title="Instructor" options={this.getInstructors()} />
+                  <SelectField className="col-xs-12 "  name="instructor" title="instructor" options={this.getInstructors()} />
                 </Row>
                 <Row>
                   <InputField className="col-xs-12 "  type="date" name="date" title="Date" required />
@@ -40,8 +40,8 @@ const AddClass = React.createClass({
                   <InputField className="col-xs-12 col-sm-6 " type="time" name="time.end" title="End Time" required />
                 </Row>
                 <Row>
-                  <InputField className="col-xs-12 col-sm-6 " type="text" name="price" title="Price"  />
-                  <InputField className="col-xs-12 col-sm-6 " type="text" name="capactiy" title="Capacity"  />
+                  <InputField className="col-xs-12 col-sm-6 " type="text" name="price" title="Price"  required/>
+                  <InputField className="col-xs-12 col-sm-6 " type="text" name="capactiy" title="Capacity"  required/>
                 </Row>
                 <Row>
                   <Col xs={12}>
@@ -77,9 +77,11 @@ const AddClass = React.createClass({
     const classTime = moment(data.date).set('hour', data.time.start.split(':')[0]).set('minute', data.time.start.split(':')[1]).format()
     const validDate = moment().isBefore(moment(classTime))
     if (validDate) {
-      data.date = moment(data.date);
       data.dateAndTime = moment(data.date);
+      data.date = moment(data.date).format('YYYYMMDD');
       data.private = false;
+      data.price = Number(data.price);
+      data.capactiy = Number(data.capactiy)
       data = JSON.stringify(data);
       const response = await addClass(data);
     } else {

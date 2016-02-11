@@ -3,7 +3,8 @@ import {branch} from 'baobab-react/higher-order';
 import moment from 'moment';
 import {DataTable} from 'react-data-components';
 import {Row, Col, Button, Input} from 'react-bootstrap';
-import CustomModal from './../../../components/Application/components/Modal/Modal';
+import CustomModal from 'components/Application/components/Modal/Modal';
+import {cancelClasses} from 'actions/ClassActions';
 import {Link} from 'react-router';
 import Select from 'react-select';
 import Spinner from 'components/Spinner';
@@ -29,7 +30,7 @@ class Classes extends React.Component {
   }
 
   delete() {
-    console.log(this.state.selections);
+    cancelClasses(this.state.selections);
     this.refs.modal.close();
   }
 

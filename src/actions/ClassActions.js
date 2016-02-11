@@ -1,6 +1,6 @@
 import tree from 'state/StateTree';
 import _ from 'lodash';
-import {postClass} from 'api/classesApi';
+import {postClass, cancelClassApi} from 'api/classesApi';
 const activeClass = tree.select(['views', 'ClassProfile']);
 const AddClass = tree.select(['views', 'AddClass']);
 const ClassList = tree.select(['views', 'ClassList']);
@@ -24,4 +24,12 @@ export async function addClass(data) {
   AddClass.set(['awaitingSave'], false);
   tree.commit();
   return post.body;
+}
+
+export async function resetAddClass(data) {
+  AddClass.set(['response'], null);
+}
+
+export async function cancelClasses(ids) {
+  cancelClassApi(ids)
 }
