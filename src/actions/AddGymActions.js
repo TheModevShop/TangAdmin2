@@ -16,7 +16,7 @@ export async function addGym(data) {
   try {
     post = await postGym(dataStr); 
     gymList.set({stale: true}); // this will cause to refetch
-    addGymCursor.set(['overview'], post.body);
+    addGymCursor.set(['data'], post.body);
     addGymCursor.set(['response'], {'success': true, 'message': 'Your gym information has been successfully submitted!'});
   } catch (err) {
     post = null;
@@ -34,7 +34,7 @@ export async function updateGym(data, gymId) {
   try {
     update = await postGymUpdate(dataStr, gymId);
     gymList.set({stale: true}); // this will cause to refetch
-    addGymCursor.set(['overview'], post.body);
+    addGymCursor.set(['data'], post.body);
     addGymCursor.set(['response'], {'success': true, 'message': 'Your gym information has been successfully submitted!'});
   } catch (err) {
     update = null;
