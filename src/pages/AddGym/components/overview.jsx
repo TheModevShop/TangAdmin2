@@ -197,11 +197,7 @@ class OverviewComponent extends React.Component {
 				form.hour = this.currency(form.hour)
 				form.halfHour = this.currency(form.halfHour)
 
-				if (!this.props.overview._id) {
-					addOverview(form);
-				}
-
-				const gymId = this.props.overview._id;
+				const gymId = this.props.data._id ? this.props.data._id : null;
 
 				if (gymId) {
 					updateGym(form, gymId);

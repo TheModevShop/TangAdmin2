@@ -4,16 +4,6 @@ import {postGym, postGymUpdate} from 'api/locationsApi';
 const gymList = tree.select(['views', 'GymList']);
 const addGymCursor = tree.select(['views', 'AddGym']);
 
-export function addOverview(overview) {
-  addGymCursor.set(['overview'], overview);
-  tree.commit();
-}
-
-export function addHours(hours) {
-  addGymCursor.set(['hours'], hours);
-  tree.commit();
-}
-
 export function clearResponse() {
   addGymCursor.set('response', null);
   tree.commit();
