@@ -15,7 +15,7 @@ export async function postClass(id, data) {
 
 export async function cancelClassApi(ids) { 
   return new bluebird((resolve, reject) => {
-    xhr('PUT', `${BASE}/me/classes/cancel`, {sessionId: ids[0]}).then((data) => {
+    xhr('PUT', `${BASE}/me/classes/cancel`, {sessions: ids}).then((data) => {
       resolve(data);
     }).catch((err) => {
       reject(err);

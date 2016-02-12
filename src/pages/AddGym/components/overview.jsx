@@ -8,6 +8,12 @@ import {getGymGeoPoints} from 'actions/GoogleMapsActions';
 import {Row, Col, Button} from 'react-bootstrap';
 import _ from 'lodash';
 
+Formsy.addValidationRule('isCurrency', function(values, value, array) {
+  if (value.length) {
+
+  }
+});
+
 class OverviewComponent extends React.Component {
 	constructor(...args) {
 		super(...args);
@@ -108,7 +114,7 @@ class OverviewComponent extends React.Component {
 						</Row>
 						<Row>
 						  <InputField 
-						  	className="col-xs-12 " 
+						  	className="col-xs-12 col-sm-6 " 
 						  	type="text" 
 						  	name="contact.website" 
 						  	title="Website" 
@@ -120,35 +126,50 @@ class OverviewComponent extends React.Component {
 						  	required />
 						</Row>
 						<Row>
-						  <InputField 
-						  	className="col-xs-12 col-sm-4 " 
-						  	name="privateSessionPrice" 
-						  	value={data.privateSessionPrice ? data.privateSessionPrice : ''} 
-						  	title="Private Session Price" 
-						  	validations={{
-					  			isNumeric: true
-					  		}}
-					  		validationError="Please enter a number!" />
-						  <InputField 
-						  	className="col-xs-12 col-sm-4 " 
-						  	name="cancellationPolicy.percent" 
-						  	title="Cancellation Fee" 
-						  	value={_.get(data, 'cancellationPolicy.percent') ? data.cancellationPolicy.percent : ''} 
-						  	required
-						  	validations={{
-					  			isNumeric: true
-					  		}}
-					  		validationError="Please enter a number!" />
-						  <InputField 
-						  	className="col-xs-12 col-sm-4 " 
-						  	name="cancellationPolicy.time" 
-						  	title="Cancellation Time" 
-						  	value={_.get(data, 'cancellationPolicy.time') ? data.cancellationPolicy.time : ''} 
-						  	validations={{
-					  			isNumeric: true
-					  		}}
-					  		validationError="Please enter a number!"
-						  	required />
+							  <InputField 
+							  	className="col-xs-12 col-sm-6 " 
+							  	name="privatePricing.hour" 
+							  	value={data.privatePricing ? data.privatePricing.hour : ''} 
+							  	title="Private Session Hour Price" 
+							  	onChange={this.currency.bind(this)}
+							  	validations={{
+						  			isNumeric: true,
+						  			isCurrency: true
+						  		}}
+						  		validationError="Please enter a number!" />
+						  	<InputField 
+							  	className="col-xs-12 col-sm-6 " 
+							  	name="privatePricing.halfHour" 
+							  	value={data.privatePricing ? data.privatePricing.halfHour : ''} 
+							  	title="Private Session Half Hour Price" 
+							  	onChange={this.currency.bind(this)}
+							  	validations={{
+						  			isNumeric: true,
+						  			isCurrency: true
+						  		}}
+						  		validationError="Please enter a number!" />
+					  	</Row>
+					  	<Row>
+							  <InputField 
+							  	className="col-xs-12 col-sm-6 " 
+							  	name="cancellationPolicy.percent" 
+							  	title="Cancellation Fee" 
+							  	value={_.get(data, 'cancellationPolicy.percent') ? data.cancellationPolicy.percent : ''} 
+							  	required
+							  	validations={{
+						  			isNumeric: true
+						  		}}
+						  		validationError="Please enter a number!" />
+							  <InputField 
+							  	className="col-xs-12 col-sm-6 "  
+							  	name="cancellationPolicy.time" 
+							  	title="Cancellation Time"
+							  	value={_.get(data, 'cancellationPolicy.time') ? data.cancellationPolicy.time : ''} 
+							  	validations={{
+						  			isNumeric: true
+						  		}}
+						  		validationError="Please enter a number!"
+							  	required />
 						</Row>
 						<Row>
 							<Col xs={12} className="map">
@@ -161,6 +182,11 @@ class OverviewComponent extends React.Component {
 			    
 			</Formsy.Form>
 		);
+	}
+
+	currency(e) {
+		var value = e.currentTarget.value;
+  	value = value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 	}
 
 	async getGeoPoint(btn, form) {

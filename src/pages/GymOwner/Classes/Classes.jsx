@@ -137,7 +137,7 @@ class Classes extends React.Component {
               columns={columns}
               initialData={classes}
               initialPageLength={15}
-              initialSortBy={{ prop: 'name', order: 'descending' }}
+              initialSortBy={{prop: 'name', order: 'descending' }}
               pageLengthOptions={[ 15, 20, 50 ]}
               className="table-body"
             /> 

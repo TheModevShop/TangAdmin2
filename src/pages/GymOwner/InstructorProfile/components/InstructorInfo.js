@@ -7,7 +7,7 @@ class InstructorInfo extends React.Component {
     const profile = this.props.profile;
     return (
         <Col xs={12}>
-          <img />
+          <div className="image" style={{backgroundImage: `url(${profile.image})`}}></div>
           <div>
             <span className="name">{profile.name.first} {profile.name.last}</span>
             <span className="email">{profile.email}</span>

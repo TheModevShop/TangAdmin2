@@ -20,13 +20,18 @@ export async function getAuthentication(data) {
 }
 
 export async function checkSession() {
-  const user = await getMe();
-  if (user._id) {
-    const session = localStorage.getItem('sessionData');
-    authentication.set(['sessionData'], session);
-    tree.commit();
-  } else {
-    // go to login
+  try {
+    const user = await getMe();
+    if (user._id) {
+      const session = localStorage.getItem('sessionData');
+      authentication.set(['sessionData'], session);
+      tree.commit();
+    } else {
+      // go to login
+      teardownSession();
+      return false;
+    }
+  } catch (err) {
     teardownSession();
     return false;
   }
