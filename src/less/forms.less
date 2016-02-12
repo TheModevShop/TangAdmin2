@@ -50,6 +50,14 @@ button.btn.btn-default,
 }
 
 form {
+	.form-group {
+		&.error {
+			.form-control {
+				border-color: red;
+				border-width: 2px;
+			}
+		}
+	}
 	.form-control {
 		padding: 10px 15px;
 		border-radius: 3px;
@@ -68,6 +76,16 @@ form {
 			border-color: @salmon;
 			outline: 0;
 			box-shadow: none;
+		}
+	}
+	.tooltip.top {
+		top: -11px;
+		transition: opacity 0.1s ease;
+		.tooltip-arrow {
+			border-top-color: red;
+		}
+		.tooltip-inner {
+			background-color: red;
 		}
 	}
 	textarea {

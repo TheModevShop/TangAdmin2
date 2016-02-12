@@ -88,8 +88,7 @@ class OverviewComponent extends React.Component {
 						  	value={_.get(data, 'contact.phone') ? data.contact.phone : ''} 
 						  	title="Phone Number"
 					  	  	validations={{
-					  			isNumeric: true,
-					  			maxLength: 10
+					  			maxLength: 15
 					  		}}
 					  	  	validationError="Please enter a valid phone number (no dashes or parenthesis)!" 
 						  	required />

@@ -21,6 +21,9 @@ const SelectField = React.createClass({
     return (
       <div className={className}>
         <label htmlFor={this.props.name}>{this.props.title}</label>
+        <Tooltip className={errorMessage ? "in validation-error" : "validation-error" } placement="top" >
+          {errorMessage}
+        </Tooltip>
         <select
           className="form-control"
           name={this.props.name}
@@ -32,7 +35,6 @@ const SelectField = React.createClass({
           </option>
           {optionsList}
         </select>
-        <span className='validation-error'>{errorMessage}</span>
       </div>
     );
   }

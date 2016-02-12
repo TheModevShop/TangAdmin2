@@ -40,7 +40,7 @@ class Gyms extends React.Component {
     const isLoading = _.get(this.props, 'gyms.isLoading') || false;
 
     const renderName = (val, row) => {
-      return <Link to={`/gyms/${row._id}`}>{row.name}</Link>;
+      return <Link to={`/add-gym/${row._id}`}>{row.name}</Link>;
     }
 
     const renderCheck = (val, row) => {
