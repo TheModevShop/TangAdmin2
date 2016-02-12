@@ -18,7 +18,7 @@ class OverviewComponent extends React.Component {
 	}
 
 	render() {
-		const data = this.props.overview || {};
+		const data = this.props.data || {};
 		return (
 			<Formsy.Form ref="form" onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} className="row">
 				 <Col xs={12}>
@@ -29,7 +29,7 @@ class OverviewComponent extends React.Component {
 						  	title="Name" 
 						  	type="text"
 						  	validations="isExisty"
-						  	value={data.name ? data.name : ''} 
+						  	value={data.owner.name ? data.owner.name : ''} 
 						  	validationError="Please enter a Gym Name!" 
 						  	required />
 						</Row>
@@ -38,7 +38,7 @@ class OverviewComponent extends React.Component {
 								className="col-xs-5 address-input " 
 								name="gym" 
 								title="Gym" 
-								value={_.get(data, 'gym') ? data.gym : ''} 
+								value={data._id} 
 								options={this.getGyms()} 
 								validations="isExisty"
 								validationError="Please select a gym!"

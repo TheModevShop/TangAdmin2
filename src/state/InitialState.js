@@ -20,9 +20,7 @@ export default function getInitialState() {
 
         AddGym: {
           awaitingSave: false,
-          overview: {},
-          hours: {},
-          images: {},
+          data: {},
           error: false,
           success: true,
           response: null

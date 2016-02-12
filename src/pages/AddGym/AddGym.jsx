@@ -20,7 +20,7 @@ class AddGym extends React.Component {
   }
 
   render() {
-    const gym = this.props.addGym;
+    const gym = _.get(this.props, 'gymProfile.gymProfile') || {};
     return (
       <Grid fluid className={this.state.activeTab}>
         <div className="row header">
@@ -39,13 +39,13 @@ class AddGym extends React.Component {
 
         {
             this.state.activeTab === 'overview' ?
-                <OverviewComponent overview={gym.overview} /> : 
+                <OverviewComponent data={gym} /> : 
             this.state.activeTab === 'hours' ?
-                <HoursComponent gymId={_.get(gym.overview, '_id')} hours={gym.hours} /> :
+                <HoursComponent gymId={gym._id ? gym._id : null} data={gym} /> :
             this.state.activeTab === 'photos' ?
-                <PhotosComponent gymId={_.get(gym.overview, '_id')} photos={gym.images} /> :
+                <PhotosComponent gymId={gym._id ? gym._id : null} data={gym} /> :
             this.state.activeTab === 'gym-owner' ?
-                <OwnerComponent gymId={_.get(gym.overview, '_id')} owner={gym.owner} /> 
+                <OwnerComponent gymId={gym._id ? gym._id : null} data={gym} /> 
             : null
         }
 
@@ -68,5 +68,9 @@ class AddGym extends React.Component {
 export default branch(AddGym, {
   cursors: {
     addGym: ['views', 'AddGym']
+  },
+  facets: {
+    gymProfile: 'GymProfile'
   }
+
 });

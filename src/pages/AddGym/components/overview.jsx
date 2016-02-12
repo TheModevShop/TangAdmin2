@@ -8,12 +8,6 @@ import {getGymGeoPoints} from 'actions/GoogleMapsActions';
 import {Row, Col, Button} from 'react-bootstrap';
 import _ from 'lodash';
 
-Formsy.addValidationRule('isCurrency', function(values, value, array) {
-  if (value.length) {
-
-  }
-});
-
 class OverviewComponent extends React.Component {
 	constructor(...args) {
 		super(...args);
@@ -23,7 +17,7 @@ class OverviewComponent extends React.Component {
 	}
 
 	render() {
-		const data = this.props.overview || {};
+		const data = this.props.data || {};
 		return (
 			<Formsy.Form ref="form" onValidSubmit={this.getGeoPoint.bind(this, false)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} className="row">
 				 <Col xs={12}>
@@ -49,7 +43,7 @@ class OverviewComponent extends React.Component {
 						<Row>
 						  <InputField 
 						  	className="col-xs-12 address-input " 
-						  	name="address.street" 
+						  	name="street" 
 						  	value={_.get(data, 'address.street') ? data.address.street : ''} 
 						  	title="Street Address"
 						  	validations="isExisty"
@@ -60,14 +54,14 @@ class OverviewComponent extends React.Component {
 						  <InputField 
 						  	className="col-xs-12 col-sm-4 address-input " 
 						  	value={_.get(data, 'address.city') ? data.address.city : ''} 
-						  	name="address.city" 
+						  	name="city" 
 						  	title="City"
 						  	validations="isExisty"
 						  	validationError="Please enter a city for your gym!"
 						  	required />
 						  <SelectField 
 						  	className="col-xs-12 col-sm-4 address-input " 
-						  	name="address.state" 
+						  	name="state" 
 						  	title="State" 
 						  	value={_.get(data, 'address.state') ? data.address.state : ''} 
 						  	options={this.getStates()} 
@@ -76,7 +70,7 @@ class OverviewComponent extends React.Component {
 						  	required />
 						  <InputField
 						  	className="col-xs-12 col-sm-4 address-input " 
-						  	name="address.zipcode" 
+						  	name="zipcode" 
 						  	title="Zip Code" 
 						  	value={_.get(data, 'address.zipcode') ? data.address.zipcode : ''}
 						  	validations={{
@@ -90,7 +84,7 @@ class OverviewComponent extends React.Component {
 						  <InputField 
 						  	className="col-xs-12 col-sm-6 " 
 						  	type="tel" 
-						  	name="contact.phone" 
+						  	name="phone" 
 						  	value={_.get(data, 'contact.phone') ? data.contact.phone : ''} 
 						  	title="Phone Number"
 					  	  	validations={{
@@ -102,7 +96,7 @@ class OverviewComponent extends React.Component {
 						  <InputField
 						   className="col-xs-12 col-sm-6 " 
 						   type="email" 
-						   name="contact.email" 
+						   name="email" 
 						   value={_.get(data, 'contact.email') ? data.contact.email : ''} 
 						   title="Email Address" 
 						   validations={{
@@ -114,9 +108,9 @@ class OverviewComponent extends React.Component {
 						</Row>
 						<Row>
 						  <InputField 
-						  	className="col-xs-12 col-sm-6 " 
+						  	className="col-xs-12 " 
 						  	type="text" 
-						  	name="contact.website" 
+						  	name="website" 
 						  	title="Website" 
 						  	value={_.get(data, 'contact.website') ? data.contact.website : ''} 
 						  	validations={{
@@ -128,31 +122,27 @@ class OverviewComponent extends React.Component {
 						<Row>
 							  <InputField 
 							  	className="col-xs-12 col-sm-6 " 
-							  	name="privatePricing.hour" 
+							  	name="hour" 
 							  	value={data.privatePricing ? data.privatePricing.hour : ''} 
 							  	title="Private Session Hour Price" 
-							  	onChange={this.currency.bind(this)}
 							  	validations={{
-						  			isNumeric: true,
-						  			isCurrency: true
+						  			isNumeric: true
 						  		}}
 						  		validationError="Please enter a number!" />
 						  	<InputField 
 							  	className="col-xs-12 col-sm-6 " 
-							  	name="privatePricing.halfHour" 
+							  	name="halfHour" 
 							  	value={data.privatePricing ? data.privatePricing.halfHour : ''} 
 							  	title="Private Session Half Hour Price" 
-							  	onChange={this.currency.bind(this)}
 							  	validations={{
-						  			isNumeric: true,
-						  			isCurrency: true
+						  			isNumeric: true
 						  		}}
 						  		validationError="Please enter a number!" />
 					  	</Row>
 					  	<Row>
 							  <InputField 
 							  	className="col-xs-12 col-sm-6 " 
-							  	name="cancellationPolicy.percent" 
+							  	name="percent" 
 							  	title="Cancellation Fee" 
 							  	value={_.get(data, 'cancellationPolicy.percent') ? data.cancellationPolicy.percent : ''} 
 							  	required
@@ -162,7 +152,7 @@ class OverviewComponent extends React.Component {
 						  		validationError="Please enter a number!" />
 							  <InputField 
 							  	className="col-xs-12 col-sm-6 "  
-							  	name="cancellationPolicy.time" 
+							  	name="time" 
 							  	title="Cancellation Time"
 							  	value={_.get(data, 'cancellationPolicy.time') ? data.cancellationPolicy.time : ''} 
 							  	validations={{
@@ -184,9 +174,10 @@ class OverviewComponent extends React.Component {
 		);
 	}
 
-	currency(e) {
-		var value = e.currentTarget.value;
-  	value = value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+	currency(value) {
+		var val = Number(value);
+		val = val.toFixed(2);
+  		return val * 100;
 	}
 
 	async getGeoPoint(btn, form) {
@@ -195,21 +186,23 @@ class OverviewComponent extends React.Component {
 			if (btn) {
 				this.refs.form.updateModel();
 				const data = this.refs.form.model;
-				location = await getGymGeoPoints(data["address.street"] + ' ' +  data["address.city"] + ', ' +  data["address.state"] + ' ' +  data["address.zipcode"]);
+				location = await getGymGeoPoints(data["street"] + ' ' +  data["city"] + ', ' +  data["state"] + ' ' +  data["zipcode"]);
 				this.setState({location: location});
 			} else {
-				location = await getGymGeoPoints(form.address.street + ' ' +  form.address.city + ', ' +  form.address.state + ' ' +  form.address.zipcode);
+				location = await getGymGeoPoints(form.street + ' ' +  form.city + ', ' +  form.state + ' ' +  form.zipcode);
 				form.location = [location.lng, location.lat];
 
-				form.cancellationPolicy.time = Number(form.cancellationPolicy.time)
-				form.cancellationPolicy.percent = Number(form.cancellationPolicy.time)
-				form.privateSessionPrice = Number(form.privateSessionPrice)
-				
+				form.time = Number(form.time)
+				form.percent = Number(form.time)
+				form.hour = this.currency(form.hour)
+				form.halfHour = this.currency(form.halfHour)
+
 				if (!this.props.overview._id) {
 					addOverview(form);
 				}
 
 				const gymId = this.props.overview._id;
+
 				if (gymId) {
 					updateGym(form, gymId);
 				} else {
@@ -217,7 +210,7 @@ class OverviewComponent extends React.Component {
 				}
 			}
 		} catch (err) {
-		console.log(err)
+			console.log(err)
 		}
 	}
 
