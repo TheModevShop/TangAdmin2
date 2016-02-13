@@ -1,6 +1,7 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import Router, { Link, RouteHandler } from "react-router";
+import {teardownSession} from 'actions/authenticationActions';
 import _ from 'lodash';
 import './header.less';
 
@@ -17,7 +18,9 @@ class Header extends React.Component {
     const nameFormatted = name ? name.first +' '+name.last : null;
     return (
       <div className="app-header">
-        <div className="icon-logo salmon"></div>
+        <div className="icon-logo salmon">
+          <div className="logout" onClick={this.logout}>Logout</div>
+        </div>
         <div className="current-user">
           <div className="title-group">
             <div className="name">{nameFormatted}</div>
@@ -27,6 +30,10 @@ class Header extends React.Component {
         </div>
       </div>
     );
+  }
+  logout() {
+    teardownSession();
+    history.pushState(null, '/login');
   }
 }
 
