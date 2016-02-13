@@ -30,16 +30,10 @@ export async function addGym(data) {
 export async function updateGym(data, gymId) {
   let update;
   addGymCursor.set(['awaitingSave'], true);
-  if (data.address) {
-    const unnested = { 'name': data.name, 'description': data.description, 'street': data.address.street, 'city': data.address.city, 'state': data.address.state, 'zipcode': data.address.zipcode, 'phone': data.contact.phone, 'email': data.contact.email, 'website': data.contact.website, 'hour': data.privatePricing.hour, 'halfHour': data.privatePricing.halfHour, 'percent': data.cancellationPolicy.percent, 'time': data.cancellationPolicy.time, 'location': data.location, 'hours': data.hours };
-    const dataStr = JSON.stringify(unnested);
-  } else {
-    const dataStr = JSON.stringify(data);
-  }
-    
+  const dataStr = JSON.stringify(data);
   try {
     update = await postGymUpdate(dataStr, gymId);
-    gymList.set({stale: true}); 
+    gymList.set({stale: true}); // this will cause to refetch
     addGymCursor.set(['data'], post.body);
     addGymCursor.set(['response'], {'success': true, 'message': 'Your gym information has been successfully submitted!'});
   } catch (err) {
