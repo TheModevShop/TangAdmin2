@@ -37,7 +37,7 @@ class HoursComponent extends React.Component {
 	}
 
 	submit(data) {
-		const gymId = this.props._id;
+		const gymId = this.props.data._id;
 		if (gymId) {
 			updateGym({hours: data}, gymId);
 		}
