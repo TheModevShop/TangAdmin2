@@ -4,20 +4,21 @@ import {DataTable} from 'react-data-components';
 import {Row, Col, Grid, Panel} from 'react-bootstrap';
 import Spinner from 'components/Spinner';
 
-const renderBtn = (val, row) => {
-  return <Link className='btn' to={`/transactions/${row._id}`}>Edit</Link>;
+const renderName = (val, row) => {
+  return <Link to={`/transactions/${row._id}`}>{row.name}</Link>;
 }
 
 const columns = [
   { 
     title: 'Name', 
-    prop: 'name'
-  },
+    prop: 'name',
+    render: renderName
+  }, 
   {
-    title: '',
-    prop: null,
-    render: renderBtn
+    title: 'Date',
+    prop: 'date'
   }
+
 ];
 
 class Transactions extends React.Component {
@@ -27,7 +28,7 @@ class Transactions extends React.Component {
   }
 
   render() {
-    const transactions = [];
+    const transactions = _.get(this.props, 'transactions.transactions') || [];
     const isLoading = _.get(this.props, 'transactions.isLoading') || false;
     return (
       <div className="table-wrapper">
@@ -56,7 +57,7 @@ class Transactions extends React.Component {
   }
 }
 export default branch(Transactions, {
-  cursors: {
-    transactions: ['transactions']
+  facets: {
+    transactions: 'Transactions'
   }
 });

@@ -26,7 +26,7 @@ class GymOwnerLinks extends React.Component {
             <Link activeClassName="active" to="/classes">Classes</Link>
           </li>
           <li> 
-            <Link activeClassName="active" to="/add-class">Add Class</Link>
+            <Link activeClassName="active" to="/transactions">Transactions</Link>
           </li>
         </ul>
     );
