@@ -5,6 +5,7 @@ import history from 'appHistory';
 import {Panel, Input, Button} from 'react-bootstrap';
 import $ from 'jquery';
 import formData from 'utility/formData';
+import './login.less';
 
 
 class Login extends React.Component {
@@ -16,13 +17,8 @@ class Login extends React.Component {
   render() {
     const error = _.get(this.props, 'authentication.error');
     return (
-      <div className="col-md-4 col-md-offset-4">
-        {
-          error ? 
-          <div className="error">ERROR LOGGING IN</div> : null
-        }
-        <Panel header={<h3>Please Sign In</h3>} className="login-panel">
-          <form role="form" onSubmit={this.submitForm}>
+      <div className="login-wrapper">
+        <form role="form" onSubmit={this.submitForm}>
             <fieldset>
               <div className="form-group">
                 <Input onChange={this.setLoginID} className="form-control" placeholder="Username" ref="loginID" type="text" autofocus="" name="email" />
@@ -31,14 +27,14 @@ class Login extends React.Component {
               <div className="form-group">
                 <Input onChange={this.setPassword} className="form-control" placeholder="Password" ref="password" type="password" name="password" />
               </div>
-              <Input type="checkbox" label="Remember Me" />
               <Button type="submit" bsSize="large" bsStyle="success" block>Login</Button>
               
             </fieldset>
-          </form>
-
-        </Panel>
-        
+          </form>   
+          {
+            error ? 
+            <div className="error">Error Signing In</div> : null
+          }     
       </div>
     );
   }

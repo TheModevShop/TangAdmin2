@@ -2,7 +2,6 @@ import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import Router, { Link, RouteHandler } from "react-router";
 import _ from 'lodash';
-
 import './header.less';
 
 class Header extends React.Component {
@@ -18,6 +17,7 @@ class Header extends React.Component {
     const nameFormatted = name ? name.first +' '+name.last : null;
     return (
       <div className="app-header">
+        <div className="icon-logo salmon"></div>
         <div className="current-user">
           <div className="title-group">
             <div className="name">{nameFormatted}</div>
