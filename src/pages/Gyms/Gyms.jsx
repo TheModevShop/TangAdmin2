@@ -96,7 +96,7 @@ class Gyms extends React.Component {
             <Spinner /> :
           gyms.length ?
           <DataTable
-            keys={[ 'name', 'street', 'city and zip code', 'state', ]}
+            keys={['_id']}
             columns={columns}
             initialData={gyms}
             initialPageLength={15}
