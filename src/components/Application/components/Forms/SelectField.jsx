@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import formsy from 'formsy-react';
+import {Tooltip} from 'react-bootstrap';
 
 const SelectField = React.createClass({
   mixins: [Formsy.Mixin],

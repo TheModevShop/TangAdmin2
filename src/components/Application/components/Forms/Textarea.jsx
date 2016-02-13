@@ -1,5 +1,6 @@
 import React from 'react';
 import formsy from 'formsy-react';
+import {Tooltip} from 'react-bootstrap';
 
 const Textarea = React.createClass({
   mixins: [Formsy.Mixin],
