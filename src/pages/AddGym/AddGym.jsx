@@ -20,7 +20,7 @@ class AddGym extends React.Component {
   }
 
   render() {
-    const gym = _.get(this.props, 'gymProfile.gymProfile') || {};
+    const gym = _.get(this.props, 'gymProfile.gymProfile') || this.props.addGym.data || {};
     return (
       <Grid fluid className={this.state.activeTab}>
         <div className="row header">
@@ -31,9 +31,15 @@ class AddGym extends React.Component {
         <div className="row tabs">
           <Col xs={12}>
             <div onClick={this.setTab.bind(this, 'overview')} className="tab tab-1 overview-tab">Overview</div>
-            <div onClick={this.setTab.bind(this, 'hours')} className="tab tab-2 hours-tab">Hours of Operation</div>
-            <div onClick={this.setTab.bind(this, 'photos')} className="tab tab-3 photos-tab">Photos</div>
-            <div onClick={this.setTab.bind(this, 'gym-owner')} className="tab tab-4 gym-owner-tab">Gym Owner</div>
+            {
+              gym._id ?
+                <span>
+                  <div onClick={this.setTab.bind(this, 'hours')} className="tab tab-2 hours-tab">Hours of Operation</div>
+                  <div onClick={this.setTab.bind(this, 'photos')} className="tab tab-3 photos-tab">Photos</div>
+                  <div onClick={this.setTab.bind(this, 'gym-owner')} className="tab tab-4 gym-owner-tab">Gym Owner</div>
+                </span>
+              : null
+            }
           </Col>
         </div>
 

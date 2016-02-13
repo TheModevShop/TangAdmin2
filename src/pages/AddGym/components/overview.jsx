@@ -166,7 +166,7 @@ class OverviewComponent extends React.Component {
 								<Button onClick={this.getGeoPoint.bind(this, true)}>Get Geo Points</Button>
 							</Col>
 						</Row>
-						<Button type="submit" value="Submit" disabled={!this.state.canSubmit}>Update</Button>
+						<Button type="submit" value="Submit" disabled={!this.state.canSubmit}>{this.props.data._id ? 'Update' : 'Submit'}</Button>
 				  </Col>
 			    
 			</Formsy.Form>
