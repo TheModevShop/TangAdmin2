@@ -17,6 +17,22 @@ const columns = [
   {
     title: 'Date',
     prop: 'date'
+  }, 
+  {
+    title: 'User Charged',
+    prop: 'userCharged'
+  },
+  {
+    title: 'Instructor',
+    prop: 'instructor'
+  },
+  {
+    title: 'Session',
+    prop: 'session'
+  },
+  {
+    title: 'Amount Charged',
+    prop: 'amount'
   }
 
 ];
