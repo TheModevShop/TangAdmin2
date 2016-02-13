@@ -29,7 +29,7 @@ class OverviewComponent extends React.Component {
 						  	title="Name" 
 						  	type="text"
 						  	validations="isExisty"
-						  	value={data.owner.name ? data.owner.name : ''} 
+						  	value={data.name ? data.name : ''} 
 						  	validationError="Please enter a Gym Name!" 
 						  	required />
 						</Row>
