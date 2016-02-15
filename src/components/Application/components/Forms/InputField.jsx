@@ -1,6 +1,5 @@
 import React from 'react';
 import formsy from 'formsy-react';
-import {Tooltip} from 'react-bootstrap';
 
 const InputField = React.createClass({
   mixins: [Formsy.Mixin],
@@ -13,9 +12,6 @@ const InputField = React.createClass({
     return (
       <div className={className}>
         <label htmlFor={this.props.name}>{this.props.title}</label>
-        <Tooltip className={errorMessage ? "in validation-error" : "validation-error" } placement="top" >
-          {errorMessage}
-        </Tooltip>
         <input
           disabled={this.props.disabled}
           className="form-control"
@@ -25,6 +21,7 @@ const InputField = React.createClass({
           value={this.getValue()}
           checked={this.props.type === 'checkbox' && this.getValue() ? 'checked' : null}
         />
+        <div className="validation-error">{errorMessage}</div>
       </div>
     );
   }

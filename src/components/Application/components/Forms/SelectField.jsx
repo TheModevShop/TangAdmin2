@@ -1,7 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
 import formsy from 'formsy-react';
-import {Tooltip} from 'react-bootstrap';
 
 const SelectField = React.createClass({
   mixins: [Formsy.Mixin],
@@ -22,9 +21,6 @@ const SelectField = React.createClass({
     return (
       <div className={className}>
         <label htmlFor={this.props.name}>{this.props.title}</label>
-        <Tooltip className={errorMessage ? "in validation-error" : "validation-error" } placement="top" >
-          {errorMessage}
-        </Tooltip>
         <select
           className="form-control"
           name={this.props.name}
@@ -32,10 +28,10 @@ const SelectField = React.createClass({
           onBlur={this.checkBlur}
           value={this.getValue()}
         >
-          <option value="">
-          </option>
+          <option value=""></option>
           {optionsList}
         </select>
+        <div className="validation-error">{errorMessage}</div>
       </div>
     );
   }

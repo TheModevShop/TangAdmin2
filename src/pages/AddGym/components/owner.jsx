@@ -29,7 +29,6 @@ class OverviewComponent extends React.Component {
 						  	title="Name" 
 						  	type="text"
 						  	validations="isExisty"
-						  	value={data.name ? data.name : ''} 
 						  	validationError="Please enter a Gym Name!" 
 						  	required />
 						</Row>
@@ -46,8 +45,7 @@ class OverviewComponent extends React.Component {
 							<InputField
 								className="col-xs-7 " 
 								type="email" 
-								name="email" 
-								value={_.get(data, 'contact.email') ? data.contact.email : ''} 
+								name="email"
 								title="Email Address" 
 								validations={{
 									isEmail: true,

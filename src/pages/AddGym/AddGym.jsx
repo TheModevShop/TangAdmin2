@@ -25,7 +25,7 @@ class AddGym extends React.Component {
       <Grid fluid className={this.state.activeTab}>
         <div className="row header">
           <Col xs={12}>
-            <h1>Add Gym</h1>
+            <h1>{ gym._id ? 'Gym Profile' : 'Add Gym'}</h1>
           </Col>
         </div>
         <div className="row tabs">
