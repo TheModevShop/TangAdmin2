@@ -1,6 +1,6 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
-import {addClass} from 'actions/ClassActions';
+import {addClass, clearResponse} from 'actions/ClassActions';
 import moment from 'moment';
 import {Row, Col, Grid, Input, Button} from 'react-bootstrap';
 import Formsy from 'formsy-react';
@@ -31,7 +31,6 @@ Formsy.addValidationRule('isMoreThan', function (values, value, otherField) {
 });
 
 const AddClass = React.createClass({
-
   render() {
     return (
       <Grid fluid>
@@ -123,16 +122,17 @@ const AddClass = React.createClass({
                 </Row>
               </Formsy.Form>
             </Row>
-            {
-              this.props.view.response ?
-                <RspMsg response={this.props.view.response} /> 
-              : null
-            }
+            <RspMsg delay={5000} response={this.props.view.response ? this.props.view.response : null} />
           </div>
         </Row>
       </Grid>
     );
   },
+  
+  componentDidMount() {
+    clearResponse();
+  },
+
   getInitialState() {
     return { canSubmit: false };
   },

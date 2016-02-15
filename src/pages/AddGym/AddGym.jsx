@@ -54,14 +54,13 @@ class AddGym extends React.Component {
                 <OwnerComponent gymId={gym._id ? gym._id : null} data={gym} /> 
             : null
         }
-
-        {
-          this.props.addGym.response ?
-            <RspMsg response={this.props.addGym.response} /> 
-          : null
-        }
+        <RspMsg delay={5000} response={this.props.addGym.response ? this.props.addGym.response : null} />
       </Grid>
     );
+  }
+
+  componentDidMount() {
+    clearResponse();
   }
 
   setTab(tab) {

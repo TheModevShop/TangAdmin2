@@ -29,7 +29,7 @@ class OverviewComponent extends React.Component {
 						  	type="text"
 						  	validations="isExisty"
 						  	value={data.name ? data.name : ''} 
-						  	validationError="Please enter a Gym Name!" 
+						  	validationError="Please enter a gym name!" 
 						  	required />
 						  <Textarea 
 						  	className="col-xs-12 "

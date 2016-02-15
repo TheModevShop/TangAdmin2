@@ -4,7 +4,7 @@ import {Row, Col, Grid} from 'react-bootstrap';
 import InstructorInfo from './components/InstructorInfo';
 import InstructorForm from './components/InstructorForm';
 import RspMsg from './../../../components/Application/components/Forms/message';
-import {setActiveInstructor} from 'actions/InstructorActions';
+import {setActiveInstructor, clearResponse} from 'actions/InstructorActions';
 import _ from 'lodash';
 import './instructor-profile.less';
 
@@ -13,6 +13,11 @@ class InstructorProfile extends React.Component {
     super(...args);
     this.state = {};
   }
+
+  componentDidMount() {
+    clearResponse();
+  }
+  
   render() {
     const profile = _.get(this.props, 'instructorProfile.instructorProfile') || {};
     const roles = _.get(this.props, 'roles.roles') || {};
@@ -34,11 +39,7 @@ class InstructorProfile extends React.Component {
               </Row>
             </div>
           </Row>
-          {
-            this.props.instructorProfileView.response ?
-              <RspMsg response={this.props.instructorProfileView.response} /> 
-            : null
-          }
+          <RspMsg delay={5000} response={this.props.instructorProfileView.response ? this.props.instructorProfileView.response : null} />
         </Grid> : null
     );
   }
