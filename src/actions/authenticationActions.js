@@ -46,7 +46,7 @@ async function buildSession(session) {
 
 export async function teardownSession() {
   localStorage.removeItem('sessionData');
-  authentication.set({});
-  history.pushState(null, '/login');
+  authentication.set({}); 
   tree.commit();
+  history.pushState(null, '/login');
 }

@@ -3,36 +3,49 @@ import {branch} from 'baobab-react/higher-order';
 import {DataTable} from 'react-data-components';
 import {Row, Col, Grid, Panel} from 'react-bootstrap';
 import Spinner from 'components/Spinner';
+import moment from 'moment';
 
-const renderName = (val, row) => {
-  return <Link to={`/transactions/${row._id}`}>{row.name}</Link>;
+const userCharged = (val, row) => {
+  return <div>{row.userCharged.name.first} {row.userCharged.name.last}</div>;
+}
+
+const renderInstructor = (val, row) => {
+  return <div>{row.instructor.name.first} {row.instructor.name.last}</div>;
+}
+
+const renderSession = (val, row) => {
+  return <div>{row.session.name}</div>;
+}
+
+const renderAmount = (val, row) => {
+  return <div>{row.stripe.amount}</div>;
+}
+
+const renderDate = (val, row) => {
+  return <div>{moment(row.date, 'YYYYMMDD').format('MMM D YYYY')}</div>;
 }
 
 const columns = [
-  { 
-    title: 'Name', 
-    prop: 'name',
-    render: renderName
-  }, 
+  {
+    title: 'Session',
+    render: renderSession
+  },
   {
     title: 'Date',
-    prop: 'date'
+    render: renderDate
   }, 
   {
     title: 'User Charged',
-    prop: 'userCharged'
+    prop: 'userCharged',
+    render: userCharged
   },
   {
     title: 'Instructor',
-    prop: 'instructor'
-  },
-  {
-    title: 'Session',
-    prop: 'session'
+    render: renderInstructor
   },
   {
     title: 'Amount Charged',
-    prop: 'amount'
+    render: renderAmount
   }
 
 ];
@@ -44,7 +57,7 @@ class Transactions extends React.Component {
   }
 
   render() {
-    const transactions = _.get(this.props, 'transactions.transactions') || [];
+    const transactions = _.get(this.props, 'transactions.allTransactions') || [];
     const isLoading = _.get(this.props, 'transactions.isLoading') || false;
     return (
       <div className="table-wrapper">
@@ -58,11 +71,10 @@ class Transactions extends React.Component {
           <Spinner /> :
           transactions.length ?
           <DataTable
-            keys={[ 'name']}
+            keys={['_id']}
             columns={columns}
             initialData={transactions}
             initialPageLength={15}
-            initialSortBy={{ prop: 'name', order: 'descending' }}
             pageLengthOptions={[ 15, 20, 50 ]}
             className="table-body"
           /> :

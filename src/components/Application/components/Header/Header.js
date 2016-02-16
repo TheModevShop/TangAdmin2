@@ -18,22 +18,20 @@ class Header extends React.Component {
     const nameFormatted = name ? name.first +' '+name.last : null;
     return (
       <div className="app-header">
-        <div className="icon-logo salmon">
-          <div className="logout" onClick={this.logout}>Logout</div>
-        </div>
+        <div className="icon-logo salmon"></div>
         <div className="current-user">
           <div className="title-group">
             <div className="name">{nameFormatted}</div>
             <div className="gym">{gym}</div>
           </div>
           <div className="img" style={{backgroundImage: "url('http://blog.ramboll.com/fehmarnbelt/wp-content/themes/ramboll2/images/profile-img.jpg')"}}></div>
+          <div className="logout" onClick={this.logout}>Logout</div>
         </div>
       </div>
     );
   }
   logout() {
     teardownSession();
-    history.pushState(null, '/login');
   }
 }
 
