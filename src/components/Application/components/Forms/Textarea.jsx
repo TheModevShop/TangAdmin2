@@ -13,15 +13,11 @@ const Textarea = React.createClass({
     return (
       <div className={className}>
         <label htmlFor={this.props.name}>{this.props.title}</label>
-        <Tooltip className={errorMessage ? "in validation-error" : "validation-error" } placement="top" >
-          {errorMessage}
-        </Tooltip>
         <textarea className="form-control" name={this.props.name} onChange={this.changeValue} value={this.getValue()}></textarea>
+        <div className="validation-error">{errorMessage}</div>
       </div>
     );
   }
 });
-
-
 
 export default Textarea;

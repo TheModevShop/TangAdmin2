@@ -25,7 +25,7 @@ class AddGym extends React.Component {
       <Grid fluid className={this.state.activeTab}>
         <div className="row header">
           <Col xs={12}>
-            <h1>Add Gym</h1>
+            <h1>{ gym._id ? 'Gym Profile' : 'Add Gym'}</h1>
           </Col>
         </div>
         <div className="row tabs">
@@ -54,14 +54,13 @@ class AddGym extends React.Component {
                 <OwnerComponent gymId={gym._id ? gym._id : null} data={gym} /> 
             : null
         }
-
-        {
-          this.props.addGym.response ?
-            <RspMsg response={this.props.addGym.response} /> 
-          : null
-        }
+        <RspMsg delay={5000} response={this.props.addGym.response ? this.props.addGym.response : null} />
       </Grid>
     );
+  }
+
+  componentDidMount() {
+    clearResponse();
   }
 
   setTab(tab) {

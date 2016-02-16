@@ -3,7 +3,7 @@ import {branch} from 'baobab-react/higher-order';
 import {Row, Col, Grid} from 'react-bootstrap';
 import StudentInfo from './components/StudentInfo';
 import StudentForm from './components/StudentForm';
-import {setActiveStudent} from 'actions/StudentActions';
+import {setActiveStudent, clearResponse} from 'actions/StudentActions';
 import RspMsg from './../../../components/Application/components/Forms/message';
 import _ from 'lodash';
 import './student-profile.less';
@@ -35,13 +35,13 @@ class StudentProfile extends React.Component {
               </Row>
             </div>
           </Row>
-          {
-            this.props.studentProfileView.response ?
-              <RspMsg response={this.props.studentProfileView.response} /> 
-            : null
-          }
+          <RspMsg delay={5000} response={this.props.studenProfileView.response ? this.props.studentProfileView.response : null} />
         </Grid> : null
     );
+  }
+
+  componentDidMount() {
+    clearResponse();
   }
 
 }

@@ -7,6 +7,10 @@ const gymStudentsCursor = tree.select(['views', 'GymStudents']);
 const gymInstructorsCursor = tree.select(['views', 'GymInstructors']);
 const InstructorProfile = tree.select(['views', 'InstructorProfile']);
 
+export function clearResponse() {
+  InstructorProfile.set('response', null);
+  tree.commit();
+}
 
 export async function editRole(userId, roleId) {
   gymInstructorsCursor.set({stale: true});

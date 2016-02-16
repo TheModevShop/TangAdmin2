@@ -1,14 +1,34 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
-import {addClass} from 'actions/ClassActions';
+import {addClass, clearResponse} from 'actions/ClassActions';
 import moment from 'moment';
 import {Row, Col, Grid, Input, Button} from 'react-bootstrap';
-import formsy from 'formsy-react';
+import Formsy from 'formsy-react';
 import InputField from './../../../components/Application/components/Forms/InputField';
 import Textarea from './../../../components/Application/components//Forms/Textarea';
 import SelectField from '../../../components/Application/components/Forms/SelectField';
 import RspMsg from './../../../components/Application/components/Forms/message';
 import './add-class.less';
+
+Formsy.addValidationRule('isLessThan', function (values, value, otherField) {
+  if (value && values[otherField]) {
+    let input1 = parseFloat(value.replace(/:/g, '.'));
+    let input2 = parseFloat(values[otherField].replace(/:/g, '.'));
+    return input1 < input2;
+  } else {
+    return true;
+  }
+});
+
+Formsy.addValidationRule('isMoreThan', function (values, value, otherField) {
+  if (value && values[otherField]) {
+    let input1 = parseFloat(values[otherField].replace(/:/g, '.'));
+    let input2 = parseFloat(value.replace(/:/g, '.'));
+    return input1 < input2;
+  } else {
+    return true;
+  }
+});
 
 const AddClass = React.createClass({
   render() {
@@ -24,24 +44,76 @@ const AddClass = React.createClass({
             <Row>
               <Formsy.Form onValidSubmit={this.submitClass} onValid={this.enableButton} onInvalid={this.disableButton} className="col-xs-12">
                 <Row>
-                  <InputField className="col-xs-12 " type="text" name="name" title="Class Name" required />
+                  <InputField
+                    className="col-xs-12 "
+                    type="text"
+                    name="name"
+                    title="Class Name"
+                    validations="isExisty"
+                    validationError="Please enter a class name!" 
+                    required />
                 </Row>
                 <Row>
-                  <Textarea className="col-xs-12 " type="textarea" name="description" title="Class Description" />
+                  <Textarea
+                    className="col-xs-12 " 
+                    type="textarea" 
+                    name="description" 
+                    title="Class Description" />
                 </Row>
                 <Row>
-                  <SelectField className="col-xs-12 "  name="instructor" title="instructor" options={this.getInstructors()} />
+                  <SelectField 
+                    className="col-xs-12 "  
+                    name="instructor" 
+                    title="Instructor"
+                    options={this.getInstructors()} />
                 </Row>
                 <Row>
-                  <InputField className="col-xs-12 "  type="date" name="date" title="Date" required />
+                  <InputField 
+                    className="col-xs-12 " 
+                    type="date" 
+                    name="date" 
+                    title="Date" 
+                    required />
                 </Row>
                 <Row>
-                  <InputField className="col-xs-12 col-sm-6 " type="time" name="time.start" title="Start Time" required />
-                  <InputField className="col-xs-12 col-sm-6 " type="time" name="time.end" title="End Time" required />
+                  <InputField 
+                    className="col-xs-12 col-sm-6 " 
+                    type="time" 
+                    name="time.start" 
+                    title="Start Time"
+                    validations={"isLessThan:time.end"}
+                    validationError="Your start time is after your closing time!" 
+                    required />
+                  <InputField 
+                    className="col-xs-12 col-sm-6 " 
+                    type="time" 
+                    name="time.end"
+                    title="End Time"
+                    validations={"isMoreThan:time.start"}
+                    validationError="Your end time is before your opening time!" 
+                    required />
                 </Row>
                 <Row>
-                  <InputField className="col-xs-12 col-sm-6 " type="text" name="price" title="Price"  required/>
-                  <InputField className="col-xs-12 col-sm-6 " type="text" name="capactiy" title="Capacity"  required/>
+                  <InputField 
+                    className="col-xs-12 col-sm-6 " 
+                    type="text" 
+                    name="price" 
+                    title="Price"  
+                    required 
+                    validations={{
+                      isNumeric: true
+                    }}
+                    validationError="Please enter a number!" />
+                  <InputField 
+                    className="col-xs-12 col-sm-6 " 
+                    type="text" 
+                    name="capactiy" 
+                    title="Capacity"
+                    validations={{
+                      isInt: true
+                    }}
+                    validationError="Please enter a number!"
+                    required/>
                 </Row>
                 <Row>
                   <Col xs={12}>
@@ -50,16 +122,17 @@ const AddClass = React.createClass({
                 </Row>
               </Formsy.Form>
             </Row>
-            {
-              this.props.view.response ?
-                <RspMsg response={this.props.view.response} /> 
-              : null
-            }
+            <RspMsg delay={5000} response={this.props.view.response ? this.props.view.response : null} />
           </div>
         </Row>
       </Grid>
     );
   },
+  
+  componentDidMount() {
+    clearResponse();
+  },
+
   getInitialState() {
     return { canSubmit: false };
   },

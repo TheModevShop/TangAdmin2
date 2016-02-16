@@ -61,7 +61,7 @@ class Day extends React.Component {
 					label="Closed"
 					name={params.abbr + "_closed"} 
 					type="checkbox" 
-					onChange={this.closed.bind(this)} 
+					onChange={this.closed.bind(this)}
 					className="checkbox " 
 					title="Closed" />
 			</Col>

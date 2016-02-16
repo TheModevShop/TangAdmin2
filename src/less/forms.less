@@ -51,9 +51,10 @@ button.btn.btn-default,
 
 form {
 	.form-group {
+		margin-bottom: 8px;
 		&.error {
 			.form-control {
-				border-color: red;
+				border-color: #C23B22;
 				border-width: 2px;
 			}
 		}
@@ -78,15 +79,12 @@ form {
 			box-shadow: none;
 		}
 	}
-	.tooltip.top {
-		top: -11px;
-		transition: opacity 0.1s ease;
-		.tooltip-arrow {
-			border-top-color: red;
-		}
-		.tooltip-inner {
-			background-color: red;
-		}
+	.validation-error {
+		display: block;
+		color: #C23B22;
+		font-size: 14px;
+		margin-top: 3px;
+		height: 15px;
 	}
 	textarea {
 		max-height: 100px;

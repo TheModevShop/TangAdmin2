@@ -15,7 +15,7 @@ class HoursComponent extends React.Component {
 
 	render() {
 		const data = this.props.data || {};
-		const days = { "days": [{"name": "Monday", "abbr": "mon", "open": data.mon_open, "close": data.mon_close}, {"name": "Tuesday", "abbr": "tue", "open": data.tue_open, "close": data.tue_close}, {"name": "Wednesday", "abbr": "wed", "open": data.wed_open, "close": data.wed_close}, {"name": "Thursday", "abbr": "thu", "open": data.thu_open, "close": data.thu_close}, {"name": "Friday", "abbr": "fri", "open": data.fri_open, "close": data.fri_close}, {"name": "Saturday", "abbr": "sat", "open": data.sat_open, "close": data.sat_close}, {"name": "Sunday", "abbr": "sun", "open": data.sun_open, "close": data.sun_close}]};
+		const days = { "days": [{"name": "Monday", "abbr": "mon", "open": data.hours.mon_open, "close": data.hours.mon_close}, {"name": "Tuesday", "abbr": "tue", "open": data.hours.tue_open, "close": data.hours.tue_close}, {"name": "Wednesday", "abbr": "wed", "open": data.hours.wed_open, "close": data.hours.wed_close}, {"name": "Thursday", "abbr": "thu", "open": data.hours.thu_open, "close": data.hours.thu_close}, {"name": "Friday", "abbr": "fri", "open": data.hours.fri_open, "close": data.hours.fri_close}, {"name": "Saturday", "abbr": "sat", "open": data.hours.sat_open, "close": data.hours.sat_close}, {"name": "Sunday", "abbr": "sun", "open": data.hours.sun_open, "close": data.hours.sun_close}]};
 		const daysList = _.map(days.days, (day) => {
 						  return (
 						     <DayModule params={day} key={day.abbr} />
@@ -37,10 +37,9 @@ class HoursComponent extends React.Component {
 	}
 
 	submit(data) {
-		const gymData = this.props.data;
-		if (this.props.data._id) {
-			gymData.hours = data;
-			updateGym({gymData}, this.props.data._id);
+		const gymId = this.props.data._id;
+		if (gymId) {
+			updateGym({hours: data}, gymId);
 		}
 	}
 

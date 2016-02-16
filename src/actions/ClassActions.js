@@ -11,19 +11,24 @@ export function setActiveClass() {
   tree.commit();
 }
 
+export function clearResponse() {
+  AddClass.set('response', null);
+  tree.commit();
+}
+
 export async function addClass(data) {
   let post;
   AddClass.set(['awaitingSave'], true);
   try {
     post = await postClass(_.get(myGym.get(), 'gymDetails._id'), data);
-    ClassList.set('stale', true);
+    ClassList.set({'stale': true});
     AddClass.set(['response'], {'success': true, 'message': 'Your class information has been successfully submitted!'});
   } catch (err) {
     AddClass.set(['response'], {'success': false, 'message': 'There was an error submitting your information.'});
   }
   AddClass.set(['awaitingSave'], false);
   tree.commit();
-  return post.body;
+  return post;
 }
 
 export async function resetAddClass(data) {
