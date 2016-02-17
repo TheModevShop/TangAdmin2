@@ -35,6 +35,18 @@ export default function getInitialState() {
           success: true,
           response: null
         },
+        StudentProfile: {
+          awaitingSave: false,
+          error: false,
+          success: true,
+          response: null
+        },
+        InstructorProfile: {
+          awaitingSave: false,
+          error: false,
+          success: true,
+          response: null
+        },
         ClassList: null,
         PrivatesList: null
       },

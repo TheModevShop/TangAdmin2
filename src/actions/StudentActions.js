@@ -1,5 +1,5 @@
 import tree from 'state/StateTree';
-import {editUser} from 'api/userApi';
+import {editRole} from 'api/userApi';
 import _ from 'lodash';
 
 const gymStudentsCursor = tree.select(['views', 'GymStudents']);
@@ -15,7 +15,7 @@ export function clearResponse() {
 export async function setAsInstructor(userId, roleId) {
   gymStudentsCursor.set({isLoading: true});
   try {
-    const put = await editUser(userId, {
+    const put = await editRole(userId, {
       gym: _.get(myGym.get(), 'gymDetails._id'),
       role: roleId
     });

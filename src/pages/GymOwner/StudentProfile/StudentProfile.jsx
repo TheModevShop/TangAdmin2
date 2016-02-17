@@ -35,7 +35,7 @@ class StudentProfile extends React.Component {
               </Row>
             </div>
           </Row>
-          <RspMsg delay={5000} response={this.props.studenProfileView.response ? this.props.studentProfileView.response : null} />
+          <RspMsg delay={5000} response={this.props.studentProfileView.response ? this.props.studentProfileView.response : null} />
         </Grid> : null
     );
   }

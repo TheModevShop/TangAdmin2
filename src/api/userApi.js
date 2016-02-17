@@ -13,6 +13,17 @@ export async function editUser(id, data) {
   });
 }
 
+export async function editRole(id, data) {
+  return new bluebird((resolve, reject) => {
+    xhr('PUT', `${BASE}/users/${id}/role`, data).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+      console.log('err')
+    });
+  });
+}
+
 export async function editMeApi(data) {
   return new bluebird((resolve, reject) => {
     xhr('PUT', `${BASE}/me`, data).then((data) => {

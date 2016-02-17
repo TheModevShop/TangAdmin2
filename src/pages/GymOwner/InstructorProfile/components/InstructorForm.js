@@ -1,6 +1,6 @@
 import React from 'react';
 import {Row, Col, Button, Input} from 'react-bootstrap';
-import {editRole} from 'actions/InstructorActions';
+import {makeGymOwner} from 'actions/InstructorActions';
 
 
 class InstructorForm extends React.Component {
@@ -18,7 +18,7 @@ class InstructorForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    editRole(this.state.userId, this.state.role);
+    makeGymOwner(this.state.userId, this.state.role);
   }
 
   render() {
