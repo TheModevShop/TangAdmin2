@@ -153,8 +153,8 @@ const AddClass = React.createClass({
       data.dateAndTime = moment(data.date);
       data.date = moment(data.date).format('YYYYMMDD');
       data.private = false;
-      data.price = Number(data.price);
-      data.capactiy = Number(data.capactiy)
+      data.price = this.currency(data.price);
+      data.capacity = Number(data.capactiy)
       data = JSON.stringify(data);
       const response = await addClass(data);
     } else {
@@ -162,11 +162,19 @@ const AddClass = React.createClass({
     }
 
   },
+
   enableButton() {
     this.setState({ canSubmit: true });
   },
+
   disableButton() {
     this.setState({ canSubmit: false });
+  },
+
+  currency(value) {
+    var val = Number(value);
+    val = val.toFixed(2);
+      return val * 100;
   }
 });
 
