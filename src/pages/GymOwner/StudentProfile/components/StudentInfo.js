@@ -11,6 +11,7 @@ class Student extends React.Component {
         <div>
           <span className="name">{profile.name.first} {profile.name.last}</span>
           <span className="email">{profile.email}</span>
+          <p>{profile.description}</p>
         </div>
       </Col>
     );

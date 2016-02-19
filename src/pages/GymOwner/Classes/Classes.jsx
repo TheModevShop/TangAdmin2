@@ -77,16 +77,20 @@ class Classes extends React.Component {
         prop: 'start' 
       },
       { 
-        title: 'End', 
+        title: 'End Time', 
         prop: 'end' 
+      },
+      { 
+        title: 'Instructor', 
+        prop: 'instructor' 
       },
       { 
         title: 'Capacity', 
         prop: 'capacity' 
       },
-      {
-        title: 'Enrolled',
-        prop: 'enrolled'
+      { 
+        title: 'Fee', 
+        prop: 'price' 
       }
     ];
 

@@ -53,7 +53,7 @@ class Privates extends React.Component {
     const isLoading = _.get(this.props, 'privates.isLoading') || false;
     
     const renderName = (val, row) => {
-      return <Link to={`/privates/${row._id}`}>{row.name}</Link>;
+      return <Link to={`/privates/${row._id}`}>{row.instructor}</Link>;
     }
 
     const renderCheck = (val, row) => {
@@ -66,7 +66,7 @@ class Privates extends React.Component {
         render: renderCheck
       },
       { 
-        title: 'Name', 
+        title: 'Instructor', 
         render: renderName
       },
       { 
@@ -82,12 +82,12 @@ class Privates extends React.Component {
         prop: 'end' 
       },
       { 
-        title: 'Capacity', 
-        prop: 'capacity' 
+        title: 'Student', 
+        prop: 'enrolled' 
       },
-      {
-        title: 'Enrolled',
-        prop: 'enrolled'
+      { 
+        title: 'Price', 
+        prop: 'price' 
       }
     ];
 
@@ -97,11 +97,8 @@ class Privates extends React.Component {
     return (
       <div className="table-wrapper">
         <div className="row table-header">
-          <Col xs={12} sm={6}>
+          <Col xs={12}>
             <h1>Private Classes</h1>
-          </Col>
-          <Col xs={12} sm={6}>
-            <Link className="btn" to={`/add-class`}>Add Private Class</Link>
           </Col>
         </div>
         <div className="row table-filter-container">
