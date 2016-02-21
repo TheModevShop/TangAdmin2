@@ -4,9 +4,9 @@ import moment from 'moment';
 import {DataTable} from 'react-data-components';
 import {Row, Col, Button, Input} from 'react-bootstrap';
 import CustomModal from 'components/Application/components/Modal/Modal';
+import TableFilter from './../../../components/Application/components/Table/TableFilter';
 import {cancelClasses} from 'actions/ClassActions';
 import {Link} from 'react-router';
-import Select from 'react-select';
 import Spinner from 'components/Spinner';
 import "./classes.less";
 import _ from 'lodash';
@@ -14,7 +14,7 @@ import _ from 'lodash';
 class Classes extends React.Component {
   constructor(...args) {
     super(...args);
-    this.state = {selections: []};
+    this.state = {selections: [], filter: null};
   }
 
   toggleSelection(id) {
@@ -39,8 +39,8 @@ class Classes extends React.Component {
     this.refs.modal.close();
   }
   
-  logChange(val) {
-    console.log("Selected: " + val);
+  logChange(val, obj) {
+    this.setState({filter: {'value': val, 'filter': obj[0].filter}});
   }
 
   activateModal(action, fn) {
@@ -48,7 +48,7 @@ class Classes extends React.Component {
   }
 
   render() {
-    const classes = this.formatData();
+    const classes = this.formatData(this.state.filter);
     const isLoading = _.get(this.props, 'classes.isLoading') || false;
 
     const renderName = (val, row) => {
@@ -81,10 +81,6 @@ class Classes extends React.Component {
         prop: 'end' 
       },
       { 
-        title: 'Instructor', 
-        prop: 'instructor' 
-      },
-      { 
         title: 'Capacity', 
         prop: 'capacity' 
       },
@@ -93,9 +89,6 @@ class Classes extends React.Component {
         prop: 'price' 
       }
     ];
-
-    const classNames = _.map(_.cloneDeep(classes), (classItem) => { return {'value': classItem.name, 'label': classItem.name}});
-    const instructorNames = _.map(_.cloneDeep(classes), (classItem) => { return {'value': 'TODO', 'label': 'TODO'}});
 
     return (
       <div className="table-wrapper">
@@ -108,21 +101,7 @@ class Classes extends React.Component {
           </Col>
         </div>
         <div className="row table-filter-container">
-          <Col xs={12} sm={7}>
-              <Select
-                className=""
-                name="form-field-name"
-                options={classNames}
-                onChange={this.logChange.bind(this)}
-                placeholder="Classes" />
-              <Select
-                className=""
-                name="form-field-name"
-                options={instructorNames}
-                placeholder="Instructors"
-                onChange={this.logChange.bind(this)} />
-              <Input type="Date" onChange={this.logChange.bind(this)} placeholder="Select Date" />
-          </Col>
+          <TableFilter table="classes" onChange={this.logChange.bind(this)} />
           { 
             this.state.selections.length ?
               <Col xs={12} sm={5}>
@@ -153,16 +132,28 @@ class Classes extends React.Component {
     );
   }
 
-  formatData() {
+  formatData(filter) {
     let classes = _.get(this.props, 'classes.allClasses') || [];
     classes = _.map(_.cloneDeep(classes), (classItem) => {
       classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
       classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
       classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
-      classItem.capacity = `${classItem.capacity}`;
-      classItem.enrolled = `${classItem.enrolled.length}`;
+      classItem.enrolled = classItem.enrolled[0];
+
       return classItem;
     });
+
+    if (filter) {
+      var param = filter.filter;
+      if (param === 'instructors') {
+        classes = _.filter(classes, _.matches({'instructor': {_id: filter.value}}));
+      } else if (param === 'classes') {
+        classes = _.filter(classes, _.matches({'name': filter.value}));
+      } else if (param === 'date') {
+        classes = _.filter(classes, _.matches({'date': filter.value}));
+      }
+    }
+
     return classes;
   }
 }

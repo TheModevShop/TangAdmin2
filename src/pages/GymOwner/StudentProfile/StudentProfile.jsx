@@ -22,11 +22,6 @@ class StudentProfile extends React.Component {
         <Grid fluid className="student-profile">
           <Row>
             <div className="col-xs-12">
-              <div className="row">
-                <Col xs={12}>
-                  <h1>Edit Student</h1>
-                </Col>
-              </div>
               <Row className="info-container">
                 <StudentInfo profile={profile} />
               </Row>

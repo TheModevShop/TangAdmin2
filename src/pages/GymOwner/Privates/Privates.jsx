@@ -5,17 +5,15 @@ import {DataTable} from 'react-data-components';
 import {Row, Col, Input, Button} from 'react-bootstrap';
 import Spinner from 'components/Spinner';
 import {Link} from 'react-router';
-import Select from 'react-select';
 import CustomModal from './../../../components/Application/components/Modal/Modal';
+import TableFilter from './../../../components/Application/components/Table/TableFilter';
 import "./privates.less";
 import _ from 'lodash';
-
-
 
 class Privates extends React.Component {
   constructor(...args) {
     super(...args);
-    this.state = {selections: []};
+    this.state = {selections: [], filter: null};
   }
 
   toggleSelection(id) {
@@ -34,14 +32,9 @@ class Privates extends React.Component {
     console.log(this.state.selections);
     this.refs.modal.close();
   }
-
-  replicate() {
-    console.log(this.state.selections);
-    this.refs.modal.close();
-  }
   
-  logChange(val) {
-    console.log("Selected: " + val);
+  logChange(val, obj) {
+    this.setState({filter: {'value': val, 'filter': obj[0].filter}});
   }
   
   activateModal(action, fn) {
@@ -49,11 +42,15 @@ class Privates extends React.Component {
   }
 
   render() {
-    const classes = this.formatData();
+    const classes = this.formatData(this.state.filter);
     const isLoading = _.get(this.props, 'privates.isLoading') || false;
     
     const renderName = (val, row) => {
-      return <Link to={`/privates/${row._id}`}>{row.instructor}</Link>;
+      return <Link to={`/privates/${row._id}`}>{ row.instructor ? row.instructor.name.first + ' ' + row.instructor.name.last : 'TODO'} </Link>;
+    }
+
+    const renderStudent = (val, row) => {
+      return <div>{ row.enrolled ? row.enrolled.name.first + ' ' + row.enrolled.name.last : 'TODO'} </div>;
     }
 
     const renderCheck = (val, row) => {
@@ -83,16 +80,13 @@ class Privates extends React.Component {
       },
       { 
         title: 'Student', 
-        prop: 'enrolled' 
+        render: renderStudent 
       },
       { 
         title: 'Price', 
         prop: 'price' 
       }
     ];
-
-    const classNames = _.map(_.cloneDeep(classes), (classItem) => { return {'value': classItem.name, 'label': classItem.name}});
-    const instructorNames = _.map(_.cloneDeep(classes), (classItem) => { return {'value': 'TODO', 'label': 'TODO'}});
 
     return (
       <div className="table-wrapper">
@@ -101,27 +95,13 @@ class Privates extends React.Component {
             <h1>Private Classes</h1>
           </Col>
         </div>
+
         <div className="row table-filter-container">
-          <Col xs={12} sm={7}>
-              <Select
-                className=""
-                name="form-field-name"
-                options={classNames}
-                onChange={this.logChange.bind(this)}
-                placeholder="Classes" />
-              <Select
-                className=""
-                name="form-field-name"
-                options={instructorNames}
-                placeholder="Instructors"
-                onChange={this.logChange.bind(this)} />
-              <Input type="Date" onChange={this.logChange.bind(this)} placeholder="Select Date" />
-          </Col>
+          <TableFilter table="private" onChange={this.logChange.bind(this)} />
           { 
             this.state.selections.length ?
               <Col xs={12} sm={5}>
                 <Button onClick={this.activateModal.bind(this, 'delete', this.delete.bind(this))}>Delete</Button>
-                <Button onClick={this.activateModal.bind(this, 'replicate', this.replicate.bind(this))}>Replicate</Button>
               </Col>
             : null
           }
@@ -135,7 +115,7 @@ class Privates extends React.Component {
                 columns={columns}
                 initialData={classes}
                 initialPageLength={15}
-                initialSortBy={{ prop: 'name', order: 'descending' }}
+                initialSortBy={{ prop: 'date', order: 'ascending' }}
                 pageLengthOptions={[ 15, 20, 50 ]}
                 className="table-body" /> 
             : 
@@ -146,16 +126,27 @@ class Privates extends React.Component {
     );
   }
 
-  formatData() {
+  formatData(filter) {
     let classes = _.get(this.props, 'privates.allPrivates') || [];
     classes = _.map(_.cloneDeep(classes), (classItem) => {
       classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
       classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
       classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
-      classItem.capacity = `${classItem.capacity}`;
-      classItem.enrolled = `${classItem.enrolled.length}`;
+      classItem.enrolled = classItem.enrolled[0];
+
       return classItem;
     });
+
+    if (filter) {
+      var param = filter.filter;
+      if (param === 'instructors') {
+        classes = _.filter(classes, _.matches({'instructor': {_id: filter.value}}));
+      } else if (param === 'students') {
+        classes = _.filter(classes, _.matches({'enrolled': {_id: filter.value}}));
+      } else if (param === 'date') {
+        classes = _.filter(classes, _.matches({'date': filter.value}));
+      }
+    }
     return classes;
   }
 }
