@@ -6,7 +6,7 @@ import {Link} from 'react-router';
 import Spinner from 'components/Spinner';
 
 const renderName = (val, row) => {
-  return <Link to={`/students/${row._id}`}>{row.name.first} {row.name.last}</Link>;
+  return <Link to={`/students/${row._id}`}><span className="profile-pic"></span>{row.name.first} {row.name.last}</Link>;
 }
   
 const columns = [
@@ -17,18 +17,6 @@ const columns = [
   { 
     title: 'Email', 
     prop: 'email' 
-  },
-  {
-    title: 'Classes', 
-    prop: 'classes' 
-  },
-  {
-    title: 'Privates', 
-    prop: 'privates' 
-  },
-  {
-    title: 'Balance', 
-    prop: 'balance' 
   }
 ];
 
