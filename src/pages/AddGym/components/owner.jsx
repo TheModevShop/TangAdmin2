@@ -53,6 +53,16 @@ class OverviewComponent extends React.Component {
 								}}
 								validationError="Please enter a valid email address!" 
 								required />
+							<InputField
+								className="col-xs-7 " 
+								type="password" 
+								name="password"
+								title="Password" 
+								validations={{
+									maxLength: 50
+								}}
+								validationError="Please enter a valid password!" 
+								required />
 						</Row>
 						<Row>
 							<Col xs={12}>
