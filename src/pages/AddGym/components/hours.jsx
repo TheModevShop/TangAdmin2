@@ -15,6 +15,7 @@ class HoursComponent extends React.Component {
 
 	render() {
 		const data = this.props.data || {};
+		data.hours = {};
 		const days = { "days": [{"name": "Monday", "abbr": "mon", "open": data.hours.mon_open, "close": data.hours.mon_close}, {"name": "Tuesday", "abbr": "tue", "open": data.hours.tue_open, "close": data.hours.tue_close}, {"name": "Wednesday", "abbr": "wed", "open": data.hours.wed_open, "close": data.hours.wed_close}, {"name": "Thursday", "abbr": "thu", "open": data.hours.thu_open, "close": data.hours.thu_close}, {"name": "Friday", "abbr": "fri", "open": data.hours.fri_open, "close": data.hours.fri_close}, {"name": "Saturday", "abbr": "sat", "open": data.hours.sat_open, "close": data.hours.sat_close}, {"name": "Sunday", "abbr": "sun", "open": data.hours.sun_open, "close": data.hours.sun_close}]};
 		const daysList = _.map(days.days, (day) => {
 						  return (
