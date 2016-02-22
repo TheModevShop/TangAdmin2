@@ -19,13 +19,12 @@ class OwnerComponent extends React.Component {
 		const roles = _.get(this.props, 'roles.roles');
 		const gymOwnerRole = _.find(roles, {'name': 'gym-owner'});
 		return {
-			'name': {
-				'first': inputs.first,
-				'last': inputs.last
-			},
-			'email': inputs.email,
-			'password': inputs.password,
-			'gyms': [{'gym': this.props.data._id, 'role': gymOwnerRole._id}]
+			first: inputs.first,
+			last: inputs.last,
+			email: inputs.email,
+			password: inputs.password,
+			gym: this.props.data._id,
+			role: gymOwnerRole._id
 		};
 	}
 
@@ -100,7 +99,7 @@ class OwnerComponent extends React.Component {
 	}
 
 	submit(data) {
-		addGymOwner(data);
+		addGymOwner(data, this.props.data._id);
 	}
 
 	enableButton() {
