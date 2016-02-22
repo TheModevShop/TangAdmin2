@@ -6,6 +6,7 @@ import {Row, Col, Grid, Button} from 'react-bootstrap';
 import RspMsg from './../../components/Application/components/Forms/message';
 import OverviewComponent from './components/overview';
 import HoursComponent from './components/hours';
+import {setActiveGym} from 'actions/GymActions';
 import PhotosComponent from './components/photos';
 import OwnerComponent from './components/owner';
 import _ from 'lodash';
@@ -17,6 +18,10 @@ class AddGym extends React.Component {
     this.state = {
       activeTab: 'overview'
     }
+  }
+
+  componentWillMount() {
+    setActiveGym();
   }
 
   render() {
@@ -67,7 +72,6 @@ class AddGym extends React.Component {
     clearResponse();
     this.setState({activeTab: tab});
   }
-
 }
 
 export default branch(AddGym, {

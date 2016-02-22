@@ -1,6 +1,6 @@
 import tree from 'state/StateTree';
 import {postGym, postGymUpdate} from 'api/locationsApi';
-
+import {createAccount} from 'api/authApi';
 const gymList = tree.select(['views', 'GymList']);
 const addGymCursor = tree.select(['views', 'AddGym']);
 
@@ -33,6 +33,24 @@ export async function updateGym(data, gymId) {
   const dataStr = JSON.stringify(data);
   try {
     update = await postGymUpdate(dataStr, gymId);
+    gymList.set({stale: true}); // this will cause to refetch
+    addGymCursor.set(['data'], post.body);
+    addGymCursor.set(['response'], {'success': true, 'message': 'Your gym information has been successfully submitted!'});
+  } catch (err) {
+    update = null;
+    addGymCursor.set(['response'], {'success': false, 'message': 'There was an error submitting your information.'});
+  }
+  addGymCursor.set(['awaitingSave'], false);
+  tree.commit();
+  return update;
+}
+
+export async function addGymOwner(data) {
+  let update;
+  addGymCursor.set(['awaitingSave'], true);
+  const dataStr = JSON.stringify(data);
+  try {
+    update = await createAccount(dataStr);
     gymList.set({stale: true}); // this will cause to refetch
     addGymCursor.set(['data'], post.body);
     addGymCursor.set(['response'], {'success': true, 'message': 'Your gym information has been successfully submitted!'});

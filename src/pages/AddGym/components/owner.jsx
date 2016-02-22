@@ -1,49 +1,61 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import InputField from './../../../components/Application/components/Forms/InputField';
-import Textarea from './../../../components/Application/components/Forms/Textarea';
 import SelectField from './../../../components/Application/components/Forms/SelectField';
-import {addGym, updateGym, addOverview} from 'actions/AddGymActions';
-import GoogleMap from 'components/GoogleMap';
-import {getGymGeoPoints} from 'actions/GoogleMapsActions';
+import {addGymOwner} from 'actions/AddGymActions';
 import {Row, Col, Button} from 'react-bootstrap';
 import _ from 'lodash';
 
-class OverviewComponent extends React.Component {
+class OwnerComponent extends React.Component {
 	constructor(...args) {
 		super(...args);
 		this.state = {
-		  canSubmit: false
+		  canSubmit: false,
+		  gymOwnerRole: null
 		}
+	}
+
+	mapInputs(inputs) {
+		const roles = _.get(this.props, 'roles.roles');
+		const gymOwnerRole = _.find(roles, {'name': 'gym-owner'});
+		return {
+			'name': {
+				'first': inputs.first,
+				'last': inputs.last
+			},
+			'email': inputs.email,
+			'password': inputs.password,
+			'gyms': [{'gym': this.props.data._id, 'role': gymOwnerRole._id}]
+		};
 	}
 
 	render() {
 		const data = this.props.data || {};
+		const roles = _.get(this.props, 'roles.roles') || {};
 		return (
-			<Formsy.Form ref="form" onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} className="row">
+			<Formsy.Form ref="form" onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} mapping={this.mapInputs.bind(this)} className="row">
 				 <Col xs={12}>
 						<Row>
 						  <InputField 
-						  	className="col-xs-12 " 
-						  	name="name" 
-						  	title="Name" 
+						  	className="col-xs-12 col-sm-6 " 
+						  	name="first" 
+						  	title="First Name" 
 						  	type="text"
 						  	validations="isExisty"
-						  	validationError="Please enter a Gym Name!" 
+						  	validationError="Please enter your first name." 
+						  	required />
+						  <InputField 
+						  	className="col-xs-12 col-sm-6 " 
+						  	name="last" 
+						  	title="Last Name" 
+						  	type="text"
+						  	validations="isExisty"
+						  	validationError="Please enter your first name." 
 						  	required />
 						</Row>
 						<Row>
-							<SelectField 
-								className="col-xs-5 address-input " 
-								name="gym" 
-								title="Gym" 
-								value={data._id} 
-								options={this.getGyms()} 
-								validations="isExisty"
-								validationError="Please select a gym!"
-								required />
 							<InputField
-								className="col-xs-7 " 
+								className="col-xs-12 " 
 								type="email" 
 								name="email"
 								title="Email Address" 
@@ -53,15 +65,27 @@ class OverviewComponent extends React.Component {
 								}}
 								validationError="Please enter a valid email address!" 
 								required />
+						</Row>
+						<Row>
 							<InputField
-								className="col-xs-7 " 
+								className="col-xs-6 " 
 								type="password" 
 								name="password"
 								title="Password" 
 								validations={{
 									maxLength: 50
 								}}
-								validationError="Please enter a valid password!" 
+								validationError="Your password needs to be under 50 characters." 
+								required />
+							<InputField
+								className="col-xs-6 " 
+								type="password" 
+								name="passwordRepeat"
+								title="Confirm Your Password" 
+								validations={{
+									equalsField: 'password'
+								}}
+								validationError="Your password must match." 
 								required />
 						</Row>
 						<Row>
@@ -76,7 +100,7 @@ class OverviewComponent extends React.Component {
 	}
 
 	submit(data) {
-		console.log(data);
+		addGymOwner(data);
 	}
 
 	enableButton() {
@@ -86,20 +110,10 @@ class OverviewComponent extends React.Component {
 	disableButton() {
 	  this.setState({ canSubmit: false });
 	}
-
-	getGyms() {
-	  return {
-	    data: _.map(_.get(this.props.gyms, 'allGyms', []), (gym) => {
-	      return {
-	        name: `${gym.name}`,
-	        id: gym._id
-	      }
-	    })
-	  };
-	}
 }
-export default branch(OverviewComponent, {
+
+export default branch(OwnerComponent, {
   facets: {
-    gyms: 'Gyms'
+    roles: 'Roles'
   }
 });

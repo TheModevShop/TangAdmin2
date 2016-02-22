@@ -30,11 +30,15 @@ class Day extends React.Component {
 		this.state = {closed: false};
 	}
 
+	componentDidMount() {
+		this.checkClosed();
+	}
+
 	render() {
 		const params = this.props.params;
 		const input1 = params.abbr + "_open";
 		const input2 = params.abbr + "_close";
-
+		
 		return (
 			<Col xs={12} className="day-container">
 				<Label>{params.name}</Label>
@@ -62,10 +66,17 @@ class Day extends React.Component {
 					name={params.abbr + "_closed"} 
 					type="checkbox" 
 					onChange={this.closed.bind(this)}
-					className="checkbox " 
+					className="checkbox "
+					checked={this.state.closed}
 					title="Closed" />
 			</Col>
 		);
+	}
+
+	checkClosed() {
+		if (!this.props.params.open && !this.props.params.close) {
+			this.setState({closed: true});
+		}
 	}
 
 	closed(params) {
