@@ -40,6 +40,18 @@ export async function postGymUpdate(data, id) {
   });
 }
 
+export async function addPhotosApi(photos, id) { 
+  console.log(photos)
+  return new bluebird((resolve, reject) => {
+    xhr('PUT', `${BASE}/gyms/${id}/add-photo`, {photos: photos}).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+      console.log('err')
+    });
+  });
+}
+
 // POST - Creates new Gym (Needs admin auth)
 
 // name - required

@@ -1,25 +1,26 @@
 import React from 'react';
 import {Row, Col, Button} from 'react-bootstrap';
-var Dropzone = require('react-dropzone');
+import Dropzone from 'react-dropzone';
+import _ from 'lodash';
+import {addPhotos} from 'actions/AddGymActions';
 import './../add-gym.less';
 
 const PhotosComponent = React.createClass({
     getInitialState() {
-        return {
-          images: []
-        };
+      return {
+        images: []
+      };
     },
 
     onDrop(files) {
-        const imgs = this.state.images;
+      const imgs = this.state.images;
+      for (var file in files) {
+          imgs.push(files[file]);
+      }
 
-        for (var file in files) {
-            imgs.push(files[file]);
-        }
-
-        this.setState({
-            images: imgs
-        });
+      this.setState({
+          images: imgs
+      });
     },
 
     onDelete(files) {
@@ -27,7 +28,10 @@ const PhotosComponent = React.createClass({
     },
 
     onSubmit() {
-      console.log(this.state.images)
+      const images = _.map(this.state.images, (image) => {
+        return image.preview;
+      })
+      addPhotos(images, this.props.gymId);
     },
 
     render() {
