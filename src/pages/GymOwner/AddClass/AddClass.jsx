@@ -1,9 +1,10 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
-import {addClass, clearResponse} from 'actions/ClassActions';
+import {updateClass, addClass, clearResponse} from 'actions/ClassActions';
 import moment from 'moment';
 import {Row, Col, Grid, Input, Button} from 'react-bootstrap';
 import Formsy from 'formsy-react';
+import {setActiveClass} from 'actions/ClassActions';
 import InputField from './../../../components/Application/components/Forms/InputField';
 import Textarea from './../../../components/Application/components//Forms/Textarea';
 import SelectField from '../../../components/Application/components/Forms/SelectField';
@@ -31,12 +32,18 @@ Formsy.addValidationRule('isMoreThan', function (values, value, otherField) {
 });
 
 const AddClass = React.createClass({
+  componentWillMount() {
+    setActiveClass();
+  },
+
   render() {
+    const profile = _.get(this.props, 'classProfile.classProfile') || {};
+    const date = profile.date ? moment(profile.date, 'YYYYMMDD').format('YYYY-MM-DD') : null;
     return (
       <Grid fluid>
         <div className="row header">
           <Col xs={12}>
-            <h1>Add Class</h1>
+            <h1>{profile._id ? 'Update Class' : 'Add Class'}</h1>
           </Col>
         </div>
         <Row>
@@ -49,6 +56,7 @@ const AddClass = React.createClass({
                     type="text"
                     name="name"
                     title="Class Name"
+                    value={profile.name ? profile.name : ''} 
                     validations="isExisty"
                     validationError="Please enter a class name!" 
                     required />
@@ -57,19 +65,22 @@ const AddClass = React.createClass({
                   <Textarea
                     className="col-xs-12 " 
                     type="textarea" 
-                    name="description" 
+                    name="description"
+                    value={profile.description ? profile.description : ''} 
                     title="Class Description" />
                 </Row>
                 <Row>
                   <SelectField 
-                    className="col-xs-12 "  
+                    className="col-xs-12 "
+                    value={profile.instructor ? profile.instructor : ''}   
                     name="instructor" 
                     title="Instructor"
                     options={this.getInstructors()} />
                 </Row>
                 <Row>
                   <InputField 
-                    className="col-xs-12 " 
+                    className="col-xs-12 "
+                    value={date ? date : ''}  
                     type="date" 
                     name="date" 
                     title="Date" 
@@ -81,6 +92,7 @@ const AddClass = React.createClass({
                     type="time" 
                     name="time.start" 
                     title="Start Time"
+                    value={profile.time ? profile.time.start : ''} 
                     validations={"isLessThan:time.end"}
                     validationError="Your start time is after your closing time!" 
                     required />
@@ -89,6 +101,7 @@ const AddClass = React.createClass({
                     type="time" 
                     name="time.end"
                     title="End Time"
+                    value={profile.time ? profile.time.end : ''} 
                     validations={"isMoreThan:time.start"}
                     validationError="Your end time is before your opening time!" 
                     required />
@@ -98,7 +111,8 @@ const AddClass = React.createClass({
                     className="col-xs-12 col-sm-6 " 
                     type="text" 
                     name="price" 
-                    title="Price"  
+                    title="Price"
+                    value={profile.price ? profile.price : ''} 
                     required 
                     validations={{
                       isNumeric: true
@@ -109,6 +123,7 @@ const AddClass = React.createClass({
                     type="text" 
                     name="capactiy" 
                     title="Capacity"
+                    value={profile.capacity ? profile.capacity : ''} 
                     validations={{
                       isInt: true
                     }}
@@ -117,7 +132,7 @@ const AddClass = React.createClass({
                 </Row>
                 <Row>
                   <Col xs={12}>
-                    <Button type="submit" value="Submit" disabled={!this.state.canSubmit}>Submit</Button>
+                    <Button type="submit" value="Submit" disabled={!this.state.canSubmit}>{profile._id ? 'Update' : 'Submit'}</Button>
                   </Col>
                 </Row>
               </Formsy.Form>
@@ -146,7 +161,7 @@ const AddClass = React.createClass({
       })
     };
   },
-  async submitClass(data) {
+  submitClass(data) {
     const classTime = moment(data.date).set('hour', data.time.start.split(':')[0]).set('minute', data.time.start.split(':')[1]).format()
     const validDate = moment().isBefore(moment(classTime))
     if (validDate) {
@@ -156,7 +171,11 @@ const AddClass = React.createClass({
       data.price = this.currency(data.price);
       data.capacity = Number(data.capactiy)
       data = JSON.stringify(data);
-      const response = await addClass(data);
+      if (this.props.classProfile.classProfile._id) {
+        updateClass(data, this.props.classProfile.classProfile._id);
+      } else {
+        addClass(data);
+      }
     } else {
       this.props.view.response = {'success': false, 'message': 'Invalid Date!'};
     }
@@ -183,7 +202,8 @@ export default branch(AddClass, {
     view: ['views', 'AddClass']
   },
   facets: {
-    instructors: 'Instructors'
+    instructors: 'Instructors',
+    classProfile: 'ClassProfile'
   }
 });
 

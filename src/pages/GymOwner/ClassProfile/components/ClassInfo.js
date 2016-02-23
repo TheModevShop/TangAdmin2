@@ -9,31 +9,13 @@ class ClassInfo extends React.Component {
         <Col xs={12} md={7}>
           <Row>
             <Col xs={12}>
-              <h2>Address</h2>
-              <div className="address-container">
-                <span></span>
-                <span className="city-zip"></span>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <h2>Private Class</h2>
-              <div>
-                <span>
-                  { profile.private ? "Yes" : "No" }
-                </span>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <h2>Time</h2>
-              <div>
-                <span>
-                  {profile.time.start} - {profile.time.end}
-                </span>
-              </div>
+              {profile.description}
+              {profile.capacity}
+              {profile.instructor}
+              {profile.price}
+              {profile.time.start}
+              {profile.time.end}
+              {profile.date}
             </Col>
           </Row>
         </Col>

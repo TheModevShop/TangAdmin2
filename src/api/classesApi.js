@@ -24,14 +24,13 @@ export async function cancelClassApi(ids) {
   });
 }
 
-
-// export async function getClasses(id) { 
-//   return new bluebird((resolve, reject) => {
-//     xhr('Get', `${BASE}/gyms/${id}/sessions`).then((data) => {
-//       resolve(data);
-//     }).catch((err) => {
-//       reject(err);
-//       console.log('err')
-//     });
-//   });
-// }
+export async function putClass(gymId, classId, data) { 
+  return new bluebird((resolve, reject) => {
+    xhr('PUT', `${BASE}/gyms/${gymId}/sessions/${classId}`, {data: data}).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+      console.log('err')
+    });
+  });
+}

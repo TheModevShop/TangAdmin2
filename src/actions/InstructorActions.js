@@ -12,6 +12,11 @@ export function clearResponse() {
   tree.commit();
 }
 
+export function setActiveInstructor() {
+  InstructorProfile.set({stale: true});
+  tree.commit();
+}
+
 export async function makeGymOwner(userId, roleId) {
   gymInstructorsCursor.set({stale: true});
   try {

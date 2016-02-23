@@ -7,7 +7,7 @@ import Spinner from 'components/Spinner';
 
 
 const renderName = (val, row) => {
-  return <Link to={`/instructors/${row._id}`}><span className="profile-pic"></span>{row.name.first} {row.name.last}</Link>;
+  return <Link to={`/instructors/${row._id}`}><div className="image" style={{backgroundImage: `url(${row.image})`}}></div>{row.name.first} {row.name.last}</Link>;
 }
   
 const columns = [

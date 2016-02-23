@@ -21,25 +21,17 @@ const columns = [
 ];
 
 
-class Students extends React.Component {
-  constructor(...args) {
-    super(...args);
-    this.state = {};
-  }
+class ClassStudentsTable extends React.Component {
   render() {
-    const students = _.get(this.props, 'students.allStudents') || [];
-    const isLoading = _.get(this.props, 'students.isLoading') || false;
-
+    const students = this.props.profile.enrolled
     return (
-      <div className="table-wrapper">
+      <div className="col-xs-12 table-wrapper">
         <div className="row table-header">
           <Col xs={12}>
-            <h1>Students</h1>
+            <h2>Students Enrolled</h2>
           </Col>
         </div>
         {
-          isLoading ? 
-          <Spinner /> :
           students.length ?
           <DataTable
             keys={['_id']}
@@ -50,14 +42,10 @@ class Students extends React.Component {
             pageLengthOptions={[ 15, 20, 50 ]}
             className="table-body"
           /> : 
-          <div className="no-results">No Students Yet</div>
+          <div className="no-results">No Students Enrolled Yet</div>
         }
        </div>
     );
   }
 }
-export default branch(Students, {
-  facets: {
-    students: 'GymStudents'
-  }
-});
+export default ClassStudentsTable;

@@ -12,6 +12,11 @@ export function clearResponse() {
   tree.commit();
 }
 
+export function setActiveStudent() {
+  StudentProfile.set({stale: true});
+  tree.commit();
+}
+
 export async function setAsInstructor(userId, roleId) {
   gymStudentsCursor.set({isLoading: true});
   try {

@@ -10,5 +10,6 @@ function getComponents(location, cb) {
 export default (
   <Route>
     <Route pageName="add-class" path="/add-class" getComponents={getComponents} />
+    <Route pageName="add-class" path="/add-class/:id" getComponents={getComponents} />
   </Route>
 );

@@ -11,7 +11,13 @@ import './student-profile.less';
 class StudentProfile extends React.Component {
   constructor(...args) {
     super(...args);
-    this.state = {};
+    this.state = {
+      activeTab: 'description'
+    }
+  }
+
+  componentWillMount() {
+    setActiveStudent();
   }
 
   render() {
@@ -19,20 +25,43 @@ class StudentProfile extends React.Component {
     const roles = _.get(this.props, 'roles.roles') || {};
     return (
         profile.name ?
-        <Grid fluid className="student-profile">
+        <Grid fluid className={this.state.activeTab + " student-profile"}>
           <Row>
             <div className="col-xs-12">
               <Row className="info-container">
                 <StudentInfo profile={profile} />
               </Row>
+              <div className="row tabs">
+                <Col xs={12}>
+                  <div onClick={this.setTab.bind(this, 'description')} className="tab tab-1 description-tab">Description</div>
+                  <div onClick={this.setTab.bind(this, 'privates')} className="tab tab-2 privates-tab">Privates</div>
+                  <div onClick={this.setTab.bind(this, 'classes')} className="tab tab-3 classes-tab">Classes</div>
+                  <div onClick={this.setTab.bind(this, 'status')} className="tab tab-3 status-tab">Status</div>
+                </Col>
+              </div>
               <Row className="form-container">
-                <StudentForm profile={profile} roles={roles}/>
+                {
+                    this.state.activeTab === 'description' ?
+                        <div>{profile.description}</div> : 
+                    this.state.activeTab === 'privates' ?
+                        <div>todo</div> :
+                    this.state.activeTab === 'classes' ?
+                        <div>todo</div> :
+                    this.state.activeTab === 'status' ?
+                        <StudentForm profile={profile} roles={roles}/>
+                    : null
+                }
+               
               </Row>
             </div>
           </Row>
           <RspMsg delay={5000} response={this.props.studentProfileView.response ? this.props.studentProfileView.response : null} />
         </Grid> : null
     );
+  }
+
+  setTab(tab) {
+    this.setState({activeTab: tab});
   }
 
   componentDidMount() {

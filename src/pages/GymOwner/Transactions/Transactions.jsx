@@ -14,7 +14,7 @@ const renderInstructor = (val, row) => {
 }
 
 const renderSession = (val, row) => {
-  return <div>{row.session.name}</div>;
+  return <div>{row.session ? row.session.name : 'TODO'}</div>;
 }
 
 const renderAmount = (val, row) => {

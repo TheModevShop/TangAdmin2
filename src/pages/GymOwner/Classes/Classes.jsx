@@ -59,6 +59,11 @@ class Classes extends React.Component {
       return <Input type="checkbox" name="delete" label=" " onChange={this.toggleSelection.bind(this, row._id)}/>;
     }
 
+    const renderEnrolled = (val, row) => {
+      let enroll = row.enrolled ? row.enrolled.length : 0;
+      return <div>{enroll} / {row.capacity}</div>
+    }
+
     const columns = [
       { 
         title: '', 
@@ -81,8 +86,8 @@ class Classes extends React.Component {
         prop: 'end' 
       },
       { 
-        title: 'Capacity', 
-        prop: 'capacity' 
+        title: 'Enrolled', 
+        render: renderEnrolled 
       },
       { 
         title: 'Fee', 

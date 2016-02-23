@@ -1,6 +1,6 @@
 import tree from 'state/StateTree';
 import _ from 'lodash';
-import {postClass, cancelClassApi} from 'api/classesApi';
+import {postClass, cancelClassApi, putClass} from 'api/classesApi';
 const activeClass = tree.select(['views', 'ClassProfile']);
 const AddClass = tree.select(['views', 'AddClass']);
 const ClassList = tree.select(['views', 'ClassList']);
@@ -29,6 +29,21 @@ export async function addClass(data) {
   AddClass.set(['awaitingSave'], false);
   tree.commit();
   return post;
+}
+
+export async function updateClass(data, classId) {
+  let put;
+  AddClass.set(['awaitingSave'], true);
+  try {
+    put = await putClass(_.get(myGym.get(), 'gymDetails._id'), classId, data);
+    ClassList.set({'stale': true});
+    AddClass.set(['response'], {'success': true, 'message': 'Your class information has been successfully update!'});
+  } catch (err) {
+    AddClass.set(['response'], {'success': false, 'message': 'There was an error updating your information.'});
+  }
+  AddClass.set(['awaitingSave'], false);
+  tree.commit();
+  return put;
 }
 
 export async function resetAddClass(data) {
