@@ -1,5 +1,6 @@
 import React from 'react';
 import {Row, Col, Button} from 'react-bootstrap';
+import BluebirdPromise from 'bluebird';
 import Dropzone from 'react-dropzone';
 import _ from 'lodash';
 import {addPhotos} from 'actions/AddGymActions';
@@ -28,10 +29,37 @@ const PhotosComponent = React.createClass({
   },
 
   onSubmit() {
+    const images = []
     const images = _.map(this.state.images, (image) => {
-      return image.preview;
+      images.push(imagePrcessor(image));
+    });
+    BluebirdPromise.all(images).then(function(allPhotoBlobs) {
+      addPhotos(_.map(allPhotoBlobs, (photo) => {
+        return {
+          photo: photo
+        }
+      }), this.props.gymId);
+    }).catch(function() {
+      alert('error occured, try again')
     })
-    addPhotos(images, this.props.gymId);
+  },
+
+  imagePrcessor(file) {
+    return new BluebirdPromise((resolve, reject) => {
+        const reader  = new FileReader();
+        reader.addEventListener('load', function () {
+          resolve(reader.result);
+        }, false);
+        reader.addEventListener('error', function () {
+          reject();
+        }, false);
+
+        if (file) {
+          reader.readAsDataURL(file);
+        } else {
+          reject()
+        }
+    });
   },
 
   render() {
