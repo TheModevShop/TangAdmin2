@@ -14,9 +14,10 @@ const PhotosComponent = React.createClass({
   },
 
   onDrop(files) {
-    const imgs = this.state.images;
+    const imgs = _.cloneDeep(this.state.images);
+    const i = [];
     for (var file in files) {
-      imgs.push(files[file]);
+      i.push(files[file]);
     }
 
     this.setState({
@@ -29,7 +30,12 @@ const PhotosComponent = React.createClass({
   },
 
   onSubmit() {
-    const images = _.map(this.state.images, (image) => {
+    
+  },
+
+  convertAndUploadImages(imagesToConvert) {
+    const images = []
+    const images = _.map(imagesToConvert, (image) => {
       images.push(imagePrcessor(image));
     });
     BluebirdPromise.all(images).then(function(allPhotoBlobs) {
@@ -37,11 +43,13 @@ const PhotosComponent = React.createClass({
         return {
           photo: photo
         }
-      }), this.props.gymId);
+      }), this.props.gymId).then(function() {
+        // show in ui
+      });
     }).catch(function() {
       alert('error occured, try again')
     })
-  },
+  }
 
   imagePrcessor(file) {
     return new BluebirdPromise((resolve, reject) => {
@@ -73,7 +81,11 @@ const PhotosComponent = React.createClass({
                   this.state.images.map((file) =>
                     <Col xs={4} className="image-container">
                       <div>
-                      <img key={file.lastModified} src={file.preview} /> 
+                      <img key={file.lastModified} src={file.preview} />
+                      <div className="actions">
+                        <div className="make-default">Make Default</div>
+                        <div className="delete">Delete</div>
+                      </div>
                     </div>
                   </Col>
                   ) : null
