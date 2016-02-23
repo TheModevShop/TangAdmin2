@@ -49,7 +49,7 @@ const PhotosComponent = React.createClass({
     }).catch(function() {
       alert('error occured, try again')
     })
-  }
+  },
 
   imagePrcessor(file) {
     return new BluebirdPromise((resolve, reject) => {
