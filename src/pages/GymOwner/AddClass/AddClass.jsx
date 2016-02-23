@@ -73,7 +73,7 @@ const AddClass = React.createClass({
                   <SelectField 
                     className="col-xs-12 "
                     value={profile.instructor ? profile.instructor : ''}   
-                    name="instructor" 
+                    name="instructorId" 
                     title="Instructor"
                     options={this.getInstructors()} />
                 </Row>
@@ -90,19 +90,19 @@ const AddClass = React.createClass({
                   <InputField 
                     className="col-xs-12 col-sm-6 " 
                     type="time" 
-                    name="time.start" 
+                    name="start" 
                     title="Start Time"
                     value={profile.time ? profile.time.start : ''} 
-                    validations={"isLessThan:time.end"}
+                    validations={"isLessThan:end"}
                     validationError="Your start time is after your closing time!" 
                     required />
                   <InputField 
                     className="col-xs-12 col-sm-6 " 
                     type="time" 
-                    name="time.end"
+                    name="end"
                     title="End Time"
                     value={profile.time ? profile.time.end : ''} 
-                    validations={"isMoreThan:time.start"}
+                    validations={"isMoreThan:start"}
                     validationError="Your end time is before your opening time!" 
                     required />
                 </Row>
@@ -162,16 +162,16 @@ const AddClass = React.createClass({
     };
   },
   submitClass(data) {
-    const classTime = moment(data.date).set('hour', data.time.start.split(':')[0]).set('minute', data.time.start.split(':')[1]).format()
+    const classTime = moment(data.date).set('hour', data.start.split(':')[0]).set('minute', data.start.split(':')[1]).format()
     const validDate = moment().isBefore(moment(classTime))
     if (validDate) {
       data.dateAndTime = moment(data.date);
       data.date = moment(data.date).format('YYYYMMDD');
       data.private = false;
       data.price = this.currency(data.price);
-      data.capacity = Number(data.capactiy)
-      data = JSON.stringify(data);
+      data.capacity = Number(data.capactiy);
       if (this.props.classProfile.classProfile._id) {
+        data.SessionId = this.props.classProfile.classProfile._id;
         updateClass(data, this.props.classProfile.classProfile._id);
       } else {
         addClass(data);

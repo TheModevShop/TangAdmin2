@@ -19,8 +19,9 @@ export function clearResponse() {
 export async function addClass(data) {
   let post;
   AddClass.set(['awaitingSave'], true);
+  let strData = JSON.stringify(data);
   try {
-    post = await postClass(_.get(myGym.get(), 'gymDetails._id'), data);
+    post = await postClass(_.get(myGym.get(), 'gymDetails._id'), strData);
     ClassList.set({'stale': true});
     AddClass.set(['response'], {'success': true, 'message': 'Your class information has been successfully submitted!'});
   } catch (err) {
@@ -34,8 +35,9 @@ export async function addClass(data) {
 export async function updateClass(data, classId) {
   let put;
   AddClass.set(['awaitingSave'], true);
+  let strData = JSON.stringify(data);
   try {
-    put = await putClass(_.get(myGym.get(), 'gymDetails._id'), classId, data);
+    put = await putClass(_.get(myGym.get(), 'gymDetails._id'), classId, strData);
     ClassList.set({'stale': true});
     AddClass.set(['response'], {'success': true, 'message': 'Your class information has been successfully update!'});
   } catch (err) {

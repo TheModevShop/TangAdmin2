@@ -29,7 +29,6 @@ const PhotosComponent = React.createClass({
   },
 
   onSubmit() {
-    const images = []
     const images = _.map(this.state.images, (image) => {
       images.push(imagePrcessor(image));
     });
