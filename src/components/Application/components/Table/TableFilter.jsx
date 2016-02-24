@@ -12,17 +12,24 @@ const TableFilter = React.createClass({
     let allClasses = [];
     let classes = null;
     let students = null;
+    let instructors = null;
     if (this.props.table === 'private') {
       allClasses = _.get(this.props, 'privates.allPrivates');
       students = _.map(allClasses, (classItem) => { return {'value': classItem.enrolled[0] ? classItem.enrolled[0]._id : 123, 'label': classItem.enrolled[0] ? classItem.enrolled[0].name.first + ' ' + classItem.enrolled[0].name.last : 'TODO', 'filter': 'students'}});
       students.unshift({'value': 'all', 'label': 'All Students', 'filter': ''});
+      instructors = _.map(allClasses, (classItem) => { return {'value': classItem.instructor ? classItem.instructor._id : null, 'label': classItem.instructor ? classItem.instructor.name.first + ' ' + classItem.instructor.name.last : null, 'filter': 'instructors' }});
+      instructors.unshift({'value': 'all', 'label': 'All Instructors', 'filter': ''});
     } else if (this.props.table === 'classes') {
       allClasses = _.get(this.props, 'classes.allClasses') || [];
       classes = _.map(allClasses, (classItem) => { return {'value': classItem.name, 'label': classItem.name, 'filter': 'classes' }});
       classes.unshift({'value': 'all', 'label': 'All Classes', 'filter': 'Classes'});
+      instructors = _.map(allClasses, (classItem) => { return {'value': classItem.instructor ? classItem.instructor._id : null, 'label': classItem.instructor ? classItem.instructor.name.first + ' ' + classItem.instructor.name.last : null, 'filter': 'instructors' }});
+      instructors.unshift({'value': 'all', 'label': 'All Instructors', 'filter': ''});
+    } else if (this.props.table === 'instructor') {
+      allClasses = _.get(this.props, 'instructorClasses');
+      students = _.map(allClasses, (classItem) => { return {'value': classItem.enrolled[0] ? classItem.enrolled[0]._id : 123, 'label': classItem.enrolled[0] ? classItem.enrolled[0].name.first + ' ' + classItem.enrolled[0].name.last : 'TODO', 'filter': 'students'}});
+      students.unshift({'value': 'all', 'label': 'All Students', 'filter': ''});
     }
-    let instructors = _.map(allClasses, (classItem) => { return {'value': classItem.instructor ? classItem.instructor._id : null, 'label': classItem.instructor ? classItem.instructor.name.first + ' ' + classItem.instructor.name.last : null, 'filter': 'instructors' }});
-    instructors.unshift({'value': 'all', 'label': 'All Instructors', 'filter': ''});
     let dates = _.map(allClasses, (classItem) => { return {'value': `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`, 'label': `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`, 'filter': 'date' }});
     dates.unshift({'value': 'all', 'label': 'All Dates', 'filter': ''});
     let onChange = this.props.onChange;

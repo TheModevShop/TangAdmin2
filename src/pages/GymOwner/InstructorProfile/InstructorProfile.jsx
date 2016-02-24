@@ -3,7 +3,8 @@ import {branch} from 'baobab-react/higher-order';
 import {Row, Col, Grid} from 'react-bootstrap';
 import InstructorInfo from './components/InstructorInfo';
 import InstructorForm from './components/InstructorForm';
-import RspMsg from './../../../components/Application/components/Forms/message';
+import InstructorDescription from './components/InstructorDescription';
+import InstructorTable from './components/InstructorProfileTable';
 import {setActiveInstructor, clearResponse} from 'actions/InstructorActions';
 import _ from 'lodash';
 import './instructor-profile.less';
@@ -17,10 +18,7 @@ class InstructorProfile extends React.Component {
   }
   
   render() {
-    const profile = _.get(this.props, 'instructorProfile.instructorProfile') || {};
-    const roles = _.get(this.props, 'roles.roles') || {};
     return (
-        profile.name ?
         <Grid fluid className={this.state.activeTab + " instructor-profile"}>
           <Row>
             <div className="col-xs-12">
@@ -30,7 +28,7 @@ class InstructorProfile extends React.Component {
                 </Col>
               </div>
               <Row className="info-container">
-                <InstructorInfo profile={profile} />
+                <InstructorInfo />
               </Row>
                <div className="row tabs">
                 <Col xs={12}>
@@ -42,18 +40,17 @@ class InstructorProfile extends React.Component {
               <Row className="form-container">
                 {
                     this.state.activeTab === 'description' ?
-                        <div>{profile.description}</div> : 
+                        <InstructorDescription /> : 
                     this.state.activeTab === 'privates' ?
-                        <div>todo</div> :
+                        <InstructorTable /> :
                     this.state.activeTab === 'status' ?
-                        <InstructorForm profile={profile} roles={roles}/>
+                        <InstructorForm />
                     : null
                 }
               </Row>
             </div>
           </Row>
-          <RspMsg delay={5000} response={this.props.instructorProfileView.response ? this.props.instructorProfileView.response : null} />
-        </Grid> : null
+        </Grid>
     );
   }
 
@@ -72,11 +69,7 @@ class InstructorProfile extends React.Component {
 }
 
 export default branch(InstructorProfile, {
-  facets: {
-    instructorProfile: 'InstructorProfile',
-    roles: 'Roles'
-  },
   cursors: {
-    instructorProfileView: ['views', 'InstructorProfile']
+    InstructorProfile: ['views', 'InstructorProfile']
   }
 });
