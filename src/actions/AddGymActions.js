@@ -67,7 +67,7 @@ export async function addPhotos(data, gymId) {
   addGymCursor.set(['awaitingSave'], true);
   const dataStr = JSON.stringify(data);
   try {
-    update = await addPhotosApi(dataStr, gymId);
+    update = await addPhotosApi({data: JSON.stringify(data)}, gymId);
     gymList.set({stale: true}); // this will cause to refetch
     addGymCursor.set(['data'], post.body);
     addGymCursor.set(['response'], {'success': true, 'message': 'Your gym information has been successfully submitted!'});

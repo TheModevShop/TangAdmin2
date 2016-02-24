@@ -14,15 +14,11 @@ const PhotosComponent = React.createClass({
   },
 
   onDrop(files) {
-    const imgs = _.cloneDeep(this.state.images);
-    const i = [];
+    const imgs = [];
     for (var file in files) {
-      i.push(files[file]);
+      imgs.push(files[file]);
     }
-
-    this.setState({
-      images: imgs
-    });
+    this.convertAndUploadImages(imgs);
   },
 
   onDelete(files) {
@@ -34,17 +30,18 @@ const PhotosComponent = React.createClass({
   },
 
   convertAndUploadImages(imagesToConvert) {
-    const images = []
+    const gymId = this.props.gymId;
     const images = _.map(imagesToConvert, (image) => {
-      images.push(imagePrcessor(image));
+      return this.imagePrcessor(image);
     });
     BluebirdPromise.all(images).then(function(allPhotoBlobs) {
-      addPhotos(_.map(allPhotoBlobs, (photo) => {
+      const allPhotos = _.map(allPhotoBlobs, (photo) => {
         return {
           photo: photo
         }
-      }), this.props.gymId).then(function() {
-        // show in ui
+      });
+      addPhotos(allPhotos, gymId).then(function(images) {
+        this.setState({images: images});
       });
     }).catch(function() {
       alert('error occured, try again')
@@ -56,10 +53,10 @@ const PhotosComponent = React.createClass({
         const reader  = new FileReader();
         reader.addEventListener('load', function () {
           resolve(reader.result);
-        }, false);
+        }.bind(this), false);
         reader.addEventListener('error', function () {
           reject();
-        }, false);
+        }.bind(this), false);
 
         if (file) {
           reader.readAsDataURL(file);

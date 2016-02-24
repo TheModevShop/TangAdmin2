@@ -52,6 +52,7 @@ export async function getMe() {
     }
     return user;
   } catch(err) {
+    teardownSession();
     history.pushState(null, '/login');
   }
 }
