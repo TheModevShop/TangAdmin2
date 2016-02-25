@@ -2,7 +2,9 @@ import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {Row, Col, Grid} from 'react-bootstrap';
 import StudentInfo from './components/StudentInfo';
+import StudentDescription from './components/StudentDescription';
 import StudentForm from './components/StudentForm';
+import StudentTable from './components/StudentTable';
 import {setActiveStudent, clearResponse} from 'actions/StudentActions';
 import RspMsg from './../../../components/Application/components/Forms/message';
 import _ from 'lodash';
@@ -16,20 +18,13 @@ class StudentProfile extends React.Component {
     }
   }
 
-  componentWillMount() {
-    setActiveStudent();
-  }
-
   render() {
-    const profile = _.get(this.props, 'studentProfile.studentProfile') || {};
-    const roles = _.get(this.props, 'roles.roles') || {};
     return (
-        profile.name ?
         <Grid fluid className={this.state.activeTab + " student-profile"}>
           <Row>
             <div className="col-xs-12">
               <Row className="info-container">
-                <StudentInfo profile={profile} />
+                <StudentInfo />
               </Row>
               <div className="row tabs">
                 <Col xs={12}>
@@ -40,28 +35,30 @@ class StudentProfile extends React.Component {
                 </Col>
               </div>
               <Row className="form-container">
-                {
-                    this.state.activeTab === 'description' ?
-                        <div>{profile.description}</div> : 
-                    this.state.activeTab === 'privates' ?
-                        <div>todo</div> :
-                    this.state.activeTab === 'classes' ?
-                        <div>todo</div> :
-                    this.state.activeTab === 'status' ?
-                        <StudentForm profile={profile} roles={roles}/>
-                    : null
-                }
-               
+              {
+                  this.state.activeTab === 'description' ?
+                      <StudentDescription /> : 
+                  this.state.activeTab === 'privates' ?
+                      <StudentTable private={true} /> :
+                  this.state.activeTab === 'classes' ?
+                      <StudentTable private={false} /> :
+                  this.state.activeTab === 'status' ?
+                      <StudentForm />
+                  : null
+              }
               </Row>
             </div>
           </Row>
-          <RspMsg delay={5000} response={this.props.studentProfileView.response ? this.props.studentProfileView.response : null} />
-        </Grid> : null
+        </Grid>
     );
   }
 
   setTab(tab) {
     this.setState({activeTab: tab});
+  }
+
+  componentWillMount() {
+    setActiveStudent();
   }
 
   componentDidMount() {
@@ -71,10 +68,6 @@ class StudentProfile extends React.Component {
 }
 
 export default branch(StudentProfile, {
-  facets: {
-    studentProfile: 'StudentProfile',
-    roles: 'Roles'
-  },
   cursors: {
     studentProfileView: ['views', 'StudentProfile']
   }

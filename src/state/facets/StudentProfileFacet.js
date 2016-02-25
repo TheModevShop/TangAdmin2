@@ -8,7 +8,7 @@ const loader = new RESTLoader({
   },
   successTransformer: (data) => {
     return {
-      studentProfile: data.body
+      profile: data.body
     };
   },
   errorTransformer: (err) => {
@@ -18,24 +18,24 @@ const loader = new RESTLoader({
   }
 });
 
-export default function LocationScheduleFacet() {
+export default function StudentProfileFacet() {
   return {
     cursors: {
-      studentProfile: ['views', 'StudentProfile', 'Profile'],
+      StudentProfile: ['views', 'StudentProfile'],
       myGym: ['user', 'myGym'],
     },
     get(data) {
       const gymId = _.get(data.myGym, 'gymDetails._id');
       const id = window.location.href.split('/').pop();
       
-      if (data.studentProfile && data.studentProfile.stale) {
+      if (data.StudentProfile && data.StudentProfile.stale) {
         loader.invalidateCache();
       }
       if (!loader.cursor) {
-        loader.setCursor(this.cursors.studentProfile);
+        loader.setCursor(this.cursors.StudentProfile);
       }
-      const studentProfile = _.clone(loader.fetch(gymId, id));
-      return studentProfile
+      const StudentProfile = _.clone(loader.fetch(gymId, id));
+      return StudentProfile
     }
   };
 };
