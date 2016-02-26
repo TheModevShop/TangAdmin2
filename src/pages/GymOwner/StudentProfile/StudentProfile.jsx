@@ -4,7 +4,8 @@ import {Row, Col, Grid} from 'react-bootstrap';
 import StudentInfo from './components/StudentInfo';
 import StudentDescription from './components/StudentDescription';
 import StudentForm from './components/StudentForm';
-import StudentTable from './components/StudentTable';
+import StudentPrivatesTable from './components/StudentPrivatesTable';
+import StudentClassesTable from './components/StudentClassesTable';
 import {setActiveStudent, clearResponse} from 'actions/StudentActions';
 import RspMsg from './../../../components/Application/components/Forms/message';
 import _ from 'lodash';
@@ -39,9 +40,9 @@ class StudentProfile extends React.Component {
                   this.state.activeTab === 'description' ?
                       <StudentDescription /> : 
                   this.state.activeTab === 'privates' ?
-                      <StudentTable private={true} /> :
+                      <StudentPrivatesTable /> :
                   this.state.activeTab === 'classes' ?
-                      <StudentTable private={false} /> :
+                      <StudentClassesTable  /> :
                   this.state.activeTab === 'status' ?
                       <StudentForm />
                   : null

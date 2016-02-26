@@ -5,6 +5,7 @@ import {Link} from 'react-router';
 import ClassInfo from './components/ClassInfo';
 import ClassStudentsTable from './components/ClassStudentsTable';
 import {setActiveClass} from 'actions/ClassActions';
+import {cancelClassApi} from 'api/classesApi';
 import _ from 'lodash';
 import './class-profile.less';
 
@@ -18,8 +19,8 @@ class ClassProfile extends React.Component {
     setActiveClass();
   }
 
-  cancelClass() {
-
+  cancelClass(id) {
+    cancelClassApi(id);
   }
 
   render() {
@@ -35,7 +36,7 @@ class ClassProfile extends React.Component {
                     <h1>{profile.name}</h1>
                   </Col>
                   <Col xs={12} sm={6} className="header-btns">
-                    <Button className="cancel-btn" onClick={this.cancelClass.bind(this)}>Cancel Class</Button>  
+                    <Button className="cancel-btn" onClick={this.cancelClass.bind(this, profile._id)}>Cancel Class</Button>  
                     <Link className="btn" to={`/add-class/${profile._id}`}>Edit Class</Link>                
                   </Col>
                 </div>
