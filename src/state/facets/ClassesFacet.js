@@ -8,7 +8,7 @@ const loader = new RESTLoader({
     const startDate = data.startDate;
     const endDate = data.endDate;
     const instructor = data.instructor;
-    // add query params
+    // add query params to get. might need to add classname to server
     return `${BASE}/gyms/${id}/sessions?private=false`;
   },
   successTransformer: (data) => {
@@ -38,8 +38,7 @@ export default function ClassesFacet() {
       if (!loader.cursor) {
         loader.setCursor(this.cursors.classes);
       }
-
-
+      // when we want to initiate a query we might need to add a search button to then set stale on the table to it refetches with new params
       const classes = _.clone(loader.fetch(_.get(data.myGym, 'gymDetails._id'), data.tableFilters));
       return classes
     }
