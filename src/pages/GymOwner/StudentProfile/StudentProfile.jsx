@@ -4,10 +4,9 @@ import {Row, Col, Grid} from 'react-bootstrap';
 import StudentInfo from './components/StudentInfo';
 import StudentDescription from './components/StudentDescription';
 import StudentForm from './components/StudentForm';
-import StudentPrivatesTable from './components/StudentPrivatesTable';
-import StudentClassesTable from './components/StudentClassesTable';
+import UserPrivatesTable from 'components/UserSessionTables/UserPrivatesTable';
+import UserClassesTable from 'components/UserSessionTables/UserClassesTable';
 import {setActiveStudent, clearResponse} from 'actions/StudentActions';
-import RspMsg from './../../../components/Application/components/Forms/message';
 import _ from 'lodash';
 import './student-profile.less';
 
@@ -20,6 +19,7 @@ class StudentProfile extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     return (
         <Grid fluid className={this.state.activeTab + " student-profile"}>
           <Row>
@@ -40,9 +40,9 @@ class StudentProfile extends React.Component {
                   this.state.activeTab === 'description' ?
                       <StudentDescription /> : 
                   this.state.activeTab === 'privates' ?
-                      <StudentPrivatesTable /> :
-                  this.state.activeTab === 'classes' ?
-                      <StudentClassesTable  /> :
+                      <UserPrivatesTable privates={_.get(this.props, 'StudentPrivates.privates')}/> :
+                    this.state.activeTab === 'classes' ?
+                      <UserClassesTable  classes={_.get(this.props, 'StudentClasses.classes')} /> :
                   this.state.activeTab === 'status' ?
                       <StudentForm />
                   : null
@@ -71,5 +71,9 @@ class StudentProfile extends React.Component {
 export default branch(StudentProfile, {
   cursors: {
     studentProfileView: ['views', 'StudentProfile']
+  },
+  facets: {
+    StudentClasses: 'StudentClasses',
+    StudentPrivates: 'StudentPrivates'
   }
 });

@@ -4,11 +4,11 @@ import {BASE} from 'constants';
 
 const loader = new RESTLoader({
   getResourceUrl: (id, instructor) => {
-    return `${BASE}/gyms/${id}/sessions?instructor=${instructor}&private=false`;
+    return `${BASE}/gyms/${id}/sessions?instructor=${instructor}&private=true`;
   },
   successTransformer: (data) => {
     return {
-      classes: data.body
+      privates: data.body
     };
   },
   errorTransformer: (err) => {
@@ -18,7 +18,7 @@ const loader = new RESTLoader({
   }
 });
 
-export default function InstructorClassesFacet() {
+export default function InstructorPrivatesFacet() {
   return {
     cursors: {
       myGym: ['user', 'myGym'],

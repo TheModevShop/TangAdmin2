@@ -5,17 +5,17 @@ import {DataTable} from 'react-data-components';
 import {Row, Col, Input, Button} from 'react-bootstrap';
 import Spinner from 'components/Spinner';
 import {Link} from 'react-router';
-import CustomModal from './../../../../components/Application/components/Modal/Modal';
-import TableFilter from './../../../../components/Application/components/Table/TableFilter';
+import CustomModal from 'components/Application/components/Modal/Modal';
+import TableFilter from 'components/Application/components/Table/TableFilter';
 import _ from 'lodash';
 
 const renderLink = (val, row) => {
-  return <Link to={`/classes/${row._id}`}>{ row.name ? row.name : 'TODO'}</Link>;
+  return <Link to={`/privates/${row._id}`}>{ row.instructor ? row.instructor.name.first + ' ' + row.instructor.name.last : 'TODO'}</Link>;
 }
 
 const columns = [
   { 
-    title: 'Class', 
+    title: 'Instructor', 
     render: renderLink 
   },
   { 
@@ -37,18 +37,14 @@ const columns = [
 ];
 
 
-class StudentClassesTable extends React.Component {
+class UserPrivatesTable extends React.Component {
   constructor(...args) {
     super(...args);
     this.state = {};
   }
 
-  logChange(val, obj) {
-    // this.setState({filter: {'value': val, 'filter': obj.length ? obj[0].filter : ''}});
-  }
-
-  formatData(classes) {
-    return _.map(_.cloneDeep(classes), (classItem) => {
+  formatData(privates) {
+    return _.map(_.cloneDeep(privates), (classItem) => {
       classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
       classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
       classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
@@ -56,27 +52,30 @@ class StudentClassesTable extends React.Component {
     });
   }
 
+  logChange(val, obj) {
+    // this.setState({filter: {'value': val, 'filter': obj.length ? obj[0].filter : ''}});
+  }
   
   render() {
-    let classes = _.get(this.props, 'StudentClasses.classes') || null;
-    classes = this.formatData(classes);
-    
+    let privates = _.get(this.props, 'privates') || null;
+    privates = this.formatData(privates);
+    console.log(this.props);
     return (
       <div className="table-wrapper">
         <div className="row table-filter-container">
           <TableFilter table={'private'} onChange={this.logChange.bind(this)} />
         </div>
         {
-            classes.length ?
+            privates.length ?
               <DataTable
                 keys={['_id']}
                 columns={columns}
-                initialData={classes}
+                initialData={privates}
                 initialPageLength={15}
                 pageLengthOptions={[ 15, 20, 50 ]}
                 className="table-body" /> 
             : 
-              <div className="no-results">No Classes Yet</div>
+              <div className="no-results">No Privates Yet</div>
         }
         <CustomModal ref="modal"/>
        </div>
@@ -84,8 +83,4 @@ class StudentClassesTable extends React.Component {
   }
 }
 
-export default branch(StudentClassesTable, {
-  facets: {
-    StudentClasses: 'StudentClasses'
-  }
-});
+export default UserPrivatesTable;

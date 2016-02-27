@@ -8,7 +8,7 @@ const loader = new RESTLoader({
   },
   successTransformer: (data) => {
     return {
-      classes: data.body
+      privates: data.body
     };
   },
   errorTransformer: (err) => {
@@ -25,8 +25,8 @@ export default function StudentPrivatesFacet() {
       StudentPrivatesTable: ['views', 'StudentProfile', 'StudentPrivatesTable']
     },
     get(data) {
-      const student = _.get(data.StudentProfile.profile, '_id');
-
+      const student = _.get(data.StudentProfile.profile, '_id') || window.location.href.split('/').pop();
+    
       if (data.StudentPrivatesTable && data.StudentPrivatesTable.stale) {
         loader.invalidateCache();
       }
@@ -36,7 +36,6 @@ export default function StudentPrivatesFacet() {
       }
 
       const StudentPrivates = _.clone(loader.fetch(student));
-      console.log(StudentPrivates);
       return StudentPrivates;
     }
   };

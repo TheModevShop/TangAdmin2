@@ -51,8 +51,4 @@ const TableFilter = React.createClass({
   }
 });
 
-export default branch(TableFilter, {
-  facets: {
-    privates: 'Privates'
-  }
-});
+export default branch(TableFilter);

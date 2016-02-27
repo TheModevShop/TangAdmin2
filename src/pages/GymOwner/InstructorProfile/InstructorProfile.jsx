@@ -4,7 +4,8 @@ import {Row, Col, Grid} from 'react-bootstrap';
 import InstructorInfo from './components/InstructorInfo';
 import InstructorForm from './components/InstructorForm';
 import InstructorDescription from './components/InstructorDescription';
-import InstructorTable from './components/InstructorProfileTable';
+import UserPrivatesTable from 'components/UserSessionTables/UserPrivatesTable';
+import UserClassesTable from 'components/UserSessionTables/UserClassesTable';
 import {setActiveInstructor, clearResponse} from 'actions/InstructorActions';
 import _ from 'lodash';
 import './instructor-profile.less';
@@ -18,6 +19,7 @@ class InstructorProfile extends React.Component {
   }
   
   render() {
+    console.log(this.props)
     return (
         <Grid fluid className={this.state.activeTab + " instructor-profile"}>
           <Row>
@@ -34,6 +36,7 @@ class InstructorProfile extends React.Component {
                 <Col xs={12}>
                   <div onClick={this.setTab.bind(this, 'description')} className="tab tab-1 description-tab">Description</div>
                   <div onClick={this.setTab.bind(this, 'privates')} className="tab tab-2 privates-tab">Privates</div>
+                  <div onClick={this.setTab.bind(this, 'classes')} className="tab tab-3 classes-tab">Classes</div>
                   <div onClick={this.setTab.bind(this, 'status')} className="tab tab-3 status-tab">Status</div>
                 </Col>
               </div>
@@ -42,7 +45,9 @@ class InstructorProfile extends React.Component {
                     this.state.activeTab === 'description' ?
                         <InstructorDescription /> : 
                     this.state.activeTab === 'privates' ?
-                        <InstructorTable /> :
+                        <UserPrivatesTable privates={_.get(this.props, 'InstructorPrivates.privates')}/> :
+                    this.state.activeTab === 'classes' ?
+                        <UserClassesTable  classes={_.get(this.props, 'InstructorClasses.classes')} /> :
                     this.state.activeTab === 'status' ?
                         <InstructorForm />
                     : null
@@ -71,5 +76,9 @@ class InstructorProfile extends React.Component {
 export default branch(InstructorProfile, {
   cursors: {
     InstructorProfile: ['views', 'InstructorProfile']
+  },
+  facets: {
+    InstructorClasses: 'InstructorClasses',
+    InstructorPrivates: 'InstructorPrivates'
   }
 });

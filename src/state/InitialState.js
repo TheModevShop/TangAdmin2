@@ -40,8 +40,8 @@ export default function getInitialState() {
           error: false,
           success: true,
           response: null,
-          StudentPrivatesTable: null,
-          StudentClassesTable: null
+          studentPrivatesTable: null,
+          studentClassesTable: null
         },
         InstructorProfile: {
           awaitingSave: false,

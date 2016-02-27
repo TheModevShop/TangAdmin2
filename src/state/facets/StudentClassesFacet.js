@@ -22,21 +22,20 @@ export default function StudentClassesFacet() {
   return {
     cursors: {
       StudentProfile: ['views', 'StudentProfile'],
-      StudentClassesTable: ['views', 'StudentProfile', 'StudentClassesTable']
+      studentClassesTable: ['views', 'StudentProfile', 'studentClassesTable']
     },
     get(data) {
-      const student = _.get(data.StudentProfile.profile, '_id');
+      const student = _.get(data.StudentProfile.profile, '_id')  || window.location.href.split('/').pop();
 
-      if (data.StudentClassesTable && data.StudentClassesTable.stale) {
+      if (data.studentClassesTable && data.studentClassesTable.stale) {
         loader.invalidateCache();
       }
 
       if (!loader.cursor) {
-        loader.setCursor(this.cursors.StudentClassesTable);
+        loader.setCursor(this.cursors.studentClassesTable);
       }
 
       const StudentClasses = _.clone(loader.fetch(student));
-      console.log(StudentClasses);
       return StudentClasses;
     }
   };

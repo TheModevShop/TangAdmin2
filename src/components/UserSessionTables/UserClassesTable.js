@@ -5,8 +5,8 @@ import {DataTable} from 'react-data-components';
 import {Row, Col, Input, Button} from 'react-bootstrap';
 import Spinner from 'components/Spinner';
 import {Link} from 'react-router';
-import CustomModal from './../../../../components/Application/components/Modal/Modal';
-import TableFilter from './../../../../components/Application/components/Table/TableFilter';
+import CustomModal from 'components/Application/components/Modal/Modal';
+import TableFilter from 'components/Application/components/Table/TableFilter';
 import _ from 'lodash';
 
 const renderLink = (val, row) => {
@@ -37,7 +37,7 @@ const columns = [
 ];
 
 
-class StudentClassesTable extends React.Component {
+class UserClassesTable extends React.Component {
   constructor(...args) {
     super(...args);
     this.state = {};
@@ -58,9 +58,9 @@ class StudentClassesTable extends React.Component {
 
   
   render() {
-    let classes = _.get(this.props, 'StudentClasses.classes') || null;
+    let classes = _.get(this.props, 'classes') || null;
     classes = this.formatData(classes);
-    
+    console.log(this.props);
     return (
       <div className="table-wrapper">
         <div className="row table-filter-container">
@@ -84,8 +84,4 @@ class StudentClassesTable extends React.Component {
   }
 }
 
-export default branch(StudentClassesTable, {
-  facets: {
-    StudentClasses: 'StudentClasses'
-  }
-});
+export default UserClassesTable;

@@ -27,6 +27,7 @@ export default function StudentProfileFacet() {
     get(data) {
       const gymId = _.get(data.myGym, 'gymDetails._id');
       const id = window.location.href.split('/').pop();
+      console.log(data)
       
       if (data.StudentProfile && data.StudentProfile.stale) {
         loader.invalidateCache();
