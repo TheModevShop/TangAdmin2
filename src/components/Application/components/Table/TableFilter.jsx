@@ -6,12 +6,12 @@ import InstructorFilter from './Filters/InstructorFilter';
 import DateFilter from './Filters/DateFilter';
 import StudentFilter from './Filters/StudentFilter';
 import {Col} from 'react-bootstrap';
+import * as actions from 'actions/TableFilterActions';
 
 const TableFilter = React.createClass({
   render() {
     const items = _.get(this.props, 'items');
-    const onChange = this.props.onChange;
-
+    
     let classes = null;
     let students = null;
     let instructors = null;
@@ -32,19 +32,19 @@ const TableFilter = React.createClass({
       <Col xs={12} sm={8}>
         {
           classes ? 
-            <ClassFilter onChange={onChange} classes={classes} /> : null
+            <ClassFilter classes={classes} /> : null
         }
         {
           instructors ? 
-            <InstructorFilter onChange={onChange} instructors={instructors} /> : null
+            <InstructorFilter instructors={instructors} /> : null
         }
         {
           students ? 
-            <StudentFilter onChange={onChange} students={students} /> : null
+            <StudentFilter students={students} /> : null
         }
         {
           dates ? 
-            <DateFilter dates={dates} onChange={onChange} /> : null
+            <DateFilter dates={dates} /> : null
         }
       </Col>
     );

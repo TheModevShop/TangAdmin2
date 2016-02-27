@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
+import * as actions from 'actions/TableFilterActions';
 
 const DateFilter = React.createClass({
   shouldComponentUpdate(next, current) {
@@ -7,15 +8,17 @@ const DateFilter = React.createClass({
   },
   render() {
     const dates = this.props.dates;
-    const onChange = this.props.onChange;
     return (
      <Select
        className=""
        name="form-field-name"
        options={dates}
-       onChange={onChange}
+       onChange={this.onChange}
        placeholder="Dates" />
     );
+  },
+  onChange(e) {
+    actions.setInstructor()
   }
 });
 

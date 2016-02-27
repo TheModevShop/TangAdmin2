@@ -11,46 +11,20 @@ import Spinner from 'components/Spinner';
 import "./classes.less";
 import _ from 'lodash';
 
+
 class Classes extends React.Component {
   constructor(...args) {
     super(...args);
-    this.state = {selections: [], filter: null, classes: null}
+    this.state = {selections: []}
   }
 
-  componentWillMount() {
-    this.formatData(); 
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return (this.state.filter ? this.state.filter.value : this.state.filter) !== (nextState.filter ? nextState.filter.value : nextState.filter);
-  }
-
-  formatData() {
-    let classes = _.get(this.props, 'classes.allClasses') || [];
+  formatData(classes) {
     classes = _.map(_.cloneDeep(classes), (classItem) => {
       classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
       classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
       classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
       return classItem;
     });
-
-    this.setState({'classes': classes});
-  }
-
-  filterData(classes) {
-    let filter = _.get(this.state.filter, 'filter'),
-        value = _.get(this.state.filter, 'value'),
-        param = {};
-
-    if (filter === 'instructors') {
-      param = {'instructor': {_id: value}};
-    } else if (filter === 'classes') {
-      param = {'name': value}; 
-    } else if (filter === 'date') {
-      param = {'date': value};
-    }
-
-    classes = _.filter(classes, _.matches(param));
 
     return classes;
   }
@@ -73,23 +47,15 @@ class Classes extends React.Component {
   }
 
   replicate() {
-    console.log(this.state.selections);
     this.refs.modal.close();
   }
   
-  logChange(val, obj) {
-    this.setState({filter: {'value': val, 'filter': obj.length ? obj[0].filter : ''}});
-  }
-
   activateModal(action, fn) {
     this.refs.modal.open(action, this.state.selections.length, fn);
   }
 
   render() {
-    let classes = _.get(this.state, 'classes') || _.get(this.props, 'classes.allClasses') || [];
-    if (this.state.filter) {
-      classes = this.filterData(classes);
-    } 
+    const classes = this.formatData(_.get(this.props, 'classes.allClasses')) || [];
     const isLoading = _.get(this.props, 'classes.isLoading') || false;
 
     const renderName = (val, row) => {
@@ -147,7 +113,7 @@ class Classes extends React.Component {
           </Col>
         </div>
         <div className="row table-filter-container">
-          <TableFilter table="classes" items={_.get(this.state, 'classes') || {}} onChange={this.logChange.bind(this)} />
+          <TableFilter table="classes" items={_.get(this.state, 'classes') || {}} />
           { 
             this.state.selections.length ?
               <Col xs={12} sm={5}>

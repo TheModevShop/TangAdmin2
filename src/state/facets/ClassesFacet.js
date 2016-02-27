@@ -14,7 +14,6 @@ const loader = new RESTLoader({
   },
   errorTransformer: (err) => {
     return {
-      sessions: [],
       error: err
     };
   }

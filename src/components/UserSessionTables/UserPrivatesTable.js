@@ -59,7 +59,7 @@ class UserPrivatesTable extends React.Component {
   render() {
     let privates = _.get(this.props, 'privates') || null;
     privates = this.formatData(privates);
-    console.log(this.props);
+    
     return (
       <div className="table-wrapper">
         <div className="row table-filter-container">

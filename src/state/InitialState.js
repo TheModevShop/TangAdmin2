@@ -10,6 +10,12 @@ export default function getInitialState() {
   return {
     cursors: {
       roles: null,
+      tableFilters: {
+        instructor: null,
+        className: null,
+        startDate: null,
+        endDate: null,
+      },
       views: {
         GymList: null,
         GymProfile: {

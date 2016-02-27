@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
+import * as actions from 'actions/TableFilterActions';
 
 const ClassFilter = React.createClass({
   shouldComponentUpdate(next, current) {
@@ -7,15 +8,18 @@ const ClassFilter = React.createClass({
   },
   render() {
     const classes = this.props.classes;
-    const onChange = this.props.onChange;
     return (
      <Select
        className=""
        name="form-field-name"
        options={classes}
-       onChange={onChange}
+       onChange={this.onChange}
        placeholder="Classes" />
     );
+  },
+
+  onChange(e) {
+    actions.setClassName()
   }
 });
 

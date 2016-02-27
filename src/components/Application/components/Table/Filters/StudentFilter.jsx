@@ -1,21 +1,26 @@
 import React from 'react';
 import Select from 'react-select';
+import * as actions from 'actions/TableFilterActions';
 
 const StudentFilter = React.createClass({
   shouldComponentUpdate(next, current) {
     return current ? true : false;
   },
+  
   render() {
     const students = this.props.students;
-    const onChange = this.props.onChange;
     return (
      <Select
        className=""
        name="form-field-name"
        options={students}
-       onChange={onChange}
+       onChange={this.onChange}
        placeholder="Students" />
     );
+  },
+
+  onChange(e) {
+    actions.setStudent()
   }
 });
 
