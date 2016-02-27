@@ -3,7 +3,12 @@ import RESTLoader from '../loaders/RESTLoader';
 import {BASE} from 'constants';
 
 const loader = new RESTLoader({
-  getResourceUrl: (id) => {
+  getResourceUrl: (id, data) => {
+    const className = data.className;
+    const startDate = data.startDate;
+    const endDate = data.endDate;
+    const instructor = data.instructor;
+    // add query params
     return `${BASE}/gyms/${id}/sessions?private=false`;
   },
   successTransformer: (data) => {
@@ -23,7 +28,8 @@ export default function ClassesFacet() {
   return {
     cursors: {
       classes: ['views', 'ClassList'],
-      myGym: ['user', 'myGym']
+      myGym: ['user', 'myGym'],
+      tableFilters: ['tableFilters']
     },
     get(data) {
       if (data.classes && data.classes.stale) {
@@ -32,7 +38,9 @@ export default function ClassesFacet() {
       if (!loader.cursor) {
         loader.setCursor(this.cursors.classes);
       }
-      const classes = _.clone(loader.fetch(_.get(data.myGym, 'gymDetails._id')));
+
+
+      const classes = _.clone(loader.fetch(_.get(data.myGym, 'gymDetails._id'), data.tableFilters));
       return classes
     }
   };
