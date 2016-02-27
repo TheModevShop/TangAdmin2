@@ -4,7 +4,7 @@ import {BASE} from 'constants';
 
 const loader = new RESTLoader({
   getResourceUrl: (id, type) => {
-    return `${BASE}/users/${id}/sessions?private=false`;
+    return `${BASE}/users/${id}/sessions?private=true`;
   },
   successTransformer: (data) => {
     return {
@@ -18,26 +18,26 @@ const loader = new RESTLoader({
   }
 });
 
-export default function StudentClassesFacet() {
+export default function StudentPrivatesFacet() {
   return {
     cursors: {
       StudentProfile: ['views', 'StudentProfile'],
-      StudentClassesTable: ['views', 'StudentProfile', 'StudentClassesTable']
+      StudentPrivatesTable: ['views', 'StudentProfile', 'StudentPrivatesTable']
     },
     get(data) {
       const student = _.get(data.StudentProfile.profile, '_id');
 
-      if (data.StudentClassesTable && data.StudentClassesTable.stale) {
+      if (data.StudentPrivatesTable && data.StudentPrivatesTable.stale) {
         loader.invalidateCache();
       }
 
       if (!loader.cursor) {
-        loader.setCursor(this.cursors.StudentClassesTable);
+        loader.setCursor(this.cursors.StudentPrivatesTable);
       }
 
-      const StudentClasses = _.clone(loader.fetch(student));
-      console.log(StudentClasses);
-      return StudentClasses;
+      const StudentPrivates = _.clone(loader.fetch(student));
+      console.log(StudentPrivates);
+      return StudentPrivates;
     }
   };
 };

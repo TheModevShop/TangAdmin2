@@ -12,7 +12,45 @@ import _ from 'lodash';
 class InstructorProfileTable extends React.Component {
   constructor(...args) {
     super(...args);
-    this.state = {selections: [], filter: null};
+    this.state = {selections: [], filter: null, classes: null};
+  }
+
+  componentWillMount() {
+    this.formatData(); 
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return (this.state.filter ? this.state.filter.value : this.state.filter) !== (nextState.filter ? nextState.filter.value : nextState.filter);
+  }
+
+  formatData() {
+    let classes = _.get(this.props, 'InstructorClasses.classes') || [];
+    classes = _.map(_.cloneDeep(classes), (classItem) => {
+      classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
+      classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
+      classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
+      classItem.enrolled = classItem.enrolled[0];
+
+      return classItem;
+    });
+
+    this.setState({'classes': classes});
+  }
+
+  filterData(classes) {
+    let filter = _.get(this.state.filter, 'filter'),
+        value = _.get(this.state.filter, 'value'),
+        param = {};
+
+    if (filter === 'students') {
+      param = {'enrolled': {_id: value}};
+    } else if (filter === 'date') {
+      param = {'date': value};
+    }
+
+    classes = _.filter(classes, _.matches(param));
+
+    return classes;
   }
 
   toggleSelection(id) {
@@ -33,7 +71,7 @@ class InstructorProfileTable extends React.Component {
   }
   
   logChange(val, obj) {
-    this.setState({filter: {'value': val, 'filter': obj[0].filter}});
+    this.setState({filter: {'value': val, 'filter': obj.length ? obj[0].filter : ''}});
   }
   
   activateModal(action, fn) {
@@ -41,7 +79,10 @@ class InstructorProfileTable extends React.Component {
   }
 
   render() {
-    const classes = this.formatData(this.state.filter);
+    let classes = _.get(this.state, 'classes') || _.get(this.props, 'InstructorClasses.classes') || [];
+    if (this.state.filter) {
+      classes = this.filterData(classes);
+    } 
     const renderStudent = (val, row) => {
       return <Link to={`/privates/${row._id}`}>{ row.enrolled ? row.enrolled.name.first + ' ' + row.enrolled.name.last : 'TODO'}</Link>;
     }
@@ -80,7 +121,7 @@ class InstructorProfileTable extends React.Component {
     return (
       <div className="table-wrapper">
         <div className="row table-filter-container">
-          <TableFilter table="instructor" instructorClasses={_.get(this.props, 'InstructorClasses.classes')} onChange={this.logChange.bind(this)} />
+          <TableFilter table="instructor" items={_.get(this.state, 'classes') || {}} onChange={this.logChange.bind(this)} />
           { 
             this.state.selections.length ?
               <Col xs={12} sm={5}>
@@ -107,27 +148,6 @@ class InstructorProfileTable extends React.Component {
     );
   }
 
-  formatData(filter) {
-    let classes = _.get(this.props, 'InstructorClasses.classes') || [];
-    classes = _.map(_.cloneDeep(classes), (classItem) => {
-      classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
-      classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
-      classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
-      classItem.enrolled = classItem.enrolled[0];
-
-      return classItem;
-    });
-
-    if (filter) {
-      var param = filter.filter;
-      if (param === 'students') {
-        classes = _.filter(classes, _.matches({'enrolled': {_id: filter.value}}));
-      } else if (param === 'date') {
-        classes = _.filter(classes, _.matches({'date': filter.value}));
-      }
-    }
-    return classes;
-  }
 }
 
 export default branch(InstructorProfileTable, {

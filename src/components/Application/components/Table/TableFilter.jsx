@@ -9,33 +9,27 @@ import {Col} from 'react-bootstrap';
 
 const TableFilter = React.createClass({
   render() {
-    let allClasses = [];
+    const items = _.get(this.props, 'items');
+    const onChange = this.props.onChange;
+
     let classes = null;
     let students = null;
     let instructors = null;
+    let dates = _.map(items, (item) => { return {'value': item.date, 'label': item.date, 'filter': 'date' }});
     if (this.props.table === 'private') {
-      allClasses = _.get(this.props, 'privates.allPrivates');
-      students = _.map(allClasses, (classItem) => { return {'value': classItem.enrolled[0] ? classItem.enrolled[0]._id : 123, 'label': classItem.enrolled[0] ? classItem.enrolled[0].name.first + ' ' + classItem.enrolled[0].name.last : 'TODO', 'filter': 'students'}});
-      students.unshift({'value': 'all', 'label': 'All Students', 'filter': ''});
-      instructors = _.map(allClasses, (classItem) => { return {'value': classItem.instructor ? classItem.instructor._id : null, 'label': classItem.instructor ? classItem.instructor.name.first + ' ' + classItem.instructor.name.last : null, 'filter': 'instructors' }});
-      instructors.unshift({'value': 'all', 'label': 'All Instructors', 'filter': ''});
+      students = _.map(items, (item) => { return {'value': item.enrolled[0] ? item.enrolled[0]._id : 123, 'label': item.enrolled[0] ? item.enrolled[0].name.first + ' ' + item.enrolled[0].name.last : 'TODO', 'filter': 'students'}});
+      instructors = _.map(items, (item) => { return {'value': item.instructor ? item.instructor._id : null, 'label': item.instructor ? item.instructor.name.first + ' ' + item.instructor.name.last : null, 'filter': 'instructors' }});
     } else if (this.props.table === 'classes') {
-      allClasses = _.get(this.props, 'classes.allClasses') || [];
-      classes = _.map(allClasses, (classItem) => { return {'value': classItem.name, 'label': classItem.name, 'filter': 'classes' }});
-      classes.unshift({'value': 'all', 'label': 'All Classes', 'filter': 'Classes'});
-      instructors = _.map(allClasses, (classItem) => { return {'value': classItem.instructor ? classItem.instructor._id : null, 'label': classItem.instructor ? classItem.instructor.name.first + ' ' + classItem.instructor.name.last : null, 'filter': 'instructors' }});
-      instructors.unshift({'value': 'all', 'label': 'All Instructors', 'filter': ''});
+      classes = _.map(items, (item) => { return {'value': item.name, 'label': item.name, 'filter': 'classes' }});
+      instructors = _.map(items, (item) => { return {'value': item.instructor ? item.instructor._id : null, 'label': item.instructor ? item.instructor.name.first + ' ' + item.instructor.name.last : null, 'filter': 'instructors' }});
     } else if (this.props.table === 'instructor') {
-      allClasses = _.get(this.props, 'instructorClasses');
-      students = _.map(allClasses, (classItem) => { return {'value': classItem.enrolled[0] ? classItem.enrolled[0]._id : 123, 'label': classItem.enrolled[0] ? classItem.enrolled[0].name.first + ' ' + classItem.enrolled[0].name.last : 'TODO', 'filter': 'students'}});
-      students.unshift({'value': 'all', 'label': 'All Students', 'filter': ''});
+      students = _.map(items, (item) => { return {'value': item.enrolled ? item.enrolled._id : 123, 'label': item.enrolled ? item.enrolled.name.first + ' ' + item.enrolled.name.last : 'TODO', 'filter': 'students'}});
+    } else if (this.props.table === 'transactions') {
+      
     }
-    let dates = _.map(allClasses, (classItem) => { return {'value': `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`, 'label': `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`, 'filter': 'date' }});
-    dates.unshift({'value': 'all', 'label': 'All Dates', 'filter': ''});
-    let onChange = this.props.onChange;
 
     return (
-      <Col xs={12} sm={7}>
+      <Col xs={12} sm={8}>
         {
           classes ? 
             <ClassFilter onChange={onChange} classes={classes} /> : null
@@ -59,7 +53,6 @@ const TableFilter = React.createClass({
 
 export default branch(TableFilter, {
   facets: {
-    privates: 'Privates',
-    classes: 'Classes'
+    privates: 'Privates'
   }
 });

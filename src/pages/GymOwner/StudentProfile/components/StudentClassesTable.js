@@ -7,13 +7,50 @@ import Spinner from 'components/Spinner';
 import {Link} from 'react-router';
 import CustomModal from './../../../../components/Application/components/Modal/Modal';
 import TableFilter from './../../../../components/Application/components/Table/TableFilter';
-import {StudentTableAction} from 'actions/StudentActions';
 import _ from 'lodash';
 
-class StudentTable extends React.Component {
+class StudentClassesTable extends React.Component {
   constructor(...args) {
     super(...args);
-    this.state = {selections: [], filter: null, private: this.props.private};
+    this.state = {selections: [], filter: null, classes: null};
+  }
+
+  componentWillMount() {
+    this.formatData(); 
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return (this.state.filter ? this.state.filter.value : this.state.filter) !== (nextState.filter ? nextState.filter.value : nextState.filter);
+  }
+
+  formatData(filter) {
+    let classes = _.get(this.props, 'StudentClasses.classes') || null;
+    classes = _.map(_.cloneDeep(classes), (classItem) => {
+      classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
+      classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
+      classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
+      return classItem;
+    });
+
+    this.setState({'classes': classes});
+  }
+
+  filterData(classes) {
+    let filter = _.get(this.state.filter, 'filter'),
+        value = _.get(this.state.filter, 'value'),
+        param = {};
+
+    if (filter === 'instructor') {
+      param = {'instructor': {_id: filter.value}}
+    } else if (filter === 'date') {
+      param = {'date': value};
+    } else if (filter === 'classes') {
+      param = {'name': value};
+    }
+
+    classes = _.filter(classes, _.matches(param));
+
+    return classes;
   }
 
   toggleSelection(id) {
@@ -34,7 +71,7 @@ class StudentTable extends React.Component {
   }
   
   logChange(val, obj) {
-    this.setState({filter: {'value': val, 'filter': obj[0].filter}});
+    this.setState({filter: {'value': val, 'filter': obj.length ? obj[0].filter : ''}});
   }
   
   activateModal(action, fn) {
@@ -42,7 +79,10 @@ class StudentTable extends React.Component {
   }
 
   render() {
-    const classes = this.formatData(this.state.filter);
+    let classes = _.get(this.state, 'classes') || _.get(this.props, 'StudentClasses.classes') || null;
+    if (this.state.filter) {
+      classes = this.filterData(classes);
+    } 
     const prvt = this.props.private; 
     const renderLink = (val, row) => {
       if (prvt) {
@@ -51,11 +91,10 @@ class StudentTable extends React.Component {
         return <Link to={`/classes/${row._id}`}>{ row.name ? row.name : 'TODO'}</Link>;
       }
     }
-
     const renderCheck = (val, row) => {
       return <Input type="checkbox" name="delete" label=" " onChange={this.toggleSelection.bind(this, row._id)}/>;
     }
-    const title = this.props.private ? 'Instructor' : 'Class Name';
+    const title = prvt ? 'Instructor' : 'Class Name';
     const columns = [
       { 
         title: '', 
@@ -86,7 +125,7 @@ class StudentTable extends React.Component {
     return (
       <div className="table-wrapper">
         <div className="row table-filter-container">
-          <TableFilter table="instructor" StudentClasses={_.get(this.props, 'StudentClasses.classes')} onChange={this.logChange.bind(this)} />
+          <TableFilter table={prvt ? "private" : "classes"} StudentClasses={_.get(this.props, 'StudentClasses.classes')} onChange={this.logChange.bind(this)} />
           { 
             this.state.selections.length ?
               <Col xs={12} sm={5}>
@@ -106,47 +145,17 @@ class StudentTable extends React.Component {
                 pageLengthOptions={[ 15, 20, 50 ]}
                 className="table-body" /> 
             : 
-              <div className="no-results">No Private Classes Yet</div>
+              <div className="no-results">{ prvt ? 'No Private Classes Yet' : 'No Classes Yet' }</div>
         }
         <CustomModal ref="modal"/>
        </div>
     );
   }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.private !== this.props.private;
-  }
-
-  componentWillMount() {
-    StudentTableAction(this.props.private);
-  }
-
-  formatData(filter) {
-    let classes = _.get(this.props, 'StudentClasses.classes') || [];
-    classes = _.map(_.cloneDeep(classes), (classItem) => {
-      classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
-      classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
-      classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
-      classItem.enrolled = classItem.enrolled[0];
-
-      return classItem;
-    });
-
-    if (filter) {
-      var param = filter.filter;
-      if (param === 'students') {
-        classes = _.filter(classes, _.matches({'enrolled': {_id: filter.value}}));
-      } else if (param === 'date') {
-        classes = _.filter(classes, _.matches({'date': filter.value}));
-      }
-    }
-    return classes;
-  }
 }
 
-export default branch(StudentTable, {
+export default branch(StudentClassesTable, {
   cursors: {
-    StudentTable: ['views', 'StudentProfile', 'StudentTable']
+    StudentClassesTable: ['views', 'StudentProfile', 'StudentClassesTable']
   },
   facets: {
     StudentClasses: 'StudentClasses'

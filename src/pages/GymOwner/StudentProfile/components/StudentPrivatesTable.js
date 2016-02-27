@@ -2,19 +2,17 @@ import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import moment from 'moment';
 import {DataTable} from 'react-data-components';
-import {Row, Col, Button, Input} from 'react-bootstrap';
-import CustomModal from 'components/Application/components/Modal/Modal';
-import TableFilter from './../../../components/Application/components/Table/TableFilter';
-import {cancelClasses} from 'actions/ClassActions';
-import {Link} from 'react-router';
+import {Row, Col, Input, Button} from 'react-bootstrap';
 import Spinner from 'components/Spinner';
-import "./classes.less";
+import {Link} from 'react-router';
+import CustomModal from './../../../../components/Application/components/Modal/Modal';
+import TableFilter from './../../../../components/Application/components/Table/TableFilter';
 import _ from 'lodash';
 
-class Classes extends React.Component {
+class StudentPrivatesTable extends React.Component {
   constructor(...args) {
     super(...args);
-    this.state = {selections: [], filter: null, classes: null}
+    this.state = {selections: [], filter: null, private: this.props.private, classes: null};
   }
 
   componentWillMount() {
@@ -25,8 +23,8 @@ class Classes extends React.Component {
     return (this.state.filter ? this.state.filter.value : this.state.filter) !== (nextState.filter ? nextState.filter.value : nextState.filter);
   }
 
-  formatData() {
-    let classes = _.get(this.props, 'classes.allClasses') || [];
+  formatData(filter) {
+    let classes = _.get(this.props, 'StudentPrivates.classes') || null;
     classes = _.map(_.cloneDeep(classes), (classItem) => {
       classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
       classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
@@ -42,12 +40,12 @@ class Classes extends React.Component {
         value = _.get(this.state.filter, 'value'),
         param = {};
 
-    if (filter === 'instructors') {
-      param = {'instructor': {_id: value}};
-    } else if (filter === 'classes') {
-      param = {'name': value}; 
+    if (filter === 'instructor') {
+      param = {'instructor': {_id: filter.value}}
     } else if (filter === 'date') {
       param = {'date': value};
+    } else if (filter === 'classes') {
+      param = {'name': value};
     }
 
     classes = _.filter(classes, _.matches(param));
@@ -68,11 +66,6 @@ class Classes extends React.Component {
   }
 
   delete() {
-    cancelClasses(this.state.selections);
-    this.refs.modal.close();
-  }
-
-  replicate() {
     console.log(this.state.selections);
     this.refs.modal.close();
   }
@@ -80,39 +73,36 @@ class Classes extends React.Component {
   logChange(val, obj) {
     this.setState({filter: {'value': val, 'filter': obj.length ? obj[0].filter : ''}});
   }
-
+  
   activateModal(action, fn) {
     this.refs.modal.open(action, this.state.selections.length, fn);
   }
 
   render() {
-    let classes = _.get(this.state, 'classes') || _.get(this.props, 'classes.allClasses') || [];
+    let classes = _.get(this.state, 'classes') || _.get(this.props, 'StudentPrivates.classes') || null;
     if (this.state.filter) {
       classes = this.filterData(classes);
     } 
-    const isLoading = _.get(this.props, 'classes.isLoading') || false;
-
-    const renderName = (val, row) => {
-      return <Link to={`/classes/${row._id}`}>{row.name}</Link>;
+    const prvt = this.props.private; 
+    const renderLink = (val, row) => {
+      if (prvt) {
+        return <Link to={`/privates/${row._id}`}>{ row.instructor ? row.instructor.name.first + ' ' + row.instructor.name.last : 'TODO'}</Link>;
+      } else {
+        return <Link to={`/classes/${row._id}`}>{ row.name ? row.name : 'TODO'}</Link>;
+      }
     }
-
     const renderCheck = (val, row) => {
       return <Input type="checkbox" name="delete" label=" " onChange={this.toggleSelection.bind(this, row._id)}/>;
     }
-
-    const renderEnrolled = (val, row) => {
-      let enroll = row.enrolled ? row.enrolled.length : 0;
-      return <div>{enroll} / {row.capacity}</div>
-    }
-
+    const title = prvt ? 'Instructor' : 'Class Name';
     const columns = [
       { 
         title: '', 
         render: renderCheck
       },
       { 
-        title: 'Name', 
-        render: renderName
+        title: title, 
+        render: renderLink 
       },
       { 
         title: 'Date', 
@@ -123,55 +113,39 @@ class Classes extends React.Component {
         prop: 'start' 
       },
       { 
-        title: 'End Time', 
+        title: 'End', 
         prop: 'end' 
       },
       { 
-        title: 'Enrolled', 
-        render: renderEnrolled 
-      },
-      { 
-        title: 'Fee', 
+        title: 'Price', 
         prop: 'price' 
       }
     ];
 
     return (
       <div className="table-wrapper">
-        <div className="row table-header">
-          <Col xs={12} sm={6}>
-            <h1>Classes</h1>
-          </Col>
-          <Col xs={12} sm={6}>
-            <Link className="btn" to={`/add-class`}>Add Class</Link>
-          </Col>
-        </div>
         <div className="row table-filter-container">
-          <TableFilter table="classes" items={_.get(this.state, 'classes') || {}} onChange={this.logChange.bind(this)} />
+          <TableFilter table={prvt ? "private" : "classes"} StudentPrivates={_.get(this.props, 'StudentPrivates.classes')} onChange={this.logChange.bind(this)} />
           { 
             this.state.selections.length ?
               <Col xs={12} sm={5}>
-                <Button onClick={this.activateModal.bind(this, 'delete', this.delete.bind(this))}>Delete</Button>
-                <Button onClick={this.activateModal.bind(this, 'replicate', this.replicate.bind(this))}>Replicate</Button>
+                <Button onClick={this.activateModal.bind(this, 'delete', this.delete.bind(this))}>Remove</Button>
               </Col>
             : null
           }
         </div>
         {
-          isLoading ? 
-            <Spinner /> :
-          classes.length ?
-            <DataTable
-              keys={['_id']}
-              columns={columns}
-              initialData={classes}
-              initialPageLength={15}
-              initialSortBy={{prop: 'name', order: 'descending' }}
-              pageLengthOptions={[ 15, 20, 50 ]}
-              className="table-body"
-            /> 
-          :
-          <div className="no-results">No Classes Yet</div>
+            classes.length ?
+              <DataTable
+                keys={['_id']}
+                columns={columns}
+                initialData={classes}
+                initialPageLength={15}
+                initialSortBy={{ prop: 'date', order: 'ascending' }}
+                pageLengthOptions={[ 15, 20, 50 ]}
+                className="table-body" /> 
+            : 
+              <div className="no-results">{ prvt ? 'No Private Classes Yet' : 'No Classes Yet' }</div>
         }
         <CustomModal ref="modal"/>
        </div>
@@ -179,8 +153,11 @@ class Classes extends React.Component {
   }
 }
 
-export default branch(Classes, {
+export default branch(StudentPrivatesTable, {
+  cursors: {
+    StudentPrivatesTable: ['views', 'StudentProfile', 'StudentPrivatesTable']
+  },
   facets: {
-    classes: 'Classes'
+    StudentPrivates: 'StudentPrivates'
   }
 });
