@@ -10,13 +10,18 @@ import TableFilter from 'components/Application/components/Table/TableFilter';
 import _ from 'lodash';
 
 const renderLink = (val, row) => {
-  return <Link to={`/classes/${row._id}`}>{ row.name ? row.name : 'TODO'}</Link>;
+  return <Link to={`/classes/${row._id}`}>{ row.name ? row.name : 'N/A'}</Link>;
+}
+
+const renderAmount = (val, row) => {
+  return <div>{ row.price ? '$' + (row.price / 100).toFixed(2) : '-'}</div>;
 }
 
 const columns = [
   { 
     title: 'Class', 
-    render: renderLink 
+    render: renderLink, 
+    prop: 'name'
   },
   { 
     title: 'Date', 
@@ -32,7 +37,8 @@ const columns = [
   },
   { 
     title: 'Price', 
-    prop: 'price' 
+    render: renderAmount,
+    prop: 'price'
   }
 ];
 

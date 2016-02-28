@@ -45,9 +45,9 @@ class InstructorProfile extends React.Component {
                     this.state.activeTab === 'description' ?
                         <InstructorDescription /> : 
                     this.state.activeTab === 'privates' ?
-                        <UserPrivatesTable privates={_.get(this.props, 'InstructorPrivates.privates')}/> :
+                        <UserPrivatesTable table="instructor" privates={_.get(this.props, 'InstructorPrivates.privates')}/> :
                     this.state.activeTab === 'classes' ?
-                        <UserClassesTable  classes={_.get(this.props, 'InstructorClasses.classes')} /> :
+                        <UserClassesTable table="instructor" classes={_.get(this.props, 'InstructorClasses.classes')} /> :
                     this.state.activeTab === 'status' ?
                         <InstructorForm />
                     : null

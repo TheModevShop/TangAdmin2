@@ -9,14 +9,23 @@ import CustomModal from 'components/Application/components/Modal/Modal';
 import TableFilter from 'components/Application/components/Table/TableFilter';
 import _ from 'lodash';
 
-const renderLink = (val, row) => {
-  return <Link to={`/privates/${row._id}`}>{ row.instructor ? row.instructor.name.first + ' ' + row.instructor.name.last : 'TODO'}</Link>;
+const renderInstructor = (val, row) => {
+  return <Link to={`/privates/${row._id}`}>{row.instructor}</Link>;
 }
 
-const columns = [
+const renderStudent = (val, row) => {
+  return <Link to={`/privates/${row._id}`}>{row.enrolled}</Link>;
+}
+
+const renderAmount = (val, row) => {
+  return <div>{ row.price ? '$' + (row.price / 100).toFixed(2) : '-'}</div>;
+}
+
+const StudentTableColumns = [
   { 
     title: 'Instructor', 
-    render: renderLink 
+    render: renderInstructor,
+    prop: 'instructor'
   },
   { 
     title: 'Date', 
@@ -32,7 +41,33 @@ const columns = [
   },
   { 
     title: 'Price', 
-    prop: 'price' 
+    render: renderAmount,
+    prop: 'price'
+  }
+];
+
+const InstructorTableColumns = [
+  { 
+    title: 'Student', 
+    render: renderStudent,
+    prop: 'enrolled'
+  },
+  { 
+    title: 'Date', 
+    prop: 'date' 
+  },
+  { 
+    title: 'Start Time', 
+    prop: 'start' 
+  },
+  { 
+    title: 'End', 
+    prop: 'end' 
+  },
+  { 
+    title: 'Price', 
+    render: renderAmount, 
+    prop: 'price'
   }
 ];
 
@@ -48,6 +83,8 @@ class UserPrivatesTable extends React.Component {
       classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
       classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
       classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
+      classItem.instructor = classItem.instructor ? classItem.instructor.name.first + ' ' + classItem.instructor.name.last : 'N/A';
+      classItem.enrolled = classItem.enrolled[0].name ? classItem.enrolled[0].name.first + ' ' + classItem.enrolled[0].name.last : 'N/A';
       return classItem;
     });
   }
@@ -69,10 +106,9 @@ class UserPrivatesTable extends React.Component {
             privates.length ?
               <DataTable
                 keys={['_id']}
-                columns={columns}
+                columns={this.props.table === 'instructor' ? InstructorTableColumns : StudentTableColumns}
                 initialData={privates}
-                initialPageLength={15}
-                pageLengthOptions={[ 15, 20, 50 ]}
+                initialPageLength={1000}
                 className="table-body" /> 
             : 
               <div className="no-results">No Privates Yet</div>

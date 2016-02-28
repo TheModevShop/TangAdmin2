@@ -23,6 +23,8 @@ class Classes extends React.Component {
       classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
       classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
       classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
+      classItem.enrolled = classItem.enrolled.length ? classItem.enrolled.length + '/' + classItem.capacity : '0/' + classItem.capacity;
+      classItem.price = classItem.price ? '$' + (classItem.price / 100).toFixed(2) : 'N/A';
       return classItem;
     });
 
@@ -66,11 +68,6 @@ class Classes extends React.Component {
       return <Input type="checkbox" name="delete" label=" " onChange={this.toggleSelection.bind(this, row._id)}/>;
     }
 
-    const renderEnrolled = (val, row) => {
-      let enroll = row.enrolled ? row.enrolled.length : 0;
-      return <div>{enroll} / {row.capacity}</div>
-    }
-
     const columns = [
       { 
         title: '', 
@@ -78,7 +75,8 @@ class Classes extends React.Component {
       },
       { 
         title: 'Name', 
-        render: renderName
+        render: renderName,
+        prop: 'name'
       },
       { 
         title: 'Date', 
@@ -94,11 +92,11 @@ class Classes extends React.Component {
       },
       { 
         title: 'Enrolled', 
-        render: renderEnrolled 
+        prop: 'enrolled'
       },
       { 
-        title: 'Fee', 
-        prop: 'price' 
+        title: 'Price', 
+        prop: 'price'
       }
     ];
 
@@ -113,12 +111,12 @@ class Classes extends React.Component {
           </Col>
         </div>
         <div className="row table-filter-container">
-          <TableFilter table="classes" items={_.get(this.state, 'classes') || {}} />
+          <TableFilter table="classes" />
           { 
             this.state.selections.length ?
-              <Col xs={12} sm={5}>
+              <Col xs={12} sm={4}>
                 <Button onClick={this.activateModal.bind(this, 'delete', this.delete.bind(this))}>Delete</Button>
-                <Button onClick={this.activateModal.bind(this, 'replicate', this.replicate.bind(this))}>Replicate</Button>
+                {/* <Button onClick={this.activateModal.bind(this, 'replicate', this.replicate.bind(this))}>Replicate</Button> */}
               </Col>
             : null
           }
@@ -131,9 +129,8 @@ class Classes extends React.Component {
               keys={['_id']}
               columns={columns}
               initialData={classes}
-              initialPageLength={15}
-              initialSortBy={{prop: 'name', order: 'descending' }}
-              pageLengthOptions={[ 15, 20, 50 ]}
+              initialPageLength={1000}
+              initialSortBy={{prop: 'date', order: 'ascending' }}
               className="table-body"
             /> 
           :

@@ -17,13 +17,13 @@ const TableFilter = React.createClass({
     let instructors = null;
     let dates = _.map(items, (item) => { return {'value': item.date, 'label': item.date, 'filter': 'date' }});
     if (this.props.table === 'private') {
-      students = _.map(items, (item) => { return {'value': item.enrolled[0] ? item.enrolled[0]._id : 123, 'label': item.enrolled[0] ? item.enrolled[0].name.first + ' ' + item.enrolled[0].name.last : 'TODO', 'filter': 'students'}});
+      students = _.map(items, (item) => { return {'value': item.enrolled[0] ? item.enrolled[0]._id : 123, 'label': item.enrolled[0] ? item.enrolled[0].name.first + ' ' + item.enrolled[0].name.last : 'N/A', 'filter': 'students'}});
       instructors = _.map(items, (item) => { return {'value': item.instructor ? item.instructor._id : null, 'label': item.instructor ? item.instructor.name.first + ' ' + item.instructor.name.last : null, 'filter': 'instructors' }});
     } else if (this.props.table === 'classes') {
       classes = _.map(items, (item) => { return {'value': item.name, 'label': item.name, 'filter': 'classes' }});
       instructors = _.map(items, (item) => { return {'value': item.instructor ? item.instructor._id : null, 'label': item.instructor ? item.instructor.name.first + ' ' + item.instructor.name.last : null, 'filter': 'instructors' }});
     } else if (this.props.table === 'instructor') {
-      students = _.map(items, (item) => { return {'value': item.enrolled ? item.enrolled._id : 123, 'label': item.enrolled ? item.enrolled.name.first + ' ' + item.enrolled.name.last : 'TODO', 'filter': 'students'}});
+      students = _.map(items, (item) => { return {'value': item.enrolled ? item.enrolled._id : 123, 'label': item.enrolled ? item.enrolled.name.first + ' ' + item.enrolled.name.last : 'N/A', 'filter': 'students'}});
     } else if (this.props.table === 'transactions') {
       
     }

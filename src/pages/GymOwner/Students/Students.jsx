@@ -6,13 +6,14 @@ import {Link} from 'react-router';
 import Spinner from 'components/Spinner';
 
 const renderName = (val, row) => {
-  return <Link to={`/students/${row._id}`}><div className="image" style={{backgroundImage: `url(${row.image})`}}></div>{row.name.first} {row.name.last}</Link>;
+  return <Link to={`/students/${row._id}`}><div className="image" style={row.image ? {backgroundImage: `url(${row.image})`} : {backgroundImage: "url('src/images/profile.png')"}}></div>{row.name.first} {row.name.last}</Link>;
 }
   
 const columns = [
   { 
     title: 'Name', 
-    render: renderName
+    render: renderName,
+    prop: 'name'
   },
   { 
     title: 'Email', 
@@ -45,9 +46,7 @@ class Students extends React.Component {
             keys={['_id']}
             columns={columns}
             initialData={students}
-            initialPageLength={15}
-            initialSortBy={{ prop: 'name', order: 'descending' }}
-            pageLengthOptions={[ 15, 20, 50 ]}
+            initialPageLength={1000}
             className="table-body"
           /> : 
           <div className="no-results">No Students Yet</div>

@@ -40,9 +40,9 @@ class StudentProfile extends React.Component {
                   this.state.activeTab === 'description' ?
                       <StudentDescription /> : 
                   this.state.activeTab === 'privates' ?
-                      <UserPrivatesTable privates={_.get(this.props, 'StudentPrivates.privates')}/> :
+                      <UserPrivatesTable table="student" privates={_.get(this.props, 'StudentPrivates.privates')}/> :
                     this.state.activeTab === 'classes' ?
-                      <UserClassesTable  classes={_.get(this.props, 'StudentClasses.classes')} /> :
+                      <UserClassesTable table="student" classes={_.get(this.props, 'StudentClasses.classes')} /> :
                   this.state.activeTab === 'status' ?
                       <StudentForm />
                   : null

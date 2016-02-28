@@ -5,60 +5,53 @@ import {Row, Col, Grid, Panel} from 'react-bootstrap';
 import Spinner from 'components/Spinner';
 import moment from 'moment';
 
-const userCharged = (val, row) => {
-  return <div>{row.userCharged.name.first} {row.userCharged.name.last}</div>;
-}
-
-const renderInstructor = (val, row) => {
-  return <div>{row.instructor.name.first} {row.instructor.name.last}</div>;
-}
-
-const renderSession = (val, row) => {
-  return <div>{row.session ? row.session.name : 'TODO'}</div>;
-}
-
-const renderAmount = (val, row) => {
-  return <div>{row.stripe.amount}</div>;
-}
-
-const renderDate = (val, row) => {
-  return <div>{moment(row.date, 'YYYYMMDD').format('MMM D YYYY')}</div>;
-}
-
-const columns = [
-  {
-    title: 'Session',
-    render: renderSession
-  },
-  {
-    title: 'Date',
-    render: renderDate
-  }, 
-  {
-    title: 'User Charged',
-    prop: 'userCharged',
-    render: userCharged
-  },
-  {
-    title: 'Instructor',
-    render: renderInstructor
-  },
-  {
-    title: 'Amount Charged',
-    render: renderAmount
-  }
-
-];
-
 class Transactions extends React.Component {
   constructor(...args) {
     super(...args);
     this.state = {};
   }
 
+  formatData(transactions) {
+    transactions = _.map(_.cloneDeep(transactions), (item) => {
+      item.userCharged = item.userCharged.name ? item.userCharged.name.first + ' ' + item.userCharged.name.first : 'N/A';
+      item.session = item.session ? item.session.name : 'N/A';
+      item.instructor = item.instructor.name ? item.instructor.name.first + ' ' + item.instructor.name.last : 'N/A';
+      item.charged = item.stripe.amount ? '$' + (item.stripe.amount / 100).toFixed(2) : 'N/A';
+      item.date = moment(item.date, 'YYYYMMDD').format('MM/DD/YYYY');
+
+      return item;
+    });
+
+    return transactions;
+  }
+
   render() {
-    const transactions = _.get(this.props, 'transactions.allTransactions') || [];
+    const transactions = this.formatData(_.get(this.props, 'transactions.allTransactions')) || [];
     const isLoading = _.get(this.props, 'transactions.isLoading') || false;
+
+    const columns = [
+      {
+        title: 'Session',
+        prop: 'session'
+      },
+      {
+        title: 'Date',
+        prop: 'date'
+      }, 
+      {
+        title: 'User Charged',
+        prop: 'userCharged'
+      },
+      {
+        title: 'Instructor',
+        prop: 'instructor'
+      },
+      {
+        title: 'Amount Charged',
+        prop: 'charged'
+      }
+
+    ];
     return (
       <div className="table-wrapper">
         <div className="row table-header">
@@ -74,8 +67,8 @@ class Transactions extends React.Component {
             keys={['_id']}
             columns={columns}
             initialData={transactions}
-            initialPageLength={15}
-            pageLengthOptions={[ 15, 20, 50 ]}
+            initialPageLength={1000}
+            initialSortBy={{ prop: 'date', order: 'ascending' }}
             className="table-body"
           /> :
           <div className="no-results">No Transactions Yet</div>

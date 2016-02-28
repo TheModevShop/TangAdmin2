@@ -13,7 +13,21 @@ import _ from 'lodash';
 class Privates extends React.Component {
   constructor(...args) {
     super(...args);
-    this.state = {selections: [], filter: null};
+    this.state = {selections: []};
+  }
+
+  formatData(classes) {
+    classes = _.map(_.cloneDeep(classes), (classItem) => {
+      classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
+      classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
+      classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
+      classItem.enrolled = classItem.enrolled ? (classItem.enrolled[0] ? classItem.enrolled[0].name.first + ' ' + classItem.enrolled[0].name.last : 'N/A') : 'N/A';
+      classItem.price = classItem.price ? '$' + (classItem.price / 100).toFixed(2) : 'N/A';
+
+      return classItem;
+    });
+
+    return classes;
   }
 
   toggleSelection(id) {
@@ -29,12 +43,8 @@ class Privates extends React.Component {
   }
 
   delete() {
-    console.log(this.state.selections);
+    cancelClasses(this.state.selections);
     this.refs.modal.close();
-  }
-  
-  logChange(val, obj) {
-    this.setState({filter: {'value': val, 'filter': obj[0].filter}});
   }
   
   activateModal(action, fn) {
@@ -42,20 +52,17 @@ class Privates extends React.Component {
   }
 
   render() {
-    const classes = this.formatData(this.state.filter);
+    const classes = this.formatData(_.get(this.props, 'privates.allPrivates')) || [];
     const isLoading = _.get(this.props, 'privates.isLoading') || false;
     
     const renderName = (val, row) => {
-      return <Link to={`/privates/${row._id}`}>{ row.instructor ? row.instructor.name.first + ' ' + row.instructor.name.last : 'TODO'} </Link>;
-    }
-
-    const renderStudent = (val, row) => {
-      return <div>{ row.enrolled ? row.enrolled.name.first + ' ' + row.enrolled.name.last : 'TODO'} </div>;
+      return <Link to={`/privates/${row._id}`}>{ row.instructor ? row.instructor.name.first + ' ' + row.instructor.name.last : 'N/A'} </Link>;
     }
 
     const renderCheck = (val, row) => {
       return <Input type="checkbox" name="delete" label=" " onChange={this.toggleSelection.bind(this, row._id)}/>;
     }
+
 
     const columns = [
       { 
@@ -64,7 +71,8 @@ class Privates extends React.Component {
       },
       { 
         title: 'Instructor', 
-        render: renderName
+        render: renderName,
+        prop: 'instructor'
       },
       { 
         title: 'Date', 
@@ -80,11 +88,11 @@ class Privates extends React.Component {
       },
       { 
         title: 'Student', 
-        render: renderStudent 
+        prop: 'enrolled'
       },
-      { 
-        title: 'Price', 
-        prop: 'price' 
+      {
+        title: 'Price',
+        prop: 'price'
       }
     ];
 
@@ -97,10 +105,10 @@ class Privates extends React.Component {
         </div>
 
         <div className="row table-filter-container">
-          <TableFilter table="private" onChange={this.logChange.bind(this)} />
+          <TableFilter table="private"/>
           { 
             this.state.selections.length ?
-              <Col xs={12} sm={5}>
+              <Col xs={12} sm={4}>
                 <Button onClick={this.activateModal.bind(this, 'delete', this.delete.bind(this))}>Delete</Button>
               </Col>
             : null
@@ -114,9 +122,8 @@ class Privates extends React.Component {
                 keys={['_id']}
                 columns={columns}
                 initialData={classes}
-                initialPageLength={15}
+                initialPageLength={1000}
                 initialSortBy={{ prop: 'date', order: 'ascending' }}
-                pageLengthOptions={[ 15, 20, 50 ]}
                 className="table-body" /> 
             : 
               <div className="no-results">No Private Classes Yet</div>
@@ -124,30 +131,6 @@ class Privates extends React.Component {
         <CustomModal ref="modal"/>
        </div>
     );
-  }
-
-  formatData(filter) {
-    let classes = _.get(this.props, 'privates.allPrivates') || [];
-    classes = _.map(_.cloneDeep(classes), (classItem) => {
-      classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
-      classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
-      classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
-      classItem.enrolled = classItem.enrolled[0];
-
-      return classItem;
-    });
-
-    if (filter) {
-      var param = filter.filter;
-      if (param === 'instructors') {
-        classes = _.filter(classes, _.matches({'instructor': {_id: filter.value}}));
-      } else if (param === 'students') {
-        classes = _.filter(classes, _.matches({'enrolled': {_id: filter.value}}));
-      } else if (param === 'date') {
-        classes = _.filter(classes, _.matches({'date': filter.value}));
-      }
-    }
-    return classes;
   }
 }
 
