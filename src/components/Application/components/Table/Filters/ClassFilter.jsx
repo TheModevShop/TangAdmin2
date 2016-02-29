@@ -1,4 +1,5 @@
 import React from 'react';
+import tree from 'state/StateTree';
 import Select from 'react-select';
 import * as actions from 'actions/TableFilterActions';
 

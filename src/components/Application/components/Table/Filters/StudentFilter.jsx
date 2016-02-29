@@ -6,7 +6,6 @@ const StudentFilter = React.createClass({
   shouldComponentUpdate(next, current) {
     return current ? true : false;
   },
-  
   render() {
     const students = this.props.students;
     return (

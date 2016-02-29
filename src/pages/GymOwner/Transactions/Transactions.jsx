@@ -2,6 +2,7 @@ import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {DataTable} from 'react-data-components';
 import {Row, Col, Grid, Panel} from 'react-bootstrap';
+import TableFilter from './../../../components/Application/components/Table/TableFilter';
 import Spinner from 'components/Spinner';
 import moment from 'moment';
 
@@ -55,9 +56,12 @@ class Transactions extends React.Component {
     return (
       <div className="table-wrapper">
         <div className="row table-header">
-          <Col xs={12} sm={6}>
+          <Col xs={12}>
             <h1>Transactions</h1>
           </Col>
+        </div>
+        <div className="row table-filter-container">
+          <TableFilter table="transactions" items={_.get(this.props, 'transactions.allTransactions')} />
         </div>
         {
           isLoading ? 

@@ -105,7 +105,7 @@ class Privates extends React.Component {
         </div>
 
         <div className="row table-filter-container">
-          <TableFilter table="private"/>
+          <TableFilter table="private" items={_.get(this.props, 'privates.allPrivates')} />
           { 
             this.state.selections.length ?
               <Col xs={12} sm={4}>
