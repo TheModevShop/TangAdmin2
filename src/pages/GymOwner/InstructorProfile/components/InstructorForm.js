@@ -1,7 +1,6 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {Row, Col, Button, Input} from 'react-bootstrap';
-import RspMsg from './../../../../components/Application/components/Forms/message';
 import {makeGymOwner} from 'actions/InstructorActions';
 
 
@@ -50,7 +49,6 @@ class InstructorForm extends React.Component {
               <Button type="submit" value="Submit">Submit</Button>
             </Col>
           </Row>
-          <RspMsg delay={5000} responnse={this.props.response ? this.props.response : null} />
         </form>
     );
   }

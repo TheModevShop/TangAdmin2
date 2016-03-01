@@ -6,7 +6,7 @@ import {Link} from 'react-router';
 import Spinner from 'components/Spinner';
 
 const renderName = (val, row) => {
-  return <Link to={`/students/${row._id}`}><div className="image" style={{backgroundImage: `url(${row.image})`}}></div>{row.name.first} {row.name.last}</Link>;
+  return row.name ? <Link to={`/students/${row._id}`}><div className="image" style={{backgroundImage: `url(${row.image})`}}></div>{row.name.first} {row.name.last}</Link> : 'null';
 }
   
 const columns = [
@@ -23,7 +23,7 @@ const columns = [
 
 class ClassStudentsTable extends React.Component {
   render() {
-    const students = this.props.profile.enrolled
+    const students = this.props.profile.enrolled;
     return (
       <div className="col-xs-12 table-wrapper">
         <div className="row table-header">
