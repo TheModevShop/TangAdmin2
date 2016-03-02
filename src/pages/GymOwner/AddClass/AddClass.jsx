@@ -72,8 +72,8 @@ const AddClass = React.createClass({
                 <Row>
                   <SelectField 
                     className="col-xs-12 "
-                    value={profile.instructor ? profile.instructor : ''}   
-                    name="instructorId" 
+                    value={profile.instructor ? profile.instructor.id : ''}   
+                    name="instructor" 
                     title="Instructor"
                     options={this.getInstructors()} />
                 </Row>
