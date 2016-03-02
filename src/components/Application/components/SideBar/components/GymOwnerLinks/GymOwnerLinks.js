@@ -1,4 +1,5 @@
 import React from 'react';
+import {branch} from 'baobab-react/higher-order';
 import {Link} from "react-router";
 
 class GymOwnerLinks extends React.Component {
@@ -8,10 +9,14 @@ class GymOwnerLinks extends React.Component {
   }
 
   render() {
+    const id = _.get(this.props, 'user.myGym.gymDetails._id', null);
     return (
         <ul>
           <li> 
             <Link activeClassName="active" to="/dashboard">Dashboard</Link> 
+          </li>
+          <li> 
+            <Link activeClassName="active" to={`/add-gym/${id}`}>Edit Gym</Link> 
           </li>
           <li> 
             <Link activeClassName="active" to="/gym-owners">Gym Owners</Link>
@@ -40,4 +45,8 @@ GymOwnerLinks.contextTypes = {
   history: React.PropTypes.object
 };
 
-export default GymOwnerLinks
+export default branch(GymOwnerLinks, {
+  cursors: {
+    user: ['user']
+  }
+});
