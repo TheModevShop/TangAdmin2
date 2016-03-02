@@ -21,7 +21,8 @@ class InstructorForm extends React.Component {
 
   render() {
     const profile = _.get(this.props, 'InstructorProfile.profile') || {};
-    const userRole = profile.gyms[0].role._id;
+    const myGymId = _.get(this.props, 'user.gymDetails._id');
+    const userRole = _.get(_.find(profile.gyms, {gym: myGymId}), 'role._id');
     const userId = profile._id;
     const roles = _.get(this.props, 'Roles.roles') || {};
     const rolesList = _.map(roles, (role) => {
@@ -42,7 +43,7 @@ class InstructorForm extends React.Component {
     });
 
     return (
-        <form onSubmit={this.onSubmit.bind(this, userId, userRole)} className="col-xs-12">
+        <form onSubmit={this.onSubmit.bind(this, userId, this.state.role)} className="col-xs-12">
           {rolesList}
           <Row>
             <Col xs={12}>
@@ -57,7 +58,8 @@ class InstructorForm extends React.Component {
 
 export default branch(InstructorForm, {
   cursors: {
-    InstructorProfile: ['views', 'InstructorProfile']
+    InstructorProfile: ['views', 'InstructorProfile'],
+    user: ['user', 'myGym']
   },
   facets: {
     Roles: 'Roles',
