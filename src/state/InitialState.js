@@ -55,6 +55,12 @@ export default function getInitialState() {
           success: true,
           response: null
         },
+        GymOwnerProfile: {
+          awaitingSave: false,
+          error: false,
+          success: true,
+          response: null
+        },
         ClassList: null,
         PrivatesList: null,
         GymOwners: null
