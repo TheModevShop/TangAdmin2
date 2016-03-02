@@ -14,6 +14,9 @@ class GymOwnerLinks extends React.Component {
             <Link activeClassName="active" to="/dashboard">Dashboard</Link> 
           </li>
           <li> 
+            <Link activeClassName="active" to="/gym-owners">Gym Owners</Link>
+          </li>
+          <li> 
             <Link activeClassName="active" to="/instructors">Instructors</Link>
           </li> 
           <li> 
