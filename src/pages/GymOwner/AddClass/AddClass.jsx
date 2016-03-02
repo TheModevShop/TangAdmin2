@@ -170,7 +170,7 @@ const AddClass = React.createClass({
       data.private = false;
       data.price = this.currency(data.price);
       data.capacity = Number(data.capactiy);
-      if (this.props.classProfile.classProfile._id) {
+      if (_.get(this.props, 'classProfile.classProfile._id')) {
         data.SessionId = this.props.classProfile.classProfile._id;
         updateClass(data, this.props.classProfile.classProfile._id);
       } else {
