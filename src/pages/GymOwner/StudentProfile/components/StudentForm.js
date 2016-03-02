@@ -41,14 +41,14 @@ class StudentForm extends React.Component {
     });
 
     return (
-        <form onSubmit={this.onSubmit.bind(this)} className="col-xs-12">
+        <form onSubmit={this.onSubmit.bind(this, userId, userRole)} className="col-xs-12">
           {rolesList}
           <Row>
             <Col xs={12}>
               <Button type="submit" value="Submit">Submit</Button>
             </Col>
           </Row>
-          <RspMsg delay={5000} responnse={this.props.response ? this.props.response : null} />
+          <RspMsg delay={5000} response={this.props.StudentProfile.response ? this.props.StudentProfile.response : null} />
         </form>
     );
   }

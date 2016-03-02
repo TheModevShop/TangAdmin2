@@ -10,8 +10,8 @@ class CustomModal extends React.Component {
 	close() {
 		this.setState({ showModal: false });
 	}
-	open(action, items, fn) {
-		this.setState({ 'showModal': true, 'action': action, 'items': items, 'fn': fn });
+	open(action, fn) {
+		this.setState({ 'showModal': true, 'action': action, 'fn': fn });
 	}
 	render() {
 		const props = this.props;
@@ -21,7 +21,7 @@ class CustomModal extends React.Component {
 					<Modal.Title>Are you sure?</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<p>Are you sure you want to {this.state.action} {this.state.items} {this.state.items > 1 ? 'items' : 'item'}? This action cannot be undone.</p>
+					<p>Are you sure you want to {this.state.action} this class? This action cannot be undone.</p>
 				</Modal.Body>
 				<Modal.Footer>
 					<Button onClick={this.state.fn}>Submit</Button>

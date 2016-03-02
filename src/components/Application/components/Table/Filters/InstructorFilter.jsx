@@ -3,8 +3,8 @@ import Select from 'react-select';
 import * as actions from 'actions/TableFilterActions';
 
 const InstructorFilter = React.createClass({
-  shouldComponentUpdate(next, current) {
-    return current ? true : false;
+  shouldComponentUpdate(nextProps) {
+    return nextProps.table !== this.props.table;
   },
   render() {
     const instructors = this.props.instructors;

@@ -4,8 +4,8 @@ import Select from 'react-select';
 import * as actions from 'actions/TableFilterActions';
 
 const ClassFilter = React.createClass({
-  shouldComponentUpdate(next, current) {
-    return current ? true : false;
+  shouldComponentUpdate(nextProps) {
+    return nextProps.table !== this.props.table;
   },
   render() {
     const classes = this.props.classes;

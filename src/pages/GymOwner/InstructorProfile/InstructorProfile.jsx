@@ -6,6 +6,7 @@ import InstructorForm from './components/InstructorForm';
 import InstructorDescription from './components/InstructorDescription';
 import UserPrivatesTable from 'components/UserSessionTables/UserPrivatesTable';
 import UserClassesTable from 'components/UserSessionTables/UserClassesTable';
+import RspMsg from './../../../components/Application/components/Forms/message';
 import {setActiveInstructor, clearResponse} from 'actions/InstructorActions';
 import _ from 'lodash';
 import './instructor-profile.less';
@@ -47,12 +48,13 @@ class InstructorProfile extends React.Component {
                     this.state.activeTab === 'privates' ?
                         <UserPrivatesTable table="instructor" privates={_.get(this.props, 'InstructorPrivates.privates')}/> :
                     this.state.activeTab === 'classes' ?
-                        <UserClassesTable table="instructor" classes={_.get(this.props, 'InstructorClasses.classes')} /> :
+                        <UserClassesTable table="instructor-classes" classes={_.get(this.props, 'InstructorClasses.classes')} /> :
                     this.state.activeTab === 'status' ?
                         <InstructorForm />
                     : null
                 }
               </Row>
+              <RspMsg delay={5000} response={this.props.InstructorProfile.response ? this.props.InstructorProfile.response : null} />
             </div>
           </Row>
         </Grid>

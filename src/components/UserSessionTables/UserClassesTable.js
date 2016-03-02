@@ -70,7 +70,7 @@ class UserClassesTable extends React.Component {
     return (
       <div className="table-wrapper">
         <div className="row table-filter-container">
-          <TableFilter table={'private'} onChange={this.logChange.bind(this)} />
+          <TableFilter table={this.props.table ? this.props.table : 'classes'} items={_.get(this.props, 'classes')} onChange={this.logChange.bind(this)} />
         </div>
         {
             classes.length ?

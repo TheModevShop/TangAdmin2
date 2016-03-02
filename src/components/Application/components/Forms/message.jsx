@@ -33,16 +33,16 @@ var RspMsg = React.createClass({
   },
   render: function() {
     const response = this.props.response ? this.props.response : null;
-    return this.state.visible 
-           ? <Row>
-                { response ? 
+    return this.state.visible ?
+            <Row>
+              { response ? 
                   <Col xs={12} className={response.success ? ' response-msg msg-success' : ' response-msg msg-error'}>
                       <span className={response.success ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-exclamation-sign'}></span>
                       <p>{response.message}</p>
                   </Col>
                 : null }
               </Row>
-           : null;
+           : null
   }
 });
 

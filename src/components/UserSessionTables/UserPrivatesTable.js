@@ -84,7 +84,7 @@ class UserPrivatesTable extends React.Component {
       classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
       classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
       classItem.instructor = classItem.instructor ? classItem.instructor.name.first + ' ' + classItem.instructor.name.last : 'N/A';
-      classItem.enrolled = classItem.enrolled[0].name ? classItem.enrolled[0].name.first + ' ' + classItem.enrolled[0].name.last : 'N/A';
+      classItem.enrolled = (classItem.enrolled[0] && classItem.enrolled[0].name) ? classItem.enrolled[0].name.first + ' ' + classItem.enrolled[0].name.last : 'N/A';
       return classItem;
     });
   }
@@ -100,7 +100,7 @@ class UserPrivatesTable extends React.Component {
     return (
       <div className="table-wrapper">
         <div className="row table-filter-container">
-          <TableFilter table={'private'} onChange={this.logChange.bind(this)} />
+          <TableFilter table={this.props.table ? this.props.table : 'private'} items={_.get(this.props, 'privates')} onChange={this.logChange.bind(this)} />
         </div>
         {
             privates.length ?

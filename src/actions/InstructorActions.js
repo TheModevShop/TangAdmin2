@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 const myGym = tree.select(['user', 'myGym']);
 const gymStudentsCursor = tree.select(['views', 'GymStudents']);
-const gymInstructorsCursor = tree.select(['views', 'GymInstructors']);
+// const gymInstructorsCursor = tree.select(['views', 'GymInstructors']);
 const InstructorProfile = tree.select(['views', 'InstructorProfile']);
 
 export function clearResponse() {
@@ -18,19 +18,18 @@ export function setActiveInstructor() {
 }
 
 export async function makeGymOwner(userId, roleId) {
-  gymInstructorsCursor.set({stale: true});
+  // gymInstructorsCursor.set({stale: true});
+  let put;
+  let gymId = _.get(myGym.get(), 'gymDetails._id');
   try {
-    const put = await editRole(userId, {
-      gym: _.get(myGym.get(), 'gymDetails._id'),
-      role: roleId
-    });
+    put = await editRole(userId, {gym: gymId, role: roleId});
     InstructorProfile.set(['response'], {'success': true, 'message': 'Your profile has been successfully updated!'});
-    gymInstructorsCursor.set({stale: true});
-    gymStudentsCursor.set('stale', true); // this will cause to refetch
+    // gymInstructorsCursor.set({stale: true});
+    // gymStudentsCursor.set('stale', true); // this will cause to refetch
   } catch (err) {
   	InstructorProfile.set(['response'], {'success': false, 'message': 'There was an error updating your profile!'});
-    gymInstructorsCursor.set('error', err);
+    // gymInstructorsCursor.set('error', err);
   }
-  gymInstructorsCursor.set('isLoading', false);
+  // gymInstructorsCursor.set('isLoading', false);
   tree.commit();
 }
