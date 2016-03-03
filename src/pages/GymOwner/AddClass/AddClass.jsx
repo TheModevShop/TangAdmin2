@@ -165,7 +165,7 @@ const AddClass = React.createClass({
     const classTime = moment(data.date).set('hour', data.start.split(':')[0]).set('minute', data.start.split(':')[1]).format()
     const validDate = moment().isBefore(moment(classTime))
     if (validDate) {
-      data.dateAndTime = moment(data.date);
+      data.dateAndTime = classTime;
       data.date = moment(data.date).format('YYYYMMDD');
       data.private = false;
       data.price = this.currency(data.price);
