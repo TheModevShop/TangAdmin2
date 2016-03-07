@@ -62,15 +62,12 @@ export async function addGymOwner(data, gymId) {
   return update;
 }
 
-export async function addPhotos(data, gymId) {
+export async function addPhotos(photos, gymId) {
   let update;
   addGymCursor.set(['awaitingSave'], true);
-  const dataStr = JSON.stringify(data);
   try {
-    update = await addPhotosApi({data: JSON.stringify(data)}, gymId);
-    gymList.set({stale: true}); // this will cause to refetch
-    addGymCursor.set(['data'], post.body);
-    addGymCursor.set(['response'], {'success': true, 'message': 'Your gym information has been successfully submitted!'});
+    update = await addPhotosApi(photos, gymId);
+    update = update.body;
   } catch (err) {
     update = null;
     addGymCursor.set(['response'], {'success': false, 'message': 'There was an error submitting your information.'});

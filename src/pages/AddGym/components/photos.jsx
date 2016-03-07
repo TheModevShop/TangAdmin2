@@ -13,6 +13,19 @@ const PhotosComponent = React.createClass({
     };
   },
 
+  componentWillMount() {    
+    var photos = _.get(this.props, 'data.photos', [])
+    this.setState({images: photos});
+  },
+
+  componentWillReceiveProps(nextProps) {
+    var nextPhotos = _.get(nextProps, 'data.photos', [])
+    var photos = _.get(nextProps, 'data.photos', [])
+    if (nextPhotos.length !== photos.length) {
+      this.setState({images: nextPhotos});
+    }
+  },
+
   onDrop(files) {
     const imgs = [];
     for (var file in files) {
@@ -25,25 +38,22 @@ const PhotosComponent = React.createClass({
 
   },
 
-  onSubmit() {
-    
-  },
 
   convertAndUploadImages(imagesToConvert) {
     const gymId = this.props.gymId;
     const images = _.map(imagesToConvert, (image) => {
       return this.imagePrcessor(image);
     });
-    BluebirdPromise.all(images).then(function(allPhotoBlobs) {
+    BluebirdPromise.all(images).then((allPhotoBlobs) => {
       const allPhotos = _.map(allPhotoBlobs, (photo) => {
         return {
           photo: photo
         }
       });
-      addPhotos(allPhotos, gymId).then(function(images) {
-        this.setState({images: images});
+      addPhotos(allPhotos, gymId).then((images) => {
+        this.setState({images: this.state.images.concat(images)});
       });
-    }).catch(function() {
+    }).catch(() => {
       alert('error occured, try again')
     })
   },
@@ -51,10 +61,10 @@ const PhotosComponent = React.createClass({
   imagePrcessor(file) {
     return new BluebirdPromise((resolve, reject) => {
         const reader  = new FileReader();
-        reader.addEventListener('load', function () {
+        reader.addEventListener('load', () => {
           resolve(reader.result);
         }.bind(this), false);
-        reader.addEventListener('error', function () {
+        reader.addEventListener('error', () => {
           reject();
         }.bind(this), false);
 
@@ -67,6 +77,7 @@ const PhotosComponent = React.createClass({
   },
 
   render() {
+    console.log(this.props)
     return (
       <Row>
         <Col xs={12}>
@@ -74,11 +85,11 @@ const PhotosComponent = React.createClass({
             <Col xs={12}>
               <Row>
                 {
-                  this.state.images.length > 0 ? 
-                  this.state.images.map((file) =>
+                  this.state.images && this.state.images.length > 0 ? 
+                  this.state.images.map((file, i) =>
                     <Col xs={4} className="image-container">
                       <div>
-                      <img key={file.lastModified} src={file.preview} />
+                      <img key={i} src={file.url} />
                       <div className="actions">
                         <div className="make-default">Make Default</div>
                         <div className="delete">Delete</div>
@@ -95,14 +106,7 @@ const PhotosComponent = React.createClass({
                 </Col>
               </Row>
             </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <Button type="button" onClick={this.onSubmit}>
-                Update
-              </Button>
-            </Col>
-          </Row>
+          </Row>          
         </Col>
       </Row>
     );
