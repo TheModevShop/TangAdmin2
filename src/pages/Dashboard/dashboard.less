@@ -1,0 +1,125 @@
+.dashboard {
+	height: ~'calc(100% - 30px)';
+	span.rbc-toolbar-label {
+		font-family: default_medium;
+		font-size: 20px;
+		color: #585858;
+	}
+	.rbc-header {
+		padding: 15px;
+		font-family: default_medium;
+		background-color: #F4F4F4;
+		color: #585858;
+		font-size: 13px;
+		letter-spacing: 1px;
+	}
+	.rbc-gutter-cell, .rbc-time-gutter>.rbc-time-slot {
+	    font-size: 11px;
+	    text-align: right;
+	    padding: 4px 6px;
+	    color: #aaa;
+	}
+	.rbc-toolbar {
+	    margin-bottom: 20px;
+	    button {
+	    	font-family: default_medium;
+    	    color: #545454;
+    	    padding: 10px 20px;
+    	    border-radius: 3px;
+    	    text-transform: capitalize;
+    	    font-size: 14px;
+    	    &.rbc-active,
+    	    &:active,
+    	    &:hover,
+    	    &:focus {
+    	    	box-shadow: none;
+    	    	background-color: #f4f4f4;
+    	    	border-color: #ccc;
+    	    }
+    	}
+    	.rbc-btn-group:last-child {
+    		button:last-child {
+    			display: none;
+    		}
+    	}
+	}
+	.rbc-time-content {
+		border-top-width: 1px;
+	}
+	.rbc-time-header.rbc-header-overflowing {
+		border-right: none;
+		.rbc-row {
+			&:first-child {
+				border-bottom: none;
+				.rbc-header {
+					padding: 15px 2px 20px;
+				}
+			}
+			&:last-child {
+				display: none;
+			}
+		}
+	}
+	.rbc-event {
+		padding: 5px;
+		background-color: transparent;
+		color: #444;
+		font-size: 13px;
+		border-left: 3px solid #1C40C4;
+		border-radius: 0;
+		margin-bottom: 1px;
+		cursor: pointer;
+		&.rbc-selected {
+	    	z-index: 9999;
+	    	box-shadow: -1px 1px 5px 0 rgba(51,51,51,.5);
+	    }
+	    &.rbc-event-overlaps {
+	    	z-index: 9998;
+	    }
+	    &.private-session {
+	    	border-left-color: @salmon;
+	    }
+	}
+	.rbc-day-slot {
+		.rbc-event {
+			border: none;
+			background-color: #E8ECF9;
+			border-left: 3px solid #1C40C4;
+			.rbc-event-label {
+			    font-size: 10px;
+			    padding-bottom: 3px;
+			}
+			.rbc-event-content {
+			    white-space: nowrap;
+			    overflow: hidden;
+			    text-overflow: ellipsis;
+			    font-size: 12px;
+			    font-family: default_medium;
+			}
+		    &.private-session {
+		    	border-left-color: @salmon;
+		    	background-color: #FEF0F0;
+		    }
+		}
+	}
+	a.rbc-show-more {
+	    background-color: transparent;
+	    color: #ccc;
+	    padding-left: 8px;
+	}
+	.rbc-date-cell {
+		padding: 10px 10px 12px;
+		&.rbc-now a {
+			background-color: @salmon;
+			color: #fff;
+			border-radius: 50%;
+			margin: -7px -7px;
+			display: block;
+			width: 30px;
+			float: right;
+			height: 30px;
+			text-align: center;
+			padding-top: 8px;
+		}
+	}
+}

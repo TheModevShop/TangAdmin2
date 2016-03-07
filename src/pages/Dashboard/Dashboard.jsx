@@ -3,6 +3,7 @@ import {branch} from 'baobab-react/higher-order';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './dashboard.less';
 import _ from 'lodash';
 
 BigCalendar.momentLocalizer(moment);
@@ -29,6 +30,10 @@ class Dashboard extends React.Component {
     return classes;
   }
 
+  setClassName(event, start, end, isSelected) {
+    return {className: event.title.replace(/\s+/g, '-').toLowerCase(), style: null};
+  }
+
   render() {
     const privates = _.get(this.props, 'privates.allPrivates') || [];
     const classes = _.get(this.props, 'classes.allClasses') || [];
@@ -36,8 +41,11 @@ class Dashboard extends React.Component {
     console.log(classArray);
     return (
 
-        <div className="dahboard-home">
-          <BigCalendar events={classArray} defaultDate={new Date()} />
+        <div className="dashboard">
+          <BigCalendar
+            events={classArray}
+            defaultDate={new Date()} 
+            eventPropGetter={this.setClassName.bind(this)}/>
         </div>
     );
   }
