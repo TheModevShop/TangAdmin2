@@ -14,16 +14,31 @@ class Dashboard extends React.Component {
     this.state = {classes: []};
   }
 
+  monthEvent({event}) {
+    let start = moment(event.start).format('h:mm a');
+    let end = moment(event.end).format('h:mm a');
+    return (
+      <div>
+        <span>{event.shortTitle}</span>
+      </div>
+     
+    )
+  }
+
   formatData(classes) {
     classes = _.map(_.cloneDeep(classes), (classItem) => {
       let newClassItem = {};
       let date = moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY');
       let start = moment(classItem.time.start, 'H:mm').format('HH:mm');
       let end = moment(classItem.time.end, 'H:mm').format('HH:mm');
+      let enrolled = classItem.enrolled ? (classItem.enrolled[0] ? classItem.enrolled[0].name.first : 'N/A') : 'N/A';
+      let instructor = classItem.instructor ? classItem.instructor.name.first : 'N/A';
       newClassItem.start = new Date(moment(classItem.date + ' ' + classItem.time.start).format('YYYY-MM-DD HH:mm'));
       newClassItem.end = new Date(moment(classItem.date + ' ' + classItem.time.end).format('YYYY-MM-DD HH:mm'));
       newClassItem.desc = classItem.description ? classItem.description : null;
-      newClassItem.title = classItem.name ? classItem.name : classItem.instructor ? classItem.instructor.name.first + ' ' + classItem.instructor.name.last : 'N/A';
+      newClassItem.title = (classItem.private ? (instructor + ' - ' + enrolled) : classItem.name) + ', ' + moment(newClassItem.start).format('h:mm a') + ' - ' + moment(newClassItem.end).format('h:mm a');
+      newClassItem.className = classItem.private ? 'private-session' : '';
+      newClassItem.shortTitle = classItem.private ? (instructor + ' - ' + enrolled) : classItem.name;
       return newClassItem;
     });
 
@@ -31,7 +46,7 @@ class Dashboard extends React.Component {
   }
 
   setClassName(event, start, end, isSelected) {
-    return {className: event.title.replace(/\s+/g, '-').toLowerCase(), style: null};
+    return {className: event.className, style: null};
   }
 
   render() {
@@ -44,8 +59,18 @@ class Dashboard extends React.Component {
         <div className="dashboard">
           <BigCalendar
             events={classArray}
+            popup
             defaultDate={new Date()} 
-            eventPropGetter={this.setClassName.bind(this)}/>
+            eventPropGetter={this.setClassName.bind(this)}
+            components={{month:{event: this.monthEvent.bind(this), popup: this.monthEvent.bind(this)}}}
+            views={['month', 'week', 'day']}
+            formats={{
+                      dateFormat: 'D',
+                      dayFormat: 'dddd Do',
+                      weekHeaderFormat: 'MMMM D - D',
+                      dayHeaderFormat: 'MMMM D, YYYY',
+                    }}
+                      />
         </div>
     );
   }
