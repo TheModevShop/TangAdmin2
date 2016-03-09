@@ -43,11 +43,18 @@
 	}
 	.rbc-time-header.rbc-header-overflowing {
 		border-right: none;
+		height: 44px;
+		min-height: 44px;
+		max-height: 44px;
 		.rbc-row {
 			&:first-child {
 				border-bottom: none;
+				height: 44px;
+				min-height: 44px;
+				max-height: 44px;
 				.rbc-header {
-					padding: 15px 2px 20px;
+					padding: 0 10px;
+					line-height: 42px;
 				}
 			}
 			&:last-child {
@@ -64,6 +71,9 @@
 		border-radius: 0;
 		margin-bottom: 1px;
 		cursor: pointer;
+		a {
+			color: #444;
+		}
 		&.rbc-selected {
 	    	z-index: 9999;
 	    	box-shadow: -1px 1px 5px 0 rgba(51,51,51,.5);

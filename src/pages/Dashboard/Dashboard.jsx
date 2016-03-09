@@ -3,6 +3,7 @@ import {branch} from 'baobab-react/higher-order';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import {Link} from 'react-router';
 import './dashboard.less';
 import _ from 'lodash';
 
@@ -19,7 +20,7 @@ class Dashboard extends React.Component {
     let end = moment(event.end).format('h:mm a');
     return (
       <div>
-        <span>{event.shortTitle}</span>
+        <Link to={`/classes/${event.id}`}>{event.shortTitle}</Link>
       </div>
      
     )
@@ -39,6 +40,7 @@ class Dashboard extends React.Component {
       newClassItem.title = (classItem.private ? (instructor + ' - ' + enrolled) : classItem.name) + ', ' + moment(newClassItem.start).format('h:mm a') + ' - ' + moment(newClassItem.end).format('h:mm a');
       newClassItem.className = classItem.private ? 'private-session' : '';
       newClassItem.shortTitle = classItem.private ? (instructor + ' - ' + enrolled) : classItem.name;
+      newClassItem.id = classItem._id;
       return newClassItem;
     });
 
@@ -50,37 +52,28 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const privates = _.get(this.props, 'privates.allPrivates') || [];
-    const classes = _.get(this.props, 'classes.allClasses') || [];
-    const classArray = this.formatData(_.concat(privates, classes));
-    console.log(classArray);
+    const classes = this.formatData(_.get(this.props, 'dashboard.allClasses') || []);
     return (
 
         <div className="dashboard">
           <BigCalendar
-            events={classArray}
+            events={classes}
             popup
             defaultDate={new Date()} 
             eventPropGetter={this.setClassName.bind(this)}
-            components={{month:{event: this.monthEvent.bind(this), popup: this.monthEvent.bind(this)}}}
+            components={{month:{event: this.monthEvent.bind(this)}, week:{event: this.monthEvent.bind(this)}, day:{event: this.monthEvent.bind(this)}}}
             views={['month', 'week', 'day']}
-            formats={{
-                      dateFormat: 'D',
-                      dayFormat: 'dddd Do',
-                      weekHeaderFormat: 'MMMM D - D',
-                      dayHeaderFormat: 'MMMM D, YYYY',
-                    }}
-                      />
+            formats={{dateFormat: 'D', dayFormat: 'dddd Do', weekHeaderFormat: 'MMMM D - D', dayHeaderFormat: 'MMMM D, YYYY'}}
+          />
         </div>
     );
   }
 }
 export default branch(Dashboard, {
   cursors: {
-    dashboard: ['dashboard']
+    Dashboard: ['Dashboard']
   },
   facets: {
-    classes: 'Classes',
-    privates: 'Privates'
+    dashboard: 'Dashboard'
   }
 });
