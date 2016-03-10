@@ -3,9 +3,6 @@ import Select from 'react-select';
 import * as actions from 'actions/TableFilterActions';
 
 const StudentFilter = React.createClass({
-  shouldComponentUpdate(nextProps) {
-    return nextProps.table !== this.props.table;
-  },
   render() {
     const students = this.props.students;
     return (

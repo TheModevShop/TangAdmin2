@@ -16,6 +16,7 @@ export default function getInitialState() {
         startDate: null,
         endDate: null,
       },
+      locationClassNames: null,
       views: {
         Dashboard: null,
         GymList: null,

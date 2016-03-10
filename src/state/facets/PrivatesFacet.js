@@ -4,7 +4,7 @@ import {BASE} from 'constants';
 
 const loader = new RESTLoader({
   getResourceUrl: (id) => {
-    return `${BASE}/gyms/${id}/sessions?private=true`;
+    return `${BASE}/gyms/${id}/sessions?private=true&onlyEnrolled=true`;
   },
   successTransformer: (data) => {
     return {
