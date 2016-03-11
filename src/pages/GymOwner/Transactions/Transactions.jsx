@@ -5,6 +5,7 @@ import {Row, Col, Grid, Panel} from 'react-bootstrap';
 import TableFilter from './../../../components/Application/components/Table/TableFilter';
 import Spinner from 'components/Spinner';
 import moment from 'moment';
+import currency from 'utility/currency';
 
 class Transactions extends React.Component {
   constructor(...args) {
@@ -14,10 +15,10 @@ class Transactions extends React.Component {
 
   formatData(transactions) {
     transactions = _.map(_.cloneDeep(transactions), (item) => {
-      item.userCharged = item.userCharged.name ? item.userCharged.name.first + ' ' + item.userCharged.name.first : 'N/A';
+      item.userCharged = item.userCharged.name ? item.userCharged.name.first + ' ' + item.userCharged.name.last : 'N/A';
       item.session = item.session ? item.session.name : 'N/A';
       item.instructor = item.instructor.name ? item.instructor.name.first + ' ' + item.instructor.name.last : 'N/A';
-      item.charged = item.stripe.amount ? '$' + (item.stripe.amount / 100).toFixed(2) : 'N/A';
+      item.charged = item.stripe.amount ? '$' + currency(item.stripe.amount) : 'N/A';
       item.date = moment(item.date, 'YYYYMMDD').format('MM/DD/YYYY');
 
       return item;

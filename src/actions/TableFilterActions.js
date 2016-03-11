@@ -8,33 +8,30 @@ export function clearFilter() {
     instructor: null,
     className: null,
     startDate: null,
-    endDate: null
+    endDate: null,
+    student: null
   })
   tree.commit();
 }
 
 export function setInstructor(instructor) {
-  tableFilters.set({instructor: instructor});
+  tableFilters.set('instructor', instructor);
   tree.commit();
 }
 
 export function setClassName(className) {
-  tableFilters.set({className: className});
+  tableFilters.set('className', className);
   tree.commit();
 }
 
 export function setStudent(student) {
-  tableFilters.set({student: student});
+  tableFilters.set('student', student);
   tree.commit();
 }
 
-export function setStartDate(startDate) {
-  tableFilters.set({startDate: startDate});
-  tree.commit();
-}
-
-export function setEndDate(endDate) {
-  tableFilters.set({endDate: endDate});
+export function setDate(startDate, endDate) {
+  tableFilters.set('startDate', startDate);
+  tableFilters.set('endDate', endDate);
   tree.commit();
 }
 

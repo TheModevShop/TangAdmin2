@@ -11,6 +11,7 @@ const InstructorFilter = React.createClass({
        name="form-field-name"
        options={instructors}
        onChange={this.onChange}
+       value={this.props.value}
        placeholder="Instructors" />
     );
   },

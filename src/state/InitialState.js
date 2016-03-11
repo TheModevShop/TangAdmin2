@@ -15,6 +15,7 @@ export default function getInitialState() {
         className: null,
         startDate: null,
         endDate: null,
+        student: null
       },
       locationClassNames: null,
       views: {

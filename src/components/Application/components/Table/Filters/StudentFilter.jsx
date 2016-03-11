@@ -10,13 +10,14 @@ const StudentFilter = React.createClass({
        className=""
        name="form-field-name"
        options={students}
+       value={this.props.value}
        onChange={this.onChange}
        placeholder="Students" />
     );
   },
 
-  onChange(e) {
-    actions.setStudent()
+  onChange(val) {
+    actions.setStudent(val)
   }
 });
 

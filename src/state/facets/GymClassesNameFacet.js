@@ -7,7 +7,7 @@ import moment from 'moment';
 
 const loader = new RESTLoader({
   getResourceUrl: (id) => {
-    let startDate = moment().format('YYYYMMDD');
+    let startDate = moment().subtract(3, 'months').format('YYYYMMDD');
     let endDate = moment().add(12, 'months').format('YYYYMMDD');
     return `${BASE}/gyms/${id}/sessions/classes?startDate=${startDate}&endDate=${endDate}`;
   },

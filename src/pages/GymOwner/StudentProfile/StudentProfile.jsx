@@ -18,8 +18,7 @@ class StudentProfile extends React.Component {
     }
   }
 
-  render() {
-    console.log(this.props)
+  render() { 
     return (
         <Grid fluid className={this.state.activeTab + " student-profile"}>
           <Row>

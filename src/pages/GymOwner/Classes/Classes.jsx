@@ -76,7 +76,7 @@ class Classes extends React.Component {
           </Col>
         </div>
         <div className="row table-filter-container">
-          <TableFilter table="classes" items={_.get(this.props, 'classes.allClasses')} />
+          <TableFilter table="classes" />
         </div>
         {
           isLoading ? 
