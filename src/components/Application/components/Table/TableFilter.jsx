@@ -53,7 +53,7 @@ const TableFilter = React.createClass({
     }
 
     return (
-      <Col className="table-filter" xs={12} sm={8}>
+      <Col className="table-filter" xs={12}>
         {
           table === 'classes' || table === 'instructor-classes' || table === 'student-classes' ? 
             <ClassFilter value={className} table={this.props.table} classes={allClassNames} /> : null
