@@ -19,6 +19,9 @@ class AppOwnerLinks extends React.Component {
           <li> 
             <Link activeClassName="active" to="/add-gym">Add Gym</Link>
           </li>
+          <li> 
+            <Link activeClassName="active" to="/app-owner-report">Reports</Link>
+          </li>
         </ul>
     );
   }

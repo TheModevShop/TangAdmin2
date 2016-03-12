@@ -1,0 +1,28 @@
+.table-wrapper .table-body table td, .table-wrapper .table-body table th {
+    text-align: right;
+    &:first-child {
+    	text-align: left;
+    }
+}
+
+.totals-wrapper {
+	float: right;
+	width: 300px;
+	margin-top: 30px;
+	div {
+		margin-bottom: 25px;
+		span {
+			display: inline-block;
+			vertical-align: bottom;
+		}
+		span:first-child {
+			font-family: 'default_regular';
+			font-size: 1.2em;
+		}
+		span:last-child {
+			font-family: 'default_medium';
+			float: right;
+			font-size: 1.3em;
+		}
+	}
+}

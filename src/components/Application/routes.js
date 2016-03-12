@@ -15,8 +15,10 @@ function getChildRoutes(state, cb) {
       require('pages/Dashboard/routes'),
       require('pages/Gyms/routes'),
       require('pages/AddGym/routes'),
+      require('pages/AppOwnerReports/routes'),
 
       require('pages/GymOwner/GymOwners/routes'),
+      require('pages/GymOwner/GymOwnerReports/routes'),
       require('pages/GymOwner/Classes/routes'),
       require('pages/GymOwner/Instructors/routes'),
       require('pages/GymOwner/Transactions/routes'),
