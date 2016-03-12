@@ -60,9 +60,7 @@ class GymOwners extends React.Component {
 
   formatData(gymOwners) {
     gymOwners = _.map(gymOwners, (owner) => {
-      console.log(owner)
       owner.name = owner.name ? owner.name.first + ' ' + owner.name.last : 'N/A';
-
       return owner;
     });
     return gymOwners;

@@ -64,9 +64,16 @@ export default function getInitialState() {
           success: true,
           response: null
         },
-        ClassList: null,
-        PrivatesList: null,
         GymOwners: null,
+
+        Classes: {
+          page: 0,
+          list: null
+        },
+        Privates: {
+          page: 0,
+          list: null
+        },
         Transactions: {
           page: 0,
           list: null

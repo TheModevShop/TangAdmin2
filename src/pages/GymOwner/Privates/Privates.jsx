@@ -6,6 +6,7 @@ import {Row, Col, Input} from 'react-bootstrap';
 import Spinner from 'components/Spinner';
 import {Link} from 'react-router';
 import TableFilter from 'components/Application/components/Table/TableFilter';
+import TablePagination from 'components/Application/components/Table/TablePagination';
 import {clearPrivatesCache} from 'actions/ClassActions';
 import "./privates.less";
 import _ from 'lodash';
@@ -81,6 +82,7 @@ class Privates extends React.Component {
           isLoading ? 
             <Spinner /> :
             classes.length ?
+            <span>
               <DataTable
                 keys={['_id']}
                 columns={columns}
@@ -88,8 +90,13 @@ class Privates extends React.Component {
                 initialPageLength={1000}
                 initialSortBy={{ prop: 'date', order: 'ascending' }}
                 className="table-body" /> 
-            : 
-              <div className="no-results">No Private Classes Yet</div>
+              
+              <TablePagination path={['views', 'Privates']} 
+                page={_.get(this.props, 'privates.page')} 
+                depleted={_.get(this.props, 'privates.hideNextButton')} />
+
+            </span> : 
+            <div className="no-results">No Private Classes Yet</div>
         }
        </div>
     );

@@ -10,13 +10,21 @@ class GymOwnerForm extends React.Component {
     this.state = {}
   }
 
-  handleChange(e) {
-    this.setState({role: e.target.value})
+  handleChange(role, e) {
+    this.setState({role: role})
   }
 
   onSubmit(id, role, e) {
-    e.preventDefault();
-    editGymOwnerRole(id, role);
+    e.preventDefault();   
+    const isMe = _.get(this.props, 'me.details._id') === id;
+    const canRemoveGymOwnerRole = _.get(this.props, 'gymOwners.gymOwners.length' || false)
+    if (isMe && role.name !== 'gym-owner') {
+      alert('You cannot demote your own role.')
+    } else if (role.name !== 'gym-owner' && !canRemoveGymOwnerRole) {
+      alert('You are the last user with admin access, you cannot demote your role')
+    } else {
+      editGymOwnerRole(id, role._id);
+    }
   }
 
   render() {
@@ -31,9 +39,9 @@ class GymOwnerForm extends React.Component {
         <Row key={role._id}>
           <Col xs={12}>
             { role.name === 'instructor' ?
-              <Input type="radio" name="role" onClick={this.handleChange.bind(this)} defaultChecked={userRole === role._id  ? true : false} value={role._id} label="Instructor"  /> :
+              <Input type="radio" name="role" onClick={this.handleChange.bind(this, role)} defaultChecked={userRole === role._id  ? true : false} value={role._id} label="Instructor"  /> :
               role.name === 'gym-owner' ?
-              <Input type="radio" name="role" onClick={this.handleChange.bind(this)} defaultChecked={userRole === role._id  ? true : false} value={role._id} label="Gym Owner"  /> :
+              <Input type="radio" name="role" onClick={this.handleChange.bind(this, role)} defaultChecked={userRole === role._id  ? true : false} value={role._id} label="Gym Owner"  /> :
               null
             }
           </Col>
@@ -47,7 +55,7 @@ class GymOwnerForm extends React.Component {
           {rolesList}
           <Row>
             <Col xs={12}>
-              <Button type="submit" value="Submit">Submit</Button>
+              <Button disabled={!this.state.role} type="submit" value="Submit">Submit</Button>
             </Col>
           </Row>
         </form> : null
@@ -58,8 +66,10 @@ class GymOwnerForm extends React.Component {
 
 export default branch(GymOwnerForm, {
   cursors: {
-    user: ['user', 'myGym']
+    user: ['user', 'myGym'],
+    me: ['user']
   },
+
   facets: {
     Roles: 'Roles',
     GymOwnerProfile: 'GymOwnerProfile'

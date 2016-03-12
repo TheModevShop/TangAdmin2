@@ -4,6 +4,7 @@ import moment from 'moment';
 import {DataTable} from 'react-data-components';
 import {Row, Col, Input} from 'react-bootstrap';
 import TableFilter from 'components/Application/components/Table/TableFilter';
+import TablePagination from 'components/Application/components/Table/TablePagination';
 import {clearClassesCache} from 'actions/ClassActions';
 import {Link} from 'react-router';
 import Spinner from 'components/Spinner';
@@ -82,14 +83,19 @@ class Classes extends React.Component {
           isLoading ? 
             <Spinner /> :
           classes.length ?
-            <DataTable
-              keys={['_id']}
-              columns={columns}
-              initialData={classes}
-              initialPageLength={1000}
-              initialSortBy={{prop: 'date', order: 'ascending' }}
-              className="table-body"
-            /> 
+            <span>
+              <DataTable
+                keys={['_id']}
+                columns={columns}
+                initialData={classes}
+                initialPageLength={1000}
+                initialSortBy={{prop: 'date', order: 'ascending' }}
+                className="table-body"
+              /> 
+              <TablePagination path={['views', 'Classes']} 
+                page={_.get(this.props, 'classes.page')} 
+                depleted={_.get(this.props, 'classes.hideNextButton')} />
+            </span>
           :
           <div className="no-results">No Classes Yet</div>
         }

@@ -3,10 +3,13 @@ import _ from 'lodash';
 import {postClass, cancelClassApi, putClass} from 'api/classesApi';
 const activeClass = tree.select(['views', 'ClassProfile']);
 const AddClass = tree.select(['views', 'AddClass']);
-const ClassList = tree.select(['views', 'ClassList']);
-const PrivatesList = tree.select(['views', 'PrivatesList']);
 const myGym = tree.select(['user', 'myGym']);
 
+const PrivatesView = tree.select(['views', 'Privates']);
+const PrivatesList = tree.select(['views', 'Privates', 'list']);
+
+const ClassesView= tree.select(['views', 'Classes']);
+const ClassList = tree.select(['views', 'Classes', 'list']);
 
 export function setActiveClass() {
   activeClass.set({stale: true});
@@ -59,11 +62,13 @@ export async function cancelClasses(ids) {
 }
 
 export function clearClassesCache() {
+  ClassesView.set('page', 0);
   ClassList.set({stale: true});
   tree.commit();
 }
 
 export function clearPrivatesCache() {
+  PrivatesView.set('page', 0);
   PrivatesList.set({stale: true});
   tree.commit();
 }

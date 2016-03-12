@@ -1,7 +1,7 @@
 import React from 'react';
-import InputField from './../../../components/Application/components/Forms/InputField';
-import Textarea from './../../../components/Application/components/Forms/Textarea';
-import SelectField from './../../../components/Application/components/Forms/SelectField';
+import InputField from 'components/Application/components/Forms/InputField';
+import Textarea from 'components/Application/components/Forms/Textarea';
+import SelectField from 'components/Application/components/Forms/SelectField';
 import {addGym, updateGym, addOverview} from 'actions/AddGymActions';
 import GoogleMap from 'components/GoogleMap';
 import {getGymGeoPoints} from 'actions/GoogleMapsActions';
@@ -18,6 +18,8 @@ class OverviewComponent extends React.Component {
 
 	render() {
 		const data = this.props.data || {};
+		let timeType = _.get(data, 'cancellationPolicy.time');
+		timeType = timeType ? timeType > 24 ? 'Days' : 'Hours' : '';	
 		return (
 			<Formsy.Form ref="form" onValidSubmit={this.getGeoPoint.bind(this, false)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} className="row">
 				 <Col xs={12}>
@@ -149,20 +151,35 @@ class OverviewComponent extends React.Component {
 						  			isNumeric: true
 						  		}}
 						  		validationError="Please enter a number!" />
-							  <InputField 
-							  	className="col-xs-12 col-sm-6 "  
-							  	name="time" 
-							  	title="Cancellation Time"
-							  	value={_.get(data, 'cancellationPolicy.time') ? data.cancellationPolicy.time : ''} 
-							  	validations={{
-						  			isNumeric: true
-						  		}}
-						  		validationError="Please enter a number!"
-							  	required />
+							  <Row className="col-xs-12 col-sm-6" >
+								  <InputField 
+								  	className="col-xs-6 col-sm-6"  
+								  	name="time" 
+								  	title="Cancellation Time"
+								  	value={_.get(data, 'cancellationPolicy.time') ? data.cancellationPolicy.time : ''} 
+								  	validations={{
+							  			isNumeric: true
+							  		}}
+							  		validationError="Please enter a number!"
+								  	required />
+								  	<SelectField 
+									  	className="col-xs-6 col-sm-2" 
+									  	name="durationType" 
+									  	title="Duration Type" 
+									  	value={timeType}
+									  	options={{data: [{name:"Days", id:"Days"}, {name:"Hours", id:"Hours"}]}} 
+									  	validations="isExisty"
+									  	validationError="Please a duration type!"
+									  	required />
+								</Row>
 						</Row>
+
+
+
+
 						<Row>
 							<Col xs={12} className="map">
-								<GoogleMap marker={this.state.location} />
+								<GoogleMap marker={this.state.location || {lng: _.get(data, 'location[0]'), lat: _.get(data, 'location[1]')}} />
 								<Button onClick={this.getGeoPoint.bind(this, true)}>Get Geo Points</Button>
 							</Col>
 						</Row>
@@ -188,16 +205,19 @@ class OverviewComponent extends React.Component {
 				location = await getGymGeoPoints(data["street"] + ' ' +  data["city"] + ', ' +  data["state"] + ' ' +  data["zipcode"]);
 				this.setState({location: location});
 			} else {
+				
 				location = await getGymGeoPoints(form.street + ' ' +  form.city + ', ' +  form.state + ' ' +  form.zipcode);
 				form.location = [location.lng, location.lat];
-
-				form.time = Number(form.time)
+				
+				var durationType = form.durationType;
+				form.time = durationType === 'Days' ? Number(form.time) * 24 : Number(form.time);
 				form.percent = Number(form.time)
 				form.hour = this.currency(form.hour)
 				form.halfHour = this.currency(form.halfHour)
 
 				const gymId = this.props.data._id ? this.props.data._id : null;
 
+				console.log(form)
 				if (gymId) {
 					updateGym(form, gymId);
 				} else {
