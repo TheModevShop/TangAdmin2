@@ -1,7 +1,8 @@
 import tree from 'state/StateTree';
-import {postGym, postGymUpdate, addPhotosApi} from 'api/locationsApi';
+import {postGym, postGymUpdate, addPhotosApi, defaultPhotoApi, deletePhotoApi} from 'api/locationsApi';
 import {createAdmin} from 'api/authApi';
 const gymList = tree.select(['views', 'GymList']);
+const activeGym = tree.select(['views', 'GymProfile']);
 const addGymCursor = tree.select(['views', 'AddGym']);
 
 export function clearResponse() {
@@ -71,6 +72,34 @@ export async function addPhotos(photos, gymId) {
   } catch (err) {
     update = null;
     addGymCursor.set(['response'], {'success': false, 'message': 'There was an error submitting your information.'});
+  }
+  addGymCursor.set(['awaitingSave'], false);
+  tree.commit();
+  return update;
+}
+
+export async function defaultPhoto(_id, gymId) {
+  let update;
+  addGymCursor.set(['awaitingSave'], true);
+  try {
+    update = await defaultPhotoApi(_id, gymId);
+    update = update.body;
+  } catch (err) {
+    update = null;
+  }
+  addGymCursor.set(['awaitingSave'], false);
+  tree.commit();
+  return update;
+}
+
+export async function deletePhoto(_id, gymId) {
+  let update;
+  addGymCursor.set(['awaitingSave'], true);
+  try {
+    update = await deletePhotoApi(_id, gymId);
+    update = update.body;
+  } catch (err) {
+    update = null;
   }
   addGymCursor.set(['awaitingSave'], false);
   tree.commit();

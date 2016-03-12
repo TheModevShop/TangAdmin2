@@ -32,3 +32,21 @@ h3 {
   font-family: 'default_bold';
   -webkit-font-smoothing: antialiased;
 }
+
+.primary-link {
+  color: @salmon;
+  cursor: pointer;
+  &:hover {
+    color: @salmonDark;
+  }
+  &:active {
+    color: @salmonSeventy;
+  }
+  &.inactive {
+    color: @charcoalFifty;
+    cursor: normal;
+    &:hover, &:active {
+      color: @charcoalFifty;
+    }
+  }
+}

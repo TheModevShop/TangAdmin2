@@ -2,9 +2,11 @@ import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {DataTable} from 'react-data-components';
 import {Row, Col, Grid, Panel} from 'react-bootstrap';
-import TableFilter from './../../../components/Application/components/Table/TableFilter';
+import TableFilter from 'components/Application/components/Table/TableFilter';
+import TablePagination from 'components/Application/components/Table/TablePagination';
 import Spinner from 'components/Spinner';
 import moment from 'moment';
+import {clearTransactionsCache} from 'actions/TransactionsActions';
 import currency from 'utility/currency';
 
 class Transactions extends React.Component {
@@ -18,9 +20,8 @@ class Transactions extends React.Component {
       item.userCharged = item.userCharged.name ? item.userCharged.name.first + ' ' + item.userCharged.name.last : 'N/A';
       item.session = item.session ? item.session.name : 'N/A';
       item.instructor = item.instructor.name ? item.instructor.name.first + ' ' + item.instructor.name.last : 'N/A';
-      item.charged = item.stripe.amount ? '$' + currency(item.stripe.amount) : 'N/A';
+      item.charged = item.stripe.amount ? currency(item.stripe.amount) : 'N/A';
       item.date = moment(item.date, 'YYYYMMDD').format('MM/DD/YYYY');
-
       return item;
     });
 
@@ -62,24 +63,32 @@ class Transactions extends React.Component {
           </Col>
         </div>
         <div className="row table-filter-container">
-          <TableFilter table="transactions" items={_.get(this.props, 'transactions.allTransactions')} />
+          <TableFilter onSubmitFilter={this.submitFilter.bind(this)} table="transactions" />
         </div>
         {
           isLoading ? 
           <Spinner /> :
           transactions.length ?
-          <DataTable
-            keys={['_id']}
-            columns={columns}
-            initialData={transactions}
-            initialPageLength={1000}
-            initialSortBy={{ prop: 'date', order: 'ascending' }}
-            className="table-body"
-          /> :
+          <span>
+            <DataTable
+              keys={['_id']}
+              columns={columns}
+              initialData={transactions}
+              initialPageLength={10000}
+              className="table-body"
+            />
+            <TablePagination path={['views', 'Transactions']} 
+              page={_.get(this.props, 'transactions.page')} 
+              depleted={_.get(this.props, 'transactions.hideNextButton')} />
+          </span> :
           <div className="no-results">No Transactions Yet</div>
         }
        </div>
     );
+  }
+
+  submitFilter() {
+    clearTransactionsCache();
   }
 }
 export default branch(Transactions, {

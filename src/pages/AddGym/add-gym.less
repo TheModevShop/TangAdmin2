@@ -59,19 +59,27 @@
 	.photos {
 		.image-container {
 			margin-bottom: 30px;
-			> div {
-				overflow: hidden;
+	    overflow: hidden;
+	    width: auto;
+			.image {
+				width: 375px;
 				height: 250px;
+				background-color: @silver;
+				background-position: center center;			
 			}
-			img {
-				height: 100%;
-			}
+		}
+		.actions {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding-top: 5px;
 		}
 		.dropzone-container {
 			margin-bottom: 30px;
 		}
 		.dropzone {
 			height: 250px;
+			min-width: 150px;
 			border: 1px solid #e5e5e5;
 			color: #ccc;
 			text-align: center;

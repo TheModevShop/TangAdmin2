@@ -31,7 +31,7 @@ export async function editMe(data) {
 export async function getMe() {
   try {
     const user = await getUser();
-    const location = _.get(user, 'body.gyms[0]');
+    const location = _.find(_.get(user, 'body.gyms'), {default: true}) || _.get(user, 'body.gyms[0]');
     const locationId = _.get(location, 'gym');
     await getMyGym(locationId);
     await getRoles();

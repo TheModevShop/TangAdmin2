@@ -1,15 +1,17 @@
 import _ from 'lodash';
 import RESTLoader from '../loaders/RESTLoader';
+import moment from 'moment';
 import {BASE} from 'constants';
 
 const loader = new RESTLoader({
   getResourceUrl: (id, data) => {
-    const className = data.className;
-    const startDate = data.startDate;
-    const endDate = data.endDate;
-    const instructor = data.instructor;
+    const className = data.className || '';
+    const startDate = data.startDate ? moment(data.startDate).format('YYYYMMDD') : '';
+    const endDate = data.endDate ? moment(data.endDate).format('YYYYMMDD') : '';
+    const instructor = data.instructor || '';
+    const student = data.student || '';
     // add query params to get. might need to add classname to server
-    return `${BASE}/gyms/${id}/sessions?private=false`;
+    return `${BASE}/gyms/${id}/sessions?private=false&name=${className}&instructor=${instructor}&student=${student}&startDate=${startDate}&endDate=${endDate}`;
   },
   successTransformer: (data) => {
     return {

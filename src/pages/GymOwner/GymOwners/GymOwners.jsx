@@ -13,7 +13,7 @@ class GymOwners extends React.Component {
   }
 
   render() {
-    const gymOwners = this.formatData(_.get(this.props, 'gymOwners.gymOwners') || []);
+    const gymOwners = this.formatData(_.cloneDeep(_.get(this.props, 'gymOwners.gymOwners')) || []);
     const isLoading = _.get(this.props, 'gymOwners.isLoading') || false;
 
     const renderName = (val, row) => {
@@ -60,6 +60,7 @@ class GymOwners extends React.Component {
 
   formatData(gymOwners) {
     gymOwners = _.map(gymOwners, (owner) => {
+      console.log(owner)
       owner.name = owner.name ? owner.name.first + ' ' + owner.name.last : 'N/A';
 
       return owner;

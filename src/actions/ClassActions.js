@@ -4,7 +4,9 @@ import {postClass, cancelClassApi, putClass} from 'api/classesApi';
 const activeClass = tree.select(['views', 'ClassProfile']);
 const AddClass = tree.select(['views', 'AddClass']);
 const ClassList = tree.select(['views', 'ClassList']);
+const PrivatesList = tree.select(['views', 'PrivatesList']);
 const myGym = tree.select(['user', 'myGym']);
+
 
 export function setActiveClass() {
   activeClass.set({stale: true});
@@ -54,4 +56,14 @@ export async function resetAddClass(data) {
 
 export async function cancelClasses(ids) {
   cancelClassApi(ids)
+}
+
+export function clearClassesCache() {
+  ClassList.set({stale: true});
+  tree.commit();
+}
+
+export function clearPrivatesCache() {
+  PrivatesList.set({stale: true});
+  tree.commit();
 }

@@ -51,6 +51,28 @@ export async function addPhotosApi(photos, id) {
   });
 }
 
+export async function defaultPhotoApi(_id, id) { 
+  return new bluebird((resolve, reject) => {
+    xhr('POST', `${BASE}/gyms/${id}/add-photo/default`, {_id: _id}).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+      console.log('err')
+    });
+  });
+}
+
+export async function deletePhotoApi(_id, id) { 
+  return new bluebird((resolve, reject) => {
+    xhr('DELETE', `${BASE}/gyms/${id}/add-photo`, {_id: _id}).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+      console.log('err')
+    });
+  });
+}
+
 // POST - Creates new Gym (Needs admin auth)
 
 // name - required

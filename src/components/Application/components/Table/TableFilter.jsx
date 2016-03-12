@@ -32,7 +32,7 @@ const TableFilter = React.createClass({
     const {student, instructor, className, startDate, endDate} = this.props.tableFilters;
 
     const startDateFilter = startDate || moment().subtract(29, 'days')
-    const endDateFilter = startDate || moment();
+    const endDateFilter = endDate || moment();
       
     if (allClassNames.length) {
       allClassNames = _.map(allClassNames, (item) => { 
@@ -71,7 +71,7 @@ const TableFilter = React.createClass({
             <button className="btn">{moment(startDateFilter).format('M/DD/YY') + ' - ' + moment(endDateFilter).format('M/DD/YY')} </button>
         </DateRangePicker>
 
-        <button className="btn" onClick={this.props.submit}>Submit Filter</button>
+        <button className="btn" onClick={this.props.onSubmitFilter}>Submit Filter</button>
   
       </Col>
     );

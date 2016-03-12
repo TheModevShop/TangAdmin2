@@ -3,8 +3,8 @@ import {branch} from 'baobab-react/higher-order';
 import moment from 'moment';
 import {DataTable} from 'react-data-components';
 import {Row, Col, Input} from 'react-bootstrap';
-import TableFilter from './../../../components/Application/components/Table/TableFilter';
-import {cancelClasses} from 'actions/ClassActions';
+import TableFilter from 'components/Application/components/Table/TableFilter';
+import {clearClassesCache} from 'actions/ClassActions';
 import {Link} from 'react-router';
 import Spinner from 'components/Spinner';
 import "./classes.less";
@@ -76,7 +76,7 @@ class Classes extends React.Component {
           </Col>
         </div>
         <div className="row table-filter-container">
-          <TableFilter table="classes" />
+          <TableFilter onSubmitFilter={this.submitFilter.bind(this)} table="classes" />
         </div>
         {
           isLoading ? 
@@ -95,6 +95,9 @@ class Classes extends React.Component {
         }
        </div>
     );
+  }
+  submitFilter() {
+    clearClassesCache();
   }
 }
 

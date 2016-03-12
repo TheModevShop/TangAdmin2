@@ -49,5 +49,22 @@ export default function(method, url, data, options) {
           }
       });
     };
+
+    if (method === 'DELETE') {
+       request
+        .delete(url)
+        .send(data)
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+        .set('x-access-token', sessionData)
+        .end(function(err, res) {
+          if (err) {
+            reject(err)
+          } else {
+            resolve(res)
+          }
+      });
+    };
+
+
   });
 }

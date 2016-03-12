@@ -3,7 +3,7 @@ import {Row, Col, Button} from 'react-bootstrap';
 import BluebirdPromise from 'bluebird';
 import Dropzone from 'react-dropzone';
 import _ from 'lodash';
-import {addPhotos} from 'actions/AddGymActions';
+import {addPhotos, defaultPhoto, deletePhoto} from 'actions/AddGymActions';
 import './../add-gym.less';
 
 const PhotosComponent = React.createClass({
@@ -21,9 +21,7 @@ const PhotosComponent = React.createClass({
   componentWillReceiveProps(nextProps) {
     var nextPhotos = _.get(nextProps, 'data.photos', [])
     var photos = _.get(nextProps, 'data.photos', [])
-    if (nextPhotos.length !== photos.length) {
-      this.setState({images: nextPhotos});
-    }
+    this.setState({images: nextPhotos});
   },
 
   onDrop(files) {
@@ -32,10 +30,6 @@ const PhotosComponent = React.createClass({
       imgs.push(files[file]);
     }
     this.convertAndUploadImages(imgs);
-  },
-
-  onDelete(files) {
-
   },
 
 
@@ -51,7 +45,7 @@ const PhotosComponent = React.createClass({
         }
       });
       addPhotos(allPhotos, gymId).then((images) => {
-        this.setState({images: this.state.images.concat(images)});
+        this.setState({images: images});
       });
     }).catch(() => {
       alert('error occured, try again')
@@ -76,8 +70,21 @@ const PhotosComponent = React.createClass({
     });
   },
 
+  async deletePhoto(url) {
+    const photos = await deletePhoto(url, this.props.gymId);
+    if (photos) {
+      this.setState({images: photos});
+    }
+  },
+
+  async defaultPhoto(url) {
+    const photos = await defaultPhoto(url, this.props.gymId);
+    if (photos) {
+      this.setState({images: photos});
+    }
+  },
+
   render() {
-    console.log(this.props)
     return (
       <Row>
         <Col xs={12}>
@@ -87,13 +94,15 @@ const PhotosComponent = React.createClass({
                 {
                   this.state.images && this.state.images.length > 0 ? 
                   this.state.images.map((file, i) =>
-                    <Col xs={4} className="image-container">
-                      <div>
-                      <img key={i} src={file.url} />
-                      <div className="actions">
-                        <div className="make-default">Make Default</div>
-                        <div className="delete">Delete</div>
-                      </div>
+                  <Col key={i} xs={4} className="image-container">
+                    <div className="image" style={{ backgroundImage: `url(${file.url})`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat'}}></div>
+                    <div className="actions">
+                      {
+                        file.default ?
+                        <div className="make-default primary-link inactive">Is Default</div> :
+                        <div className="make-default primary-link" onClick={this.defaultPhoto.bind(null, file._id)}>Make Default</div>
+                      }
+                      <div className="delete primary-link" onClick={this.deletePhoto.bind(null, file._id)}>Delete</div>
                     </div>
                   </Col>
                   ) : null

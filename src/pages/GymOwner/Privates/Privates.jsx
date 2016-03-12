@@ -5,7 +5,8 @@ import {DataTable} from 'react-data-components';
 import {Row, Col, Input} from 'react-bootstrap';
 import Spinner from 'components/Spinner';
 import {Link} from 'react-router';
-import TableFilter from './../../../components/Application/components/Table/TableFilter';
+import TableFilter from 'components/Application/components/Table/TableFilter';
+import {clearPrivatesCache} from 'actions/ClassActions';
 import "./privates.less";
 import _ from 'lodash';
 
@@ -74,7 +75,7 @@ class Privates extends React.Component {
         </div>
 
         <div className="row table-filter-container">
-          <TableFilter table="private" items={_.get(this.props, 'privates.allPrivates')} />
+          <TableFilter onSubmitFilter={this.submitFilter.bind(this)} table="private" />
         </div>
         {
           isLoading ? 
@@ -92,6 +93,9 @@ class Privates extends React.Component {
         }
        </div>
     );
+  }
+  submitFilter() {
+    clearPrivatesCache();
   }
 }
 
