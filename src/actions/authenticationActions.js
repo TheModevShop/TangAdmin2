@@ -3,6 +3,7 @@ import bluebird from 'bluebird';
 import history from 'appHistory';
 import {fetchToken} from 'api/authApi';
 import {getMe} from 'actions/userActions';
+import {resetState} from 'state/ResetStateTree';
 
 const authentication = tree.select(['authentication']);
 
@@ -45,8 +46,9 @@ async function buildSession(session) {
 }
 
 export async function teardownSession() {
+  resetState();
   localStorage.removeItem('sessionData');
-  authentication.set({}); 
+  authentication.set({});
   tree.commit();
   history.pushState(null, '/login');
 }

@@ -18,7 +18,9 @@ class Login extends React.Component {
     const error = _.get(this.props, 'authentication.error');
     return (
       <div className="login-wrapper">
+        <div className="icon-logo"></div>
         <form role="form" onSubmit={this.submitForm}>
+            <h2 className="light">Sign Into Tang Admin</h2>
             <fieldset>
               <div className="form-group">
                 <Input onChange={this.setLoginID} className="form-control" placeholder="Username" ref="loginID" type="text" autofocus="" name="email" />
@@ -28,13 +30,15 @@ class Login extends React.Component {
                 <Input onChange={this.setPassword} className="form-control" placeholder="Password" ref="password" type="password" name="password" />
               </div>
               <Button type="submit" bsSize="large" bsStyle="success" block>Login</Button>
-              
+              {
+                error ? 
+                <div className="error">Error Signing In</div> : null
+              }  
             </fieldset>
-          </form>   
-          {
-            error ? 
-            <div className="error">Error Signing In</div> : null
-          }     
+          </form>
+          <footer>
+            <h3>Interested in using Tang? Contact Us</h3>
+          </footer>
       </div>
     );
   }

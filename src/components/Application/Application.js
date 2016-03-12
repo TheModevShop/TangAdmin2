@@ -8,6 +8,12 @@ import _ from 'lodash';
 import './app.less';
 
 class App extends React.Component {
+  componentDidMount() {
+    setTimeout(() => {
+      document.body.className = document.body.className.replace("loading", "");
+    }, 500)
+  }
+
   render() {
     const classNames = _.reduce(this.props.routes, (accum, route) => {
       if (route.pageName) {
