@@ -11,7 +11,7 @@ export async function getAuthentication(data) {
   const {email, password} = data;
   try {
     const token = await fetchToken({email, password});
-    buildSession(token.body.token);
+    await buildSession(token.body.token);
     history.pushState(null, '/dashboard');
     return token;
   } catch (e) {
@@ -42,13 +42,15 @@ async function buildSession(session) {
   authentication.set(['sessionData'], session);
   localStorage.setItem('sessionData', session);
   tree.commit();
-  getMe();
+  return await getMe();
 }
 
 export async function teardownSession() {
-  resetState();
   localStorage.removeItem('sessionData');
   authentication.set({});
   tree.commit();
+  setTimeout(() => {
+    resetState();
+  }, 500);
   history.pushState(null, '/login');
 }

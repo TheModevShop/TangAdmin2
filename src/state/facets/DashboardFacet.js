@@ -33,8 +33,8 @@ export default function CalendarFacet() {
         loader.setCursor(this.cursors.Dashboard);
       }
       // when we want to initiate a query we might need to add a search button to then set stale on the table to it refetches with new params
-      const Dashboard = _.clone(loader.fetch(_.get(data.myGym, 'gymDetails._id'), data.tableFilters));
-      return Dashboard
+      const Dashboard = data.myGym ? _.clone(loader.fetch(_.get(data.myGym, 'gymDetails._id'), data.tableFilters)) : null;
+      return Dashboard;
     }
   };
 };

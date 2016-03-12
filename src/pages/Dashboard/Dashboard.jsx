@@ -70,9 +70,6 @@ class Dashboard extends React.Component {
   }
 }
 export default branch(Dashboard, {
-  cursors: {
-    Dashboard: ['Dashboard']
-  },
   facets: {
     dashboard: 'Dashboard'
   }

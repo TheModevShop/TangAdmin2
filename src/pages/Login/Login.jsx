@@ -13,7 +13,7 @@ class Login extends React.Component {
     super(...args);
     this.state = {};
   }
-
+  
   render() {
     const error = _.get(this.props, 'authentication.error');
     return (
