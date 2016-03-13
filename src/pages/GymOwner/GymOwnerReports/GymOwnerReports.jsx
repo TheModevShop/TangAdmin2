@@ -6,6 +6,7 @@ import _ from 'lodash';
 import './reports.less';
 import {DataTable} from 'react-data-components';
 import TableFilter from 'components/Application/components/Table/TableFilter';
+import currency from 'utility/currency';
 import {gymOwnerReport} from 'actions/ReportActions';
 
 class GymOwnerReports extends React.Component {
@@ -15,18 +16,22 @@ class GymOwnerReports extends React.Component {
 
   render() {
     const reports = _.get(this.props.report, 'report.instructorsReport');
+    const metrics = _.get(this.props.report, 'report.metrics', {});
     const isLoading = _.get(this.props.report, 'report.isLoading', false);
 
     const renderName = (val, row) => {
-      return <span>sdvsdavzxdv</span>;
+      return <span>{row.instructor.name.first} {row.instructor.name.last}</span>;
+    }
+
+    const renderEarnings = (val, row) => {
+      return <span>{currency(row.earnings)}</span>;
     }
 
     
     const columns = [
       { 
         title: 'Name', 
-        render: renderName,
-        prop: 'name'
+        render: renderName
       },
       { 
         title: 'Half Hour Privates', 
@@ -38,8 +43,8 @@ class GymOwnerReports extends React.Component {
       },
       { 
         title: 'Earnings', 
-        prop: 'earnings' 
-      },
+        render: renderEarnings 
+      }
     ];
     return (
         <div className="table-wrapper">
@@ -66,13 +71,13 @@ class GymOwnerReports extends React.Component {
                     />
                     <div className="totals-wrapper">
                       <div>
-                        <span>Total Gym Revenue</span><span>$1000.00</span>
+                        <span>Total Gym Revenue</span><span>{metrics.revenue ? currency(metrics.revenue) : '$0.00'}</span>
                       </div>
                       <div>
-                        <span>Total Coach Earnings</span><span>$1000.00</span>
+                        <span>Total Coach Earnings</span><span>{metrics.instructorTotal ? currency(metrics.instructorTotal) : '$0.00'}</span>
                       </div>
                       <div>
-                        <span>Total Gym Profit</span><span>$1000.00</span>
+                        <span>Total Gym Profit</span><span>{metrics.profit ? currency(metrics.profit) : '$0.00'}</span>
                       </div>
                     </div>
                   </div>
