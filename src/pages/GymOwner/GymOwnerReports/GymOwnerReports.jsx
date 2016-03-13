@@ -11,36 +11,33 @@ import {gymOwnerReport} from 'actions/ReportActions';
 class GymOwnerReports extends React.Component {
   constructor(...args) {
     super(...args);
-    this.state = {full: [], half: []};
-  }
-
-  formatData(classes) {
-    classes = _.map(_.cloneDeep(classes), (classItem) => {
-      return classItem;
-    });
-
-    return classes;
   }
 
   render() {
-    console.log(this.props)
-    const reports = [{instructor: "Jon Hutchison", half: 12, full: 15, earnings: "$60.00"}]
-    const isLoading = _.get(this.props, 'privates.isLoading') || false;
+    const reports = _.get(this.props.report, 'report.instructorsReport');
+    const isLoading = _.get(this.props.report, 'report.isLoading', false);
+
+    const renderName = (val, row) => {
+      return <span>sdvsdavzxdv</span>;
+    }
+
+    
     const columns = [
       { 
         title: 'Name', 
-        prop: 'instructor'
+        render: renderName,
+        prop: 'name'
       },
       { 
         title: 'Half Hour Privates', 
-        prop: 'half' 
+        prop: 'halfHourprivates' 
       },
       { 
         title: 'Full Hour Privates', 
-        prop: 'full' 
+        prop: 'hourPrivates' 
       },
       { 
-        title: 'earnings', 
+        title: 'Earnings', 
         prop: 'earnings' 
       },
     ];
@@ -57,7 +54,7 @@ class GymOwnerReports extends React.Component {
           {
             isLoading ? 
               <Spinner /> :
-                reports.length ?
+                reports && reports.length ?
                   <div>
                     <DataTable
                       keys={['_id']}
