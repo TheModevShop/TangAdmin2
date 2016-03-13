@@ -6,6 +6,7 @@ import _ from 'lodash';
 import './reports.less';
 import {DataTable} from 'react-data-components';
 import TableFilter from 'components/Application/components/Table/TableFilter';
+import {gymOwnerReport} from 'actions/ReportActions';
 
 class GymOwnerReports extends React.Component {
   constructor(...args) {
@@ -22,6 +23,7 @@ class GymOwnerReports extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     const reports = [{instructor: "Jon Hutchison", half: 12, full: 15, earnings: "$60.00"}]
     const isLoading = _.get(this.props, 'privates.isLoading') || false;
     const columns = [
@@ -83,8 +85,14 @@ class GymOwnerReports extends React.Component {
         </div>
     );
   }
-  submitFilter() {
+
+  submitFilter() {    
+    gymOwnerReport();
   }
 }
 
-export default GymOwnerReports;
+export default branch(GymOwnerReports, {
+  facets: {
+    report: 'GymOwnerReport'
+  }
+});

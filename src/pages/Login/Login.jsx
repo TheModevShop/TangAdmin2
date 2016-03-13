@@ -13,7 +13,7 @@ class Login extends React.Component {
     super(...args);
     this.state = {};
   }
-  
+
   render() {
     const error = _.get(this.props, 'authentication.error');
     return (
@@ -29,7 +29,7 @@ class Login extends React.Component {
               <div className="form-group">
                 <Input onChange={this.setPassword} className="form-control" placeholder="Password" ref="password" type="password" name="password" />
               </div>
-              <Button type="submit" bsSize="large" bsStyle="success" block>Login</Button>
+              <Button type="submit" bsSize="large" block>Login</Button>
               {
                 error ? 
                 <div className="error">Error Signing In</div> : null

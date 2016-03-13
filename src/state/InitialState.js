@@ -77,6 +77,9 @@ export default function getInitialState() {
         Transactions: {
           page: 0,
           list: null
+        },
+        GymOwnerReports: {
+          list: null
         }
       },
       user: {
