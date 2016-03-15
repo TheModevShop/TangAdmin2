@@ -34,6 +34,7 @@ class Dashboard extends React.Component {
       // let end = moment(classItem.time.end, 'H:mm').format('HH:mm');
       let enrolled = classItem.enrolled ? (classItem.enrolled[0] ? classItem.enrolled[0].name.first : 'N/A') : 'N/A';
       let instructor = classItem.instructor ? classItem.instructor.name.first : 'N/A';
+      
       newClassItem.start = new Date(parseDate(classItem.date, classItem.time.start));
       newClassItem.end = new Date(parseDate(classItem.date, classItem.time.end));
       newClassItem.desc = classItem.description ? classItem.description : null;
@@ -63,7 +64,7 @@ class Dashboard extends React.Component {
             eventPropGetter={this.setClassName.bind(this)}
             components={{month:{event: this.monthEvent.bind(this)}, week:{event: this.monthEvent.bind(this)}, day:{event: this.monthEvent.bind(this)}}}
             views={['month', 'week', 'day']}
-            formats={{dateFormat: 'D', dayFormat: 'dddd Do', weekHeaderFormat: 'MMMM D - D', dayHeaderFormat: 'MMMM D, YYYY'}}
+            formats={{dateFormat: 'D', dayFormat: 'ddd Do', weekHeaderFormat: 'MMMM D - D', dayHeaderFormat: 'MMMM D, YYYY'}}
           />
         </div>
     );

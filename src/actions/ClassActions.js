@@ -11,6 +11,8 @@ const PrivatesList = tree.select(['views', 'Privates', 'list']);
 const ClassesView= tree.select(['views', 'Classes']);
 const ClassList = tree.select(['views', 'Classes', 'list']);
 
+const Dashboard = tree.select(['views', 'Dashboard']);
+
 export function setActiveClass() {
   activeClass.set({stale: true});
   tree.commit();
@@ -28,6 +30,7 @@ export async function addClass(data) {
   try {
     post = await postClass(_.get(myGym.get(), 'gymDetails._id'), strData);
     ClassList.set({'stale': true});
+    Dashboard.set({'stale': true});
     AddClass.set(['response'], {'success': true, 'message': 'Your class information has been successfully submitted!'});
   } catch (err) {
     AddClass.set(['response'], {'success': false, 'message': 'There was an error submitting your information.'});
