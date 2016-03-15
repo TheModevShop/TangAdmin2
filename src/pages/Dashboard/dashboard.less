@@ -1,3 +1,11 @@
+.hide-content {
+    max-width: 25%;
+    overflow: hidden;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .dashboard {
 	height: ~'calc(100% - 30px)';
 	span.rbc-toolbar-label {
@@ -69,11 +77,14 @@
 		border-left: 3px solid #1C40C4;
 		border-radius: 0;
 		cursor: pointer;
-		flex-flow: inherit;
 		font-size: 11px;
-    height: 17px;
+   	 	height: 17px;
 		a {
 			color: #444;
+			width: 100%;
+			display: block;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 		&.rbc-selected {
 	    	z-index: 9999;
@@ -131,7 +142,7 @@
 	}
 	.rbc-date-cell {
 		font-size: 10px;
-    padding: 5px;
+    	padding: 5px;
 		&.rbc-now a {
 			background-color: @salmon;
 			color: #fff;

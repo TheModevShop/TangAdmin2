@@ -17,14 +17,21 @@ class Dashboard extends React.Component {
   }
 
   monthEvent({event}) {
-    let start = moment(event.start).format('h:mm a');
-    let end = moment(event.end).format('h:mm a');
     return (
       <div>
         <Link to={`/class-profile/${event.id}`}>{event.shortTitle}</Link>
       </div>
     );
   }
+
+  weekEvent({event}) {
+    return (
+      <div className={event.duration < 45 ? 'hide-content' : ''}>
+        <Link to={`/class-profile/${event.id}`}>{event.shortTitle}</Link>
+      </div>
+    );
+  }
+
 
   formatData(classes) {
     classes = _.map(_.cloneDeep(classes), (classItem) => {
@@ -42,6 +49,7 @@ class Dashboard extends React.Component {
       newClassItem.className = classItem.private ? 'private-session' : '';
       newClassItem.shortTitle = classItem.private ? (instructor + ' - ' + enrolled) : classItem.name;
       newClassItem.id = classItem._id;
+      newClassItem.duration = moment.duration(classItem.time.end).asMinutes() - moment.duration(classItem.time.start).asMinutes();
       return newClassItem;
     });
 
@@ -62,7 +70,7 @@ class Dashboard extends React.Component {
             popup
             defaultDate={new Date()} 
             eventPropGetter={this.setClassName.bind(this)}
-            components={{month:{event: this.monthEvent.bind(this)}, week:{event: this.monthEvent.bind(this)}, day:{event: this.monthEvent.bind(this)}}}
+            components={{month:{event: this.monthEvent.bind(this)}, week:{event: this.weekEvent.bind(this)}, day:{event: this.monthEvent.bind(this)}}}
             views={['month', 'week', 'day']}
             formats={{dateFormat: 'D', dayFormat: 'ddd Do', weekHeaderFormat: 'MMMM D - D', dayHeaderFormat: 'MMMM D, YYYY'}}
           />
