@@ -36,7 +36,7 @@ class Privates extends React.Component {
     const isLoading = _.get(this.props, 'privates.isLoading') || false;
     
     const renderName = (val, row) => {
-      return <Link to={`/privates/${row._id}`}>{ row.instructor ? row.instructor.name.first + ' ' + row.instructor.name.last : 'N/A'} </Link>;
+      return <Link to={`/class-profile/${row._id}`}>{ row.instructor ? row.instructor.name.first + ' ' + row.instructor.name.last : 'N/A'} </Link>;
     }
 
     const columns = [

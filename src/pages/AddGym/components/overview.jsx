@@ -180,7 +180,7 @@ class OverviewComponent extends React.Component {
 						<Row>
 							<Col xs={12} className="map">
 								<GoogleMap marker={this.state.location || {lng: _.get(data, 'location[0]'), lat: _.get(data, 'location[1]')}} />
-								<Button onClick={this.getGeoPoint.bind(this, true)}>Get Geo Points</Button>
+								<Button onClick={this.getGeoPoint.bind(this, true)}>Verify Location</Button>
 							</Col>
 						</Row>
 						<Button type="submit" value="Submit" disabled={!this.state.canSubmit}>{this.props.data._id ? 'Update' : 'Submit'}</Button>

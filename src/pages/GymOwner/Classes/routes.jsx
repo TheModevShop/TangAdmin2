@@ -12,6 +12,6 @@ import ClassProfile from './../ClassProfile';
 export default (
   <Route>
     <Route pageName="classes" path="/classes" component={Classes} />
-    <Route pageName="classes" path="/classes/:id" component={ClassProfile} />
+    <Route pageName="classes" path="/class-profile/:id" component={ClassProfile} />
   </Route>
 );

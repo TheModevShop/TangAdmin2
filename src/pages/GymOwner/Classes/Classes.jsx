@@ -35,7 +35,7 @@ class Classes extends React.Component {
     const isLoading = _.get(this.props, 'classes.isLoading') || false;
 
     const renderName = (val, row) => {
-      return <Link to={`/classes/${row._id}`}>{row.name}</Link>;
+      return <Link to={`/class-profile/${row._id}`}>{row.name}</Link>;
     }
 
     const columns = [

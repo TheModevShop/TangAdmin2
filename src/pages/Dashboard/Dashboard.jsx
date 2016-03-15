@@ -1,8 +1,9 @@
-import React from 'react';
+ import React from 'react';
 import {branch} from 'baobab-react/higher-order';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import parseDate from 'utility/parseDate';
 import {Link} from 'react-router';
 import './dashboard.less';
 import _ from 'lodash';
@@ -20,22 +21,21 @@ class Dashboard extends React.Component {
     let end = moment(event.end).format('h:mm a');
     return (
       <div>
-        <Link to={`/classes/${event.id}`}>{event.shortTitle}</Link>
+        <Link to={`/class-profile/${event.id}`}>{event.shortTitle}</Link>
       </div>
-     
-    )
+    );
   }
 
   formatData(classes) {
     classes = _.map(_.cloneDeep(classes), (classItem) => {
       let newClassItem = {};
-      let date = moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY');
-      let start = moment(classItem.time.start, 'H:mm').format('HH:mm');
-      let end = moment(classItem.time.end, 'H:mm').format('HH:mm');
+      // let date = moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY');
+      // let start = moment(classItem.time.start, 'H:mm').format('HH:mm');
+      // let end = moment(classItem.time.end, 'H:mm').format('HH:mm');
       let enrolled = classItem.enrolled ? (classItem.enrolled[0] ? classItem.enrolled[0].name.first : 'N/A') : 'N/A';
       let instructor = classItem.instructor ? classItem.instructor.name.first : 'N/A';
-      newClassItem.start = new Date(moment(classItem.date + ' ' + classItem.time.start).format('YYYY-MM-DD HH:mm'));
-      newClassItem.end = new Date(moment(classItem.date + ' ' + classItem.time.end).format('YYYY-MM-DD HH:mm'));
+      newClassItem.start = new Date(parseDate(classItem.date, classItem.time.start));
+      newClassItem.end = new Date(parseDate(classItem.date, classItem.time.end));
       newClassItem.desc = classItem.description ? classItem.description : null;
       newClassItem.title = (classItem.private ? (instructor + ' - ' + enrolled) : classItem.name) + ', ' + moment(newClassItem.start).format('h:mm a') + ' - ' + moment(newClassItem.end).format('h:mm a');
       newClassItem.className = classItem.private ? 'private-session' : '';

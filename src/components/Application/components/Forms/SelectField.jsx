@@ -27,6 +27,7 @@ const SelectField = React.createClass({
           onChange={this.changeValue}
           onBlur={this.checkBlur}
           value={this.getValue()}
+          defaultValue={this.getValue() || this.props.value}
         >
           <option value=""></option>
           {optionsList}

@@ -20,10 +20,10 @@ const columns = [
   }
 ];
 
-
 class ClassStudentsTable extends React.Component {
   render() {
-    const students = this.props.profile.enrolled;
+    const profile = _.get(this.props, 'classProfile.classProfile') || {};
+    const students = profile.enrolled;
     return (
       <div className="col-xs-12 table-wrapper">
         <div className="row table-header">
@@ -48,4 +48,8 @@ class ClassStudentsTable extends React.Component {
     );
   }
 }
-export default ClassStudentsTable;
+export default branch(ClassStudentsTable, {
+  facets: {
+    classProfile: 'ClassProfile'
+  }
+});
