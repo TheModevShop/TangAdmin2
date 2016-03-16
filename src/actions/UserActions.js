@@ -1,5 +1,5 @@
 import tree from 'state/StateTree';
-import {editMeApi, getUser} from 'api/userApi';
+import {editMeApi, getUser, setDefaultGym} from 'api/userApi';
 import _ from 'lodash';
 import history from 'appHistory';
 import {teardownSession} from 'actions/authenticationActions';
@@ -57,13 +57,18 @@ export async function getMe() {
   }
 }
 
-export async function setDefaultLocation(data) {
-  const defaultLocationArray = defaultLocation.get(data) || [];
-  defaultLocationArray.push(data)
-  defaultLocation.set(defaultLocationArray);
-  tree.commit();
-  await editMe({gyms: [defaultLocationArray[0]._id]});
-  invalidateAfterGymChange();
+export async function setDefaultLocation(gymId) {
+  try {
+    await setDefaultGym(gymId);
+    await getMe();
+    userCursor.set('myGyms', null);
+  } catch (err) {
+    alert('There was an error changing gyms');
+  }
+}
+
+export async function resetAllCursors(data) {
+ 
 }
 
 

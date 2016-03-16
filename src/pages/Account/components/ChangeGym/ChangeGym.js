@@ -2,6 +2,7 @@ import React from 'react';
 import InputField from 'components/Application/components/Forms/InputField';
 import {Row, Col, Button} from 'react-bootstrap';
 import Formsy from 'formsy-react';
+import {setDefaultLocation} from 'actions/UserActions';
 import _ from 'lodash';
 
 class ChangeGym extends React.Component {
@@ -14,9 +15,9 @@ class ChangeGym extends React.Component {
 
   render() {
     return (
-      this.props.gyms ?
+      this.props.gyms && !_.get(this.props.gyms, 'isLoading') ?
       <ul className="change-gym">
-        <h3>My Gyms</h3>
+        <h3>Change Default Gym</h3>
         {
           _.map(this.props.gyms, (gym) => {
             return (
@@ -27,9 +28,9 @@ class ChangeGym extends React.Component {
                 </div>
                 <div className="actions">
                   {
-                    gym.gym.default ?
+                    gym.default ?
                     <h4>Default</h4> :
-                    <h4 className="primary-link">Make Default</h4>
+                    <h4 onClick={this.setDefaultLocation.bind(this, gym.gym._id)} className="primary-link">Make Default</h4>
                   }
                 </div>
               </li>
@@ -41,10 +42,8 @@ class ChangeGym extends React.Component {
     );
   }
 
-
-  async submit(btn) {
-    const data = this.refs.form.model;
-    console.log(data)
+  async setDefaultLocation(gymId) {
+    setDefaultLocation(gymId)
   }
 
 

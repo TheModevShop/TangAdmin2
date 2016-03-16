@@ -45,3 +45,14 @@ export async function getUser() {
     });
   });
 }
+
+export async function setDefaultGym(gymId) { 
+  return new bluebird((resolve, reject) => {
+    xhr('PUT', `${BASE}/me/gyms/default`, {gym: gymId}).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+      console.log('err')
+    });
+  });
+}
