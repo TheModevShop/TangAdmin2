@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import {branch} from 'baobab-react/higher-order';
 import {getAuthentication} from 'actions/authenticationActions';
 import history from 'appHistory';
@@ -37,7 +38,7 @@ class Login extends React.Component {
             </fieldset>
           </form>
           <footer>
-            <h3>Interested in using Tang? Contact Us</h3>
+            <h3><Link to={`/forgot-password`}>Forgot Password?</Link></h3>
           </footer>
       </div>
     );

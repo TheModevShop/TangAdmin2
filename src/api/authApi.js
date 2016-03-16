@@ -39,6 +39,16 @@ export async function fetchToken(data) {
   });
 }
 
+export async function forgotPassword() { 
+  return new bluebird((resolve, reject) => {
+    xhr('POST', `${BASE}/forgot-password`).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+      console.log('err')
+    });
+  });
+}
 
 // export function fetchPreferences(data) {
 // }

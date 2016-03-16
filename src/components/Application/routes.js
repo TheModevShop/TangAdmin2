@@ -24,7 +24,9 @@ function getChildRoutes(state, cb) {
       require('pages/GymOwner/Transactions/routes'),
       require('pages/GymOwner/Students/routes'),
       require('pages/GymOwner/AddClass/routes'),
-      require('pages/GymOwner/Privates/routes')
+      require('pages/GymOwner/Privates/routes'),
+      require('pages/Account/routes'),
+      require('pages/ForgotPassword/routes')
     ]);
   });
 }

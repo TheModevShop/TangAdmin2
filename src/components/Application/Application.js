@@ -21,6 +21,9 @@ class App extends React.Component {
       }
       return accum;
     }, '');
+
+    const renderSideBar = classNames.trim() === 'login' || classNames.trim() === 'forgot-password' ? false : true;
+
     return (      
       <div className={classNames.trim()+'-wrapper ' + 'main-container'}>
       <div className="app-header">
@@ -28,8 +31,8 @@ class App extends React.Component {
       </div>
 
         {
-          classNames.trim() !== 'login' ? 
-          <SideBar /> : null
+          renderSideBar ? 
+          <SideBar />  : null
         }
         <div className={classNames + 'pages'}>
           {this.props.children}
