@@ -80,12 +80,12 @@ class UserPrivatesTable extends React.Component {
 
   formatData(privates) {
     return _.map(_.cloneDeep(privates), (classItem) => {
-      classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
-      classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
-      classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
-      classItem.instructor = classItem.instructor ? classItem.instructor.name.first + ' ' + classItem.instructor.name.last : 'N/A';
-      classItem.enrolled = (classItem.enrolled[0] && classItem.enrolled[0].name) ? classItem.enrolled[0].name.first + ' ' + classItem.enrolled[0].name.last : 'N/A';
-      return classItem;
+        classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
+        classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
+        classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
+        classItem.instructor = classItem.instructor ? classItem.instructor.name.first + ' ' + classItem.instructor.name.last : 'N/A';
+        classItem.enrolled = (classItem.enrolled[0] && classItem.enrolled[0].name) ? classItem.enrolled[0].name.first + ' ' + classItem.enrolled[0].name.last : 'N/A';
+        return classItem;
     });
   }
 

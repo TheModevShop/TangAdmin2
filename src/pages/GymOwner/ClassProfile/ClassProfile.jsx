@@ -4,6 +4,7 @@ import {Row, Col, Grid, Button} from 'react-bootstrap';
 import {Link} from 'react-router';
 import ClassInfo from './components/ClassInfo';
 import ClassStudentsTable from './components/ClassStudentsTable';
+import ClassTransactionsTable from './components/ClassTransactionsTable';
 import CustomModal from './../../../components/Application/components/Modal/Modal';
 import {setActiveClass} from 'actions/ClassActions';
 import {cancelClassApi} from 'api/classesApi';
@@ -64,7 +65,9 @@ class ClassProfile extends React.Component {
                     this.state.activeTab === 'details' ?
                         <ClassInfo /> : 
                     this.state.activeTab === 'table' ?
-                        <ClassStudentsTable />
+                        <ClassStudentsTable /> :
+                    this.state.activeTab === 'trans-table' ?
+                        <ClassTransactionsTable />
                     : null
                 }
               </Row>

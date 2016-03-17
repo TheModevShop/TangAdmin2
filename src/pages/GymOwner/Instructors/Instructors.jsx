@@ -19,6 +19,10 @@ const columns = [
   { 
     title: 'Email', 
     prop: 'email' 
+  },
+  { 
+    title: 'Phone Number', 
+    prop: 'phone' 
   }
 ];
 
