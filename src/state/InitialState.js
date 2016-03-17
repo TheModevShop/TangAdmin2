@@ -80,11 +80,12 @@ export default function getInitialState() {
         },
         GymOwnerReports: {
           list: null
-        }
+        },
       },
       user: {
         details: {},
-        myGym: null
+        myGym: null,
+        myGyms: null
       },
       authentication: {
         sessionData: sessionData ? sessionData : null

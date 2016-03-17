@@ -5,8 +5,10 @@ import history from 'appHistory';
 import {teardownSession} from 'actions/authenticationActions';
 import {getMyGym} from 'actions/GymActions';
 import {getRoles} from 'actions/RolesActions';
+import {resetAllCursors} from 'actions/AppResetActions';
 
 const userCursor = tree.select(['user']);
+const myGyms = tree.select(['user', 'myGyms']);
 const userDetailsCurosr = tree.select(['user', 'details']);
 
 userDetailsCurosr.on('update', async (value) => {
@@ -60,15 +62,12 @@ export async function getMe() {
 export async function setDefaultLocation(gymId) {
   try {
     await setDefaultGym(gymId);
+    resetAllCursors();
     await getMe();
-    userCursor.set('myGyms', null);
+    myGyms.set('stale', true);
   } catch (err) {
     alert('There was an error changing gyms');
   }
-}
-
-export async function resetAllCursors(data) {
- 
 }
 
 

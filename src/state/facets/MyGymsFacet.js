@@ -7,7 +7,9 @@ const loader = new RESTLoader({
     return `${BASE}/me/get-gyms`;
   },
   successTransformer: (data) => {
-    return _.get(data.body, 'gyms') || []
+    return {
+     list: _.get(data.body, 'gyms') || []
+    }
   }  
 });
 

@@ -15,11 +15,11 @@ class ChangeGym extends React.Component {
 
   render() {
     return (
-      this.props.gyms && !_.get(this.props.gyms, 'isLoading') ?
+      this.props.gyms && _.get(this.props, 'gyms.list.length') ?
       <ul className="change-gym">
         <h3>Change Default Gym</h3>
         {
-          _.map(this.props.gyms, (gym) => {
+          _.map(this.props.gyms.list, (gym) => {
             return (
               <li key={gym._id}>
                 <div className="info">
