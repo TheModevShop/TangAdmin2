@@ -31,7 +31,7 @@ Formsy.addValidationRule('isMoreThan', function (values, value, otherField) {
   }
 });
 
-const ClassProfile = React.createClass({
+const ClassInfo = React.createClass({
   render() {
     const profile = _.get(this.props, 'classProfile.classProfile') || {};
     const date = profile.date ? moment(profile.date, 'YYYYMMDD').format('YYYY-MM-DD') : null;
@@ -40,7 +40,7 @@ const ClassProfile = React.createClass({
         <Row>
           <div className="col-xs-12 col-lg-10">
             <Row>
-              <Formsy.Form onValidSubmit={this.submitClass} onValid={this.enableButton} onInvalid={this.disableButton} className="col-xs-12">
+              <Formsy.Form disabled={profile.private === true ? true : false} onValidSubmit={this.submitClass} onValid={this.enableButton} onInvalid={this.disableButton} className="col-xs-12">
                 <Row>
                   <Textarea
                     className="col-xs-12 " 
@@ -110,11 +110,15 @@ const ClassProfile = React.createClass({
                     validationError="Please enter a number!"
                     required/>
                 </Row>
-                <Row>
-                  <Col xs={12}>
-                    <Button type="submit" value="Submit" disabled={!this.state.canSubmit}>Update</Button>
-                  </Col>
-                </Row>
+                {
+                  profile.private === false ? 
+                    <Row>
+                      <Col xs={12}>
+                        <Button type="submit" value="Submit" disabled={!this.state.canSubmit}>Update</Button>
+                      </Col>
+                    </Row>
+                  : null
+                }
               </Formsy.Form>
             </Row>
             <RspMsg delay={5000} response={this.props.classProfile.response ? this.props.this.classProfile.response : null} />
@@ -173,7 +177,7 @@ const ClassProfile = React.createClass({
   }
 });
 
-export default branch(ClassProfile, {
+export default branch(ClassInfo, {
   facets: {
     instructors: 'Instructors',
     classProfile: 'ClassProfile'

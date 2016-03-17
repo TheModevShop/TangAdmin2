@@ -22,6 +22,7 @@ const SelectField = React.createClass({
       <div className={className}>
         <label htmlFor={this.props.name}>{this.props.title}</label>
         <select
+          disabled={this.isFormDisabled()}
           className="form-control"
           name={this.props.name}
           onChange={this.changeValue}

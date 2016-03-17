@@ -16,7 +16,7 @@ const InputField = React.createClass({
       <div className={className}>
         <label htmlFor={this.props.name}>{this.props.title}</label>
         <input
-          disabled={this.props.disabled}
+          disabled={this.props.disabled || this.isFormDisabled()}
           className="form-control"
           type={this.props.type}
           name={this.props.name}

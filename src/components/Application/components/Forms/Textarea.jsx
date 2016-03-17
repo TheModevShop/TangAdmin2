@@ -13,7 +13,7 @@ const Textarea = React.createClass({
     return (
       <div className={className}>
         <label htmlFor={this.props.name}>{this.props.title}</label>
-        <textarea className="form-control" name={this.props.name} onChange={this.changeValue} value={this.getValue()}></textarea>
+        <textarea disabled={this.isFormDisabled()} className="form-control" name={this.props.name} onChange={this.changeValue} value={this.getValue()}></textarea>
         <div className="validation-error">{errorMessage}</div>
       </div>
     );

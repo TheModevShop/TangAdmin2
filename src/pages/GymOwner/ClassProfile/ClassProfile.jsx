@@ -50,7 +50,7 @@ class ClassProfile extends React.Component {
                   <h1>{profile.name}</h1>
                 </Col>
                 <Col xs={12} sm={4} className="header-btns">
-                  <Button className="cancel-btn" onClick={this.activateModal.bind(this, 'cancel', this.cancelClass.bind(this))}>Cancel Class</Button>               
+                  <Button className="cancel-btn" onClick={this.activateModal.bind(this, 'cancel', this.cancelClass.bind(this))}>{profile.private === true ? 'Cancel Private' : 'Cancel Class'}</Button>               
                 </Col>
               </div>
               <div className="row tabs">
