@@ -3,6 +3,7 @@ import {branch} from 'baobab-react/higher-order';
 import {Row, Col, Grid, Button} from 'react-bootstrap';
 import TransactionInfo from './components/TransactionInfo';
 import history from 'appHistory';
+import {setActiveTransaction} from 'actions/TransactionsActions';
 import CustomModal from './../../../components/Application/components/Modal/Modal';
 import {Link} from 'react-router';
 import _ from 'lodash';
@@ -23,6 +24,9 @@ class TransactionProfile extends React.Component {
   }
   activateModal(action, fn) {
     this.refs.modal.open(action, fn);
+  }
+  componentWillMount() {
+    setActiveTransaction();
   }
   render() {
     const profile = _.get(this.props, 'TransactionProfile.profile') || {};
