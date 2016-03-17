@@ -68,7 +68,15 @@ const TableFilter = React.createClass({
         }
 
         <DateRangePicker className="date-picker" startDate={startDateFilter} endDate={endDateFilter} ranges={this.state.ranges}  onEvent={this.handleEvent}>
-            <button className="btn">{moment(startDateFilter).format('M/DD/YY') + ' - ' + moment(endDateFilter).format('M/DD/YY')} </button>
+            <button className="btn icon">
+              <div className="calendar glyphicon glyphicon-calendar"></div>
+              <span>
+                {
+                  this.state.startDate && this.state.endDate ?
+                  moment(startDateFilter).format('M/DD/YY') + ' - ' + moment(endDateFilter).format('M/DD/YY') : 'Select a Date'
+                } 
+              </span>
+            </button>
         </DateRangePicker>
 
         <button className="btn" onClick={this.props.onSubmitFilter}>Submit Filter</button>

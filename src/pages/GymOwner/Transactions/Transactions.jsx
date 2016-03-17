@@ -50,7 +50,7 @@ class Transactions extends React.Component {
         prop: 'instructor'
       },
       {
-        title: 'Amount Charged',
+        title: 'Amount',
         prop: 'charged'
       }
 
