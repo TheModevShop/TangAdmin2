@@ -8,6 +8,7 @@ import Spinner from 'components/Spinner';
 import moment from 'moment';
 import {clearTransactionsCache} from 'actions/TransactionsActions';
 import currency from 'utility/currency';
+import {Link} from 'react-router';
 
 class Transactions extends React.Component {
   constructor(...args) {
@@ -32,10 +33,15 @@ class Transactions extends React.Component {
     const transactions = this.formatData(_.get(this.props, 'transactions.allTransactions')) || [];
     const isLoading = _.get(this.props, 'transactions.isLoading') || false;
 
+    const renderName = (val, row) => {
+      return <Link to={`/transactions/${row._id}`}>{row.session}</Link>;
+    }
+
     const columns = [
       {
         title: 'Session',
-        prop: 'session'
+        prop: 'session',
+        render: renderName
       },
       {
         title: 'Date',

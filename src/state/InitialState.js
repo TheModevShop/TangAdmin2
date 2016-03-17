@@ -78,6 +78,12 @@ export default function getInitialState() {
           page: 0,
           list: null
         },
+        TransactionProfile: {
+          awaitingSave: false,
+          error: false,
+          success: true,
+          response: null
+        },
         GymOwnerReports: {
           list: null
         },
