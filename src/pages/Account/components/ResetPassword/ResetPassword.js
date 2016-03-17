@@ -1,5 +1,6 @@
 import React from 'react';
 import InputField from 'components/Application/components/Forms/InputField';
+import Spinner from 'components/Spinner';
 import {Row, Col, Button} from 'react-bootstrap';
 import Formsy from 'formsy-react';
 import _ from 'lodash';
@@ -20,7 +21,7 @@ class ResetPassword extends React.Component {
             <Row>
               <InputField 
                 className="col-xs-12 new-password" 
-                name="new-password" 
+                name="password" 
                 title="New Password"
                 type="password"
                 required />
@@ -29,12 +30,18 @@ class ResetPassword extends React.Component {
                 name="password-confirmation" 
                 title="Confirm Password"
                 type="password"
-                validations="equalsField:new-password"
+                validations="equalsField:password"
                 validationError="Passwords Do not match!"
                 required />
             </Row>
 
-            <Button type="submit" value="Submit" disabled={!this.state.canSubmit}>Change Password</Button>
+            <Button type="submit" value="Submit" disabled={!this.state.canSubmit}>
+              {
+                this.props.loading ?
+                <Spinner className={'button-spinner'} /> :
+                'Change Password'
+              }
+            </Button>
           </Col>
           
       </Formsy.Form>
@@ -44,7 +51,11 @@ class ResetPassword extends React.Component {
 
   async submit(btn) {
     const data = this.refs.form.model;
-    console.log(data)
+    if (new RegExp('(?=.{6,}).*', 'g').test(data.password)) {
+      this.props.submitPassword({password: data.password})
+    } else {
+      alert('Your password must be atleast 6 letters');
+    }
   }
 
   enableButton() {

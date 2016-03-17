@@ -4,6 +4,7 @@ import {updateClass, addClass, clearResponse} from 'actions/ClassActions';
 import moment from 'moment';
 import {Row, Col, Grid, Input, Button} from 'react-bootstrap';
 import Formsy from 'formsy-react';
+import Spinner from 'components/Spinner';
 import {setActiveClass} from 'actions/ClassActions';
 import InputField from './../../../components/Application/components/Forms/InputField';
 import Textarea from './../../../components/Application/components//Forms/Textarea';
@@ -39,6 +40,7 @@ const AddClass = React.createClass({
   render() {
     const profile = _.get(this.props, 'classProfile.classProfile') || {};
     const date = profile.date ? moment(profile.date, 'YYYYMMDD').format('YYYY-MM-DD') : null;
+    const awaitingSave = _.get(this.props, 'view.awaitingSave')
     return (
       <Grid fluid>
         <div className="row header">
@@ -132,7 +134,13 @@ const AddClass = React.createClass({
                 </Row>
                 <Row>
                   <Col xs={12}>
-                    <Button type="submit" value="Submit" disabled={!this.state.canSubmit}>{profile._id ? 'Update' : 'Submit'}</Button>
+                    <Button type="submit" value="Submit" disabled={!this.state.canSubmit}>
+                      {
+                        awaitingSave ?
+                        <Spinner className={'button-spinner'} /> :
+                        profile._id ? 'Update' : 'Submit'
+                      }
+                    </Button>
                   </Col>
                 </Row>
               </Formsy.Form>

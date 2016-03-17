@@ -60,14 +60,16 @@ export async function getMe() {
 }
 
 export async function setDefaultLocation(gymId) {
+ let res;
   try {
     await setDefaultGym(gymId);
     resetAllCursors();
-    await getMe();
+    res = await getMe();
     myGyms.set('stale', true);
   } catch (err) {
     alert('There was an error changing gyms');
   }
+  return res;
 }
 
 

@@ -99,7 +99,11 @@ class OwnerComponent extends React.Component {
 	}
 
 	submit(data) {
-		addGymOwner(data, this.props.data._id);
+		if (new RegExp('(?=.{6,}).*', 'g').test(data.password)) {
+      addGymOwner(data, this.props.data._id);
+    } else {
+      alert('Your password must be atleast 6 letters');
+    }
 	}
 
 	enableButton() {

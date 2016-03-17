@@ -1,4 +1,5 @@
 import React from 'react';
+import Spinner from 'components/Spinner';
 import InputField from 'components/Application/components/Forms/InputField';
 import {Row, Col, Button} from 'react-bootstrap';
 import Formsy from 'formsy-react';
@@ -8,9 +9,7 @@ import _ from 'lodash';
 class ChangeGym extends React.Component {
   constructor(...args) {
     super(...args);
-    this.state = {
-      canSubmit: false
-    }
+    this.state = {};
   }
 
   render() {
@@ -28,6 +27,8 @@ class ChangeGym extends React.Component {
                 </div>
                 <div className="actions">
                   {
+                    this.state.loading === gym._id ?
+                    <Spinner className={'button-spinner'} /> :
                     gym.default ?
                     <h4>Default</h4> :
                     <h4 onClick={this.setDefaultLocation.bind(this, gym.gym._id)} className="primary-link">Make Default</h4>
@@ -43,7 +44,10 @@ class ChangeGym extends React.Component {
   }
 
   async setDefaultLocation(gymId) {
-    setDefaultLocation(gymId)
+    this.setState({loading: gymId});
+    await setDefaultLocation(gymId);
+    this.setState({loading: false});
+
   }
 
 

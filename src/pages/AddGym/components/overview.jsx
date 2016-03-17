@@ -19,7 +19,7 @@ class OverviewComponent extends React.Component {
 	render() {
 		const data = this.props.data || {};
 		let timeType = _.get(data, 'cancellationPolicy.time');
-		timeType = timeType ? timeType > 24 ? 'Days' : 'Hours' : '';	
+		timeType = timeType ? timeType > 24 ? 'Days' : 'Hours' : '';
 		return (
 			<Formsy.Form ref="form" onValidSubmit={this.getGeoPoint.bind(this, false)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} className="row">
 				 <Col xs={12}>
@@ -217,7 +217,6 @@ class OverviewComponent extends React.Component {
 
 				const gymId = this.props.data._id ? this.props.data._id : null;
 
-				console.log(form)
 				if (gymId) {
 					updateGym(form, gymId);
 				} else {

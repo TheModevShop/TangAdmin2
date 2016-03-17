@@ -21,31 +21,32 @@ class Account extends React.Component {
         <h1>Account Settings</h1>
 
         <div className="email card">
-          <ChangeEmail submitEmail={this.submitEmail.bind(this)} email={_.get(this.props, 'user.details.email', '')} />
+          <ChangeEmail loading={this.state.loading} submitEmail={this.submitEmail.bind(this)} email={_.get(this.props, 'user.details.email', '')} />
         </div>
 
         <div className="password card">
-          <ResetPassword submitPassword={this.submitPassword.bind(this)}/>
+          <ResetPassword loading={this.state.gymLoading} submitPassword={this.submitPassword.bind(this)}/>
         </div>
 
         <div className="change-primary-gym card">
-          <ChangeGym gyms={_.get(this.props, 'gyms')} changeGym={this.changeGym.bind(this)}/>
+          <ChangeGym gyms={_.get(this.props, 'gyms')}/>
         </div>
       </div>
     );
   }
   
   async submitEmail(data) {
+    this.setState({loading: true});
     await editMe(data);
     alert('success')
+    this.setState({loading: false});
   }
 
-  async changeGym(data) {
-    console.log(data)
-  }
-
-  submitPassword(data) {
-    console.log(data)
+  async submitPassword(data) {
+    this.setState({gymLoading: true});
+    await editMe(data);
+    alert('success')
+    this.setState({gymLoading: false});
   }
 }
 
