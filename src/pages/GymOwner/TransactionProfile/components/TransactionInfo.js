@@ -1,5 +1,6 @@
 import React from 'react';
 import {Row, Col} from 'react-bootstrap';
+import moment from 'moment';
 import _ from 'lodash';
 
 class PrivateClassInfo extends React.Component {
@@ -10,8 +11,7 @@ class PrivateClassInfo extends React.Component {
           <Row>
             <Col xs={12}>
               <h2>Transaction</h2>
-              <p>{profile.stripe.amount} / {profile.stripe.amount_refunded}</p>
-              <p>{profile.date}</p>
+              <p>{moment(profile.date).format('M/D/YYYY h:mma')}</p>
               <p>{profile.stripe.status}</p>
               <p>{profile.type}</p>
             </Col>
@@ -19,14 +19,14 @@ class PrivateClassInfo extends React.Component {
           <Row>
             <Col xs={12}>
               <h2>Session</h2>
-              <p>{profile.session}</p>
-              <p>{profile.date}</p>
+              <p>{profile.session.name}</p>
+              <p>{moment(profile.session.dateAndTime).format('M/D/YYYY h:mma')}</p>
             </Col>
           </Row>
           <Row>
             <Col xs={12}>
               <h2>Instructor</h2>
-              <p>{profile.Instructor}</p>
+              <p>{_.get(profile, 'instructor.name.first')} {_.get(profile, 'instructor.name.last')}</p>
             </Col>
           </Row>
         </Col>

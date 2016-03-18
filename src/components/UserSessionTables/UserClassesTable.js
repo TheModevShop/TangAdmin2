@@ -66,7 +66,6 @@ class UserClassesTable extends React.Component {
   render() {
     let classes = _.get(this.props, 'classes') || null;
     classes = this.formatData(classes);
-    console.log(this.props);
     return (
       <div className="table-wrapper">
         <div className="row table-filter-container">

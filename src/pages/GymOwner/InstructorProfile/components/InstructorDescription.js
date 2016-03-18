@@ -11,8 +11,8 @@ class InstructorDescription extends React.Component {
           { profile ?
             <div>
               {
-                profile.description ? 
-                  <p>{profile.description}</p>
+                profile.bio ? 
+                  <p>{profile.bio}</p>
                 :
                   <p>{profile.name.first} has not provided a description.</p>
               }

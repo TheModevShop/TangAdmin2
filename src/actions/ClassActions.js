@@ -1,6 +1,6 @@
 import tree from 'state/StateTree';
 import _ from 'lodash';
-import {postClass, cancelClassApi, putClass} from 'api/classesApi';
+import {postClass, cancelClassApi, putClass, completeClassApi, removeUserFromSessionApi} from 'api/classesApi';
 const activeClass = tree.select(['views', 'ClassProfile']);
 const AddClass = tree.select(['views', 'AddClass']);
 const myGym = tree.select(['user', 'myGym']);
@@ -20,6 +20,11 @@ export function setActiveClass() {
 
 export function clearResponse() {
   AddClass.set('response', null);
+  tree.commit();
+}
+
+export function setError(error) {
+  AddClass.set('response', error);
   tree.commit();
 }
 
@@ -62,6 +67,34 @@ export async function resetAddClass(data) {
 
 export async function cancelClasses(ids) {
   cancelClassApi(ids)
+}
+
+export async function completeClass(id) {
+  let response;  
+  try {
+    await completeClassApi(id, _.get(myGym.get(), 'gymDetails._id'));
+    response = true;
+    clearClassesCache();
+    activeClass.set({stale: true});
+    tree.commit();
+  } catch(err) {
+    response = false;
+  }
+  return response;
+}
+
+export async function removeUserFromSession(sessionId, userId) {
+  let response;  
+  try {
+    await removeUserFromSessionApi(_.get(myGym.get(), 'gymDetails._id'), sessionId, userId);
+    response = true;
+    clearClassesCache();
+    activeClass.set({stale: true});
+    tree.commit();
+  } catch(err) {
+    response = false;
+  }
+  return response;
 }
 
 export function clearClassesCache() {

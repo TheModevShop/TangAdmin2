@@ -18,11 +18,11 @@ class ClassTransactionsTable extends React.Component {
 
   formatData(transactions) {
     transactions = _.map(_.cloneDeep(transactions), (item) => {
-      item.userCharged = item.userCharged.name ? item.userCharged.name.first + ' ' + item.userCharged.name.last : 'N/A';
+      item.name = item.userCharged.name ? item.userCharged.name.first + ' ' + item.userCharged.name.last : 'N/A';
       item.session = item.session ? item.session.name : 'N/A';
-      item.instructor = item.instructor.name ? item.instructor.name.first + ' ' + item.instructor.name.last : 'N/A';
-      item.charged = item.stripe.amount ? currency(item.stripe.amount) : 'N/A';
-      item.date = moment(item.date, 'YYYYMMDD').format('MM/DD/YYYY');
+      item.instructor = _.get(item, 'instructor.name') ? item.instructor.name.first + ' ' + item.instructor.name.last : 'N/A';
+      item.charged = _.get(item, 'stripe.amount') ? currency(item.stripe.amount) : 'N/A';
+      item.date = _.get(item, 'date') ? moment(item.date, 'YYYYMMDD').format('MM/DD/YYYY') : 'N/A';
       return item;
     });
 
@@ -39,13 +39,13 @@ class ClassTransactionsTable extends React.Component {
 
     const columns = [
       {
-        title: 'Date',
+        title: 'User',
+        prop: 'name'
+      },
+      {
+        title: 'Date Charged',
         prop: 'date'
       }, 
-      {
-        title: 'User Charged',
-        prop: 'userCharged'
-      },
       {
         title: 'Instructor',
         prop: 'instructor'
@@ -62,9 +62,6 @@ class ClassTransactionsTable extends React.Component {
             <h1>Transactions</h1>
           </Col>
         </div>
-        <div className="row table-filter-container">
-          <TableFilter onSubmitFilter={this.submitFilter.bind(this)} table="transactions" />
-        </div>
         {
           isLoading ? 
           <Spinner /> :
@@ -77,9 +74,6 @@ class ClassTransactionsTable extends React.Component {
               initialPageLength={10000}
               className="table-body"
             />
-            <TablePagination path={['views', 'Transactions']} 
-              page={_.get(this.props, 'transactions.page')} 
-              depleted={_.get(this.props, 'transactions.hideNextButton')} />
           </span> :
           <div className="no-results">No Transactions Yet</div>
         }

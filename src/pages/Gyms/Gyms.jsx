@@ -100,7 +100,6 @@ class Gyms extends React.Component {
             columns={columns}
             initialData={gyms}
             initialPageLength={15}
-            initialSortBy={{ prop: 'name', order: 'descending' }}
             pageLengthOptions={[ 15, 20, 50 ]}
             className="table-body"
           /> 

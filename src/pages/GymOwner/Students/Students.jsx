@@ -3,10 +3,13 @@ import {branch} from 'baobab-react/higher-order';
 import {DataTable} from 'react-data-components';
 import {Row, Col, Grid, Panel} from 'react-bootstrap';
 import {Link} from 'react-router';
-import Spinner from 'components/Spinner';
-
+import Spinner from 'components/Spinner'; 
 const renderName = (val, row) => {
   return <Link to={`/students/${row._id}`}><div className="image" style={row.image ? {backgroundImage: `url(${row.image})`} : {backgroundImage: "url('src/images/profile.png')"}}></div>{row.name.first} {row.name.last}</Link>;
+}
+
+const renderEmail = (val, row) => {
+  return <a className="email-link" href={`mailto:${row.email}`}>{row.email}</a> 
 }
   
 const columns = [
@@ -17,7 +20,12 @@ const columns = [
   },
   { 
     title: 'Email', 
-    prop: 'email' 
+    render: renderEmail,
+    prop: 'email'
+  },
+  { 
+    title: 'Phone Number', 
+    prop: 'phone' 
   }
 ];
 

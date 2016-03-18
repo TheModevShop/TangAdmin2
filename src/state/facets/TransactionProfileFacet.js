@@ -22,7 +22,7 @@ const loader = new RESTLoader({
 export default function TransactionProfileFacet() {
   return {
     cursors: {
-      TransactionProfile: ['views', 'TransactionProfile'],
+      TransactionProfile: ['views', 'TransactionProfile', 'activeTransaction'],
       myGym: ['user', 'myGym'],
     },
     get(data) {

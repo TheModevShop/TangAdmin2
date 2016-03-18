@@ -18,7 +18,7 @@ class Transactions extends React.Component {
 
   formatData(transactions) {
     transactions = _.map(_.cloneDeep(transactions), (item) => {
-      item.userCharged = item.userCharged.name ? item.userCharged.name.first + ' ' + item.userCharged.name.last : 'N/A';
+      item.name = item.userCharged.name ? item.userCharged.name.first + ' ' + item.userCharged.name.last : 'N/A';
       item.session = item.session ? item.session.name : 'N/A';
       item.instructor = item.instructor.name ? item.instructor.name.first + ' ' + item.instructor.name.last : 'N/A';
       item.charged = item.stripe.amount ? currency(item.stripe.amount) : 'N/A';
@@ -49,7 +49,7 @@ class Transactions extends React.Component {
       }, 
       {
         title: 'User Charged',
-        prop: 'userCharged'
+        prop: 'name'
       },
       {
         title: 'Instructor',

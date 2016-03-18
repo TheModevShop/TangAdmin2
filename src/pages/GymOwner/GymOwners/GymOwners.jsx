@@ -20,6 +20,10 @@ class GymOwners extends React.Component {
       return <Link to={`/gym-owners/${row._id}`}>{row.name}</Link>;
     }
 
+    const renderEmail = (val, row) => {
+      return <a className="email-link" href={`mailto:${row.email}`}>{row.email}</a> 
+    }
+
     const columns = [
       { 
         title: 'Name', 
@@ -27,8 +31,13 @@ class GymOwners extends React.Component {
         render: renderName
       },
       { 
-        title: 'Email Address', 
+        title: 'Email', 
+        render: renderEmail,
         prop: 'email'
+      },
+      { 
+        title: 'Phone Number', 
+        prop: 'phone' 
       }
     ];
     return (
@@ -47,7 +56,6 @@ class GymOwners extends React.Component {
                 columns={columns}
                 initialData={gymOwners}
                 initialPageLength={15}
-                initialSortBy={{ prop: 'name', order: 'descending' }}
                 pageLengthOptions={[ 15, 20, 50 ]}
                 className="table-body"
               /> 

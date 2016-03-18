@@ -82,7 +82,8 @@ export default function getInitialState() {
           awaitingSave: false,
           error: false,
           success: true,
-          response: null
+          response: null,
+          activeTransaction: null
         },
         GymOwnerReports: {
           list: null

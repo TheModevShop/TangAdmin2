@@ -62,7 +62,6 @@ class AppOwnerReports extends React.Component {
                       columns={columns}
                       initialData={reports}
                       initialPageLength={1000}
-                      initialSortBy={{prop: 'date', order: 'ascending' }}
                       className="table-body"
                     />
                     <div className="totals-wrapper">

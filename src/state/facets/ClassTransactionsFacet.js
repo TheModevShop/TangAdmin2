@@ -5,12 +5,8 @@ import {BASE} from 'constants';
 const LIMIT = 20;
 
 const loader = new RESTLoader({
-  getResourceUrl: (id, data, offset) => {
-    const className = data.className || '';
-    const instructor = data.instructor || '';
-    const student = data.student || '';
-    // add query params to get. might need to add classname to server
-    return `${BASE}/gyms/${id}/transactions?lname=${className}&instructor=${instructor}&student=${student}`;
+  getResourceUrl: (id, sessionId) => {
+    return `${BASE}/gyms/${id}/sessions/${sessionId}/transactions`;
   },
   successTransformer: (data) => {
     return {

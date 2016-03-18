@@ -9,14 +9,14 @@ class StudentDescription extends React.Component {
     return (
         <Col xs={12}>
           { profile ?
-            <div>
+            <p>
               {
-                profile.description ? 
-                  <p>{profile.description}</p>
+                profile.bio ? 
+                  <p>{profile.bio}</p>
                 :
                   <p>{profile.name.first} has not provided a description.</p>
               }
-            </div>
+            </p>
           : null
           }
           

@@ -88,7 +88,6 @@ class Privates extends React.Component {
                 columns={columns}
                 initialData={classes}
                 initialPageLength={1000}
-                initialSortBy={{ prop: 'date', order: 'ascending' }}
                 className="table-body" /> 
               
               <TablePagination path={['views', 'Privates']} 

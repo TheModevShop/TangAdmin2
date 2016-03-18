@@ -1,6 +1,6 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
-import {updateClass, addClass, clearResponse} from 'actions/ClassActions';
+import {updateClass, addClass, clearResponse, setError} from 'actions/ClassActions';
 import moment from 'moment';
 import {Row, Col, Grid, Input, Button} from 'react-bootstrap';
 import Formsy from 'formsy-react';
@@ -121,7 +121,7 @@ const ClassInfo = React.createClass({
                 }
               </Formsy.Form>
             </Row>
-            <RspMsg delay={5000} response={this.props.classProfile.response ? this.props.this.classProfile.response : null} />
+            <RspMsg delay={5000} response={this.props.view.response ? this.props.view.response : null} />
           </div>
         </Row>
       </Grid>
@@ -145,7 +145,7 @@ const ClassInfo = React.createClass({
       })
     };
   },
-  submitClass(data) {
+  submitClass(data) { 
     const classTime = moment(data.date).set('hour', data.start.split(':')[0]).set('minute', data.start.split(':')[1]).format()
     const validDate = moment().isBefore(moment(classTime))
     if (validDate) {
@@ -157,7 +157,7 @@ const ClassInfo = React.createClass({
       data.SessionId = this.props.classProfile.classProfile._id;
       updateClass(data, this.props.classProfile.classProfile._id);
     } else {
-      this.props.view.response = {'success': false, 'message': 'Invalid Date!'};
+      setError({'success': false, 'message': 'Invalid Date!'});
     }
 
   },
@@ -178,6 +178,9 @@ const ClassInfo = React.createClass({
 });
 
 export default branch(ClassInfo, {
+  cursors: {
+    view: ['views', 'AddClass']
+  },
   facets: {
     instructors: 'Instructors',
     classProfile: 'ClassProfile'

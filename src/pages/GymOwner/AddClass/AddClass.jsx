@@ -1,6 +1,6 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
-import {updateClass, addClass, clearResponse} from 'actions/ClassActions';
+import {updateClass, addClass, clearResponse, setError} from 'actions/ClassActions';
 import moment from 'moment';
 import {Row, Col, Grid, Input, Button} from 'react-bootstrap';
 import Formsy from 'formsy-react';
@@ -185,7 +185,7 @@ const AddClass = React.createClass({
         addClass(data);
       }
     } else {
-      this.props.view.response = {'success': false, 'message': 'Invalid Date!'};
+      setError({'success': false, 'message': 'Invalid Date!'});
     }
 
   },
