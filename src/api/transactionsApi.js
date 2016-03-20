@@ -20,7 +20,6 @@ export function retryChargeApi(transactionId, gymId, userId) {
       resolve(data);
     }).catch((err) => {
       reject(err);
-      console.log('err')
     });
   });
 }

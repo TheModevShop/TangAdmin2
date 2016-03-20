@@ -49,7 +49,7 @@ class ClassTransactionsTable extends React.Component {
       if(!row.status || !row.userId || !row.transactionId) {
         return 'N/A';
       } else if (row.status !== 'success') {
-        return <Button className="action-button" onClick={this.activateModal.bind(this, ``, this.reCharge.bind(this, row.transactionId, row.userId))}>Charge Again</Button>;
+        return <Button className="action-button" onClick={this.activateModal.bind(this, `charge ${row.userCharged.name.first} ${row.userCharged.name.last} ${row.amount}`, this.reCharge.bind(this, row.transactionId, row.userId))}>Charge Again</Button>;
       } else if(row.status === 'success') {
         return <div>success</div>
       }
@@ -111,6 +111,11 @@ class ClassTransactionsTable extends React.Component {
 
   async reCharge(transactionId, userId) {
     const response  = await retryCharge(transactionId, userId);
+    if (!response) {
+      alert('Charge failed. The user may have to update their payment method.')
+    } else if(response === 'declined') {
+      alert('Charge failed. The users card was declined, notify user to update payment method.');
+    }
     this.refs.modal.close();
   }
 }

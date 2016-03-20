@@ -43,7 +43,7 @@ export default function(method, url, data, options) {
         .set('x-access-token', sessionData)
         .end(function(err, res) {
           if (err) {
-            reject(err)
+            reject(res)
           } else {
             resolve(res)
           }
@@ -58,7 +58,7 @@ export default function(method, url, data, options) {
         .set('x-access-token', sessionData)
         .end(function(err, res) {
           if (err) {
-            reject(err)
+            reject(res)
           } else {
             resolve(res)
           }

@@ -1,5 +1,5 @@
 import tree from 'state/StateTree';
-import {refundTransaction, rechargeCardApi} from 'api/transactionsApi';
+import {refundTransaction, retryChargeApi} from 'api/transactionsApi';
 import _ from 'lodash';
 
 const activeClass = tree.select(['views', 'TransactionProfile']);
@@ -40,7 +40,7 @@ export async function refund(id) {
 export async function retryCharge(id, user) {
   let response;  
   try {
-    await retryChargeApi(id, _.get(myGym.get(), 'gymDetails._id'))
+    await retryChargeApi(id, _.get(myGym.get(), 'gymDetails._id'), user)
     response = true;
     TransactionsView.set('page', 0);
     TransactionsList.set(null);
@@ -48,6 +48,9 @@ export async function retryCharge(id, user) {
     tree.commit();
   } catch(err) {
     response = false;
+    if (_.get(err, 'body.code') === "card_declined") {
+      response = 'declined';
+    }
   }
   return response;
 }
