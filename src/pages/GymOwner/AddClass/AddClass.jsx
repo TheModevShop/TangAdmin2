@@ -177,6 +177,7 @@ const AddClass = React.createClass({
       data.date = moment(data.date).format('YYYYMMDD');
       data.private = false;
       data.price = this.currency(data.price);
+      data.name = data.name ? data.name.trim() : '';
       data.capacity = Number(data.capactiy);
       if (_.get(this.props, 'classProfile.classProfile._id')) {
         data.SessionId = this.props.classProfile.classProfile._id;
