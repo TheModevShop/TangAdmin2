@@ -28,7 +28,7 @@ class ClassTransactionsTable extends React.Component {
       item.date = _.get(item, 'date') ? moment(item.date, 'YYYYMMDD').format('MM/DD/YYYY') : 'N/A';
       item.userId = _.get(item, 'userCharged._id');
       item.status = false;
-      if (moment().isAfter(item.session.dateAndTime) && (item.missing || item.failed) && item.complete) {
+      if (moment().isAfter(item.session.dateAndTime) && item.session.complete) {
         item.status = item.missing ? 'missing' : item.failed ? 'failed' : 'success';
       }
       return item;
