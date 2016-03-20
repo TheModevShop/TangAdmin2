@@ -9,6 +9,7 @@ const TransactionsView = tree.select(['views', 'Transactions']);
 const TransactionsList = tree.select(['views', 'Transactions', 'list']);
 const activeTransaction = tree.select(['views', 'TransactionProfile', 'activeTransaction']);
 
+const classTransactions = tree.select(['views', 'ClassTransactions']);
 
 export function setActiveTransaction() {
 	activeTransaction.set({stale: true});
@@ -49,4 +50,9 @@ export async function retryCharge(id, user) {
     response = false;
   }
   return response;
+}
+
+export function clearClassTransactions() {
+  classTransactions.set(null);
+  tree.commit();
 }

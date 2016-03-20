@@ -110,7 +110,6 @@ class ClassTransactionsTable extends React.Component {
   }
 
   async reCharge(transactionId, userId) {
-    console.log(transactionId, userId);
     const response  = await retryCharge(transactionId, userId);
     this.refs.modal.close();
   }

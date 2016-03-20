@@ -10,6 +10,7 @@ import CustomModal from 'components/Application/components/Modal/Modal';
 import {setActiveClass, completeClass} from 'actions/ClassActions';
 import RspMsg from 'components/Application/components/Forms/message';
 import {cancelClassApi} from 'api/classesApi';
+import {clearClassTransactions} from 'actions/TransactionsActions';
 import history from 'appHistory';
 import moment from 'moment';
 import _ from 'lodash';
@@ -125,6 +126,10 @@ class ClassProfile extends React.Component {
         </Grid>
       : null
     );
+  }
+
+  componentWillUnmount() {
+    clearClassTransactions();
   }
 }
 
