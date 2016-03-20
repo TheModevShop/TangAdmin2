@@ -11,7 +11,7 @@ const PrivatesList = tree.select(['views', 'Privates', 'list']);
 const ClassesView= tree.select(['views', 'Classes']);
 const ClassList = tree.select(['views', 'Classes', 'list']);
 
-import {clearTransactionsCache} from 'actions/TransactionsActions';
+import {clearTransactionsCache, clearClassTransactions} from 'actions/TransactionsActions';
 
 const Dashboard = tree.select(['views', 'Dashboard']);
 
@@ -92,6 +92,7 @@ export async function removeUserFromSession(sessionId, userId) {
     await removeUserFromSessionApi(_.get(myGym.get(), 'gymDetails._id'), sessionId, userId);
     response = true;
     clearClassesCache();
+    clearClassTransactions();
     activeClass.set({stale: true});
     tree.commit();
   } catch(err) {

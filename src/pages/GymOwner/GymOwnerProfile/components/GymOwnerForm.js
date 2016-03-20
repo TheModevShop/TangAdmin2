@@ -38,8 +38,7 @@ class GymOwnerForm extends React.Component {
       return (
         <Row key={role._id}>
           <Col xs={12}>
-            { role.name === 'instructor' ?
-              <Input type="radio" name="role" onClick={this.handleChange.bind(this, role)} defaultChecked={userRole === role._id  ? true : false} value={role._id} label="Instructor"  /> :
+            { 
               role.name === 'gym-owner' ?
               <Input type="radio" name="role" onClick={this.handleChange.bind(this, role)} defaultChecked={userRole === role._id  ? true : false} value={role._id} label="Gym Owner"  /> :
               null
@@ -53,11 +52,6 @@ class GymOwnerForm extends React.Component {
         userId ?
         <form onSubmit={this.onSubmit.bind(this, userId, this.state.role)} className="col-xs-12">
           {rolesList}
-          <Row>
-            <Col xs={12}>
-              <Button disabled={!this.state.role} type="submit" value="Submit">Submit</Button>
-            </Col>
-          </Row>
         </form> : null
     );
   }
@@ -76,3 +70,11 @@ export default branch(GymOwnerForm, {
     gymOwners: 'GymOwners'
   }
 });
+
+
+
+// <Row>
+//   <Col xs={12}>
+//     <Button disabled={!this.state.role} type="submit" value="Submit">Submit</Button>
+//   </Col>
+// </Row>

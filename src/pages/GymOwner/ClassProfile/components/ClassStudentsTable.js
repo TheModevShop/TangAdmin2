@@ -34,7 +34,7 @@ class ClassStudentsTable extends React.Component {
         prop: 'phone' 
       }
     ];
-    if (!profile.private && !profile.complete) {
+    if (!profile.private && !profile.complete && !profile.cancelled) {
       columns.push({ 
         title: 'Remove User', 
         render: renderRemoveUser

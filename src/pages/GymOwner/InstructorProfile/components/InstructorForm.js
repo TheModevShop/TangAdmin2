@@ -33,8 +33,6 @@ class InstructorForm extends React.Component {
               <Input type="radio" name="role" onClick={this.handleChange.bind(this)} defaultChecked={userRole === role._id ? true : false} value={role._id} label="Student"  /> :
             role.name === 'instructor' ?
               <Input type="radio" name="role" onClick={this.handleChange.bind(this)} defaultChecked={userRole === role._id  ? true : false} value={role._id} label="Instructor"  /> :
-            role.name === 'gym-owner' ?
-              <Input type="radio" name="role" onClick={this.handleChange.bind(this)} defaultChecked={userRole === role._id  ? true : false} value={role._id} label="Gym Owner"  /> :
             null
             }
           </Col>
