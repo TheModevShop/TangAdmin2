@@ -19,14 +19,16 @@ var RspMsg = React.createClass({
       this.setTimer();
   },
   setTimer: function() {
-    // clear any existing timer
-    this._timer != null ? clearTimeout(this._timer) : null;
+    if (!this.props.persist) {
+      // clear any existing timer
+      this._timer != null ? clearTimeout(this._timer) : null;
 
-    // hide after `delay` milliseconds
-    this._timer = setTimeout(function(){
-      this.setState({visible: false});
-      this._timer = null;
-    }.bind(this), this.props.delay);
+      // hide after `delay` milliseconds
+      this._timer = setTimeout(function(){
+        this.setState({visible: false});
+        this._timer = null;
+      }.bind(this), this.props.delay);
+    };
   },
   componentWillUnmount: function() {
     clearTimeout(this._timer);
@@ -34,15 +36,15 @@ var RspMsg = React.createClass({
   render: function() {
     const response = this.props.response ? this.props.response : null;
     return this.state.visible ?
-            <Row>
-              { response ? 
-                  <Col xs={12} className={response.success ? ' response-msg msg-success' : ' response-msg msg-error'}>
-                      <span className={response.success ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-exclamation-sign'}></span>
-                      <p>{response.message}</p>
-                  </Col>
-                : null }
-              </Row>
-           : null
+      <Row className="msg-box">
+        { response ? 
+            <Col xs={12} className={response.success ? ' response-msg msg-success' : ' response-msg msg-error'}>
+                <span className={response.success ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-exclamation-sign'}></span>
+                <p>{response.message}</p>
+            </Col>
+          : null }
+        </Row>
+     : null
   }
 });
 

@@ -24,6 +24,15 @@ class Classes extends React.Component {
       classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
       classItem.enrolled = classItem.enrolled.length ? classItem.enrolled.length + '/' + classItem.capacity : '0/' + classItem.capacity;
       classItem.price = classItem.price ? '$' + (classItem.price / 100).toFixed(2) : 'N/A';
+
+      if ((moment().isAfter(classItem.dateAndTime) && !classItem.complete) || (classItem.complete && !_.get(classItem, 'sessionTransactions.passing'))) {
+        classItem.statusIcon = 'needs-attention'; // TODO
+      } else if(moment().isBefore(classItem.dateAndTime)) {
+        classItem.statusIcon = 'pending'; // TODO
+      } else if(classItem.complete) {
+        classItem.statusIcon = 'successful'; // TODO
+      }
+
       return classItem;
     });
 
@@ -34,8 +43,8 @@ class Classes extends React.Component {
     const classes = this.formatData(_.get(this.props, 'classes.allClasses')) || [];
     const isLoading = _.get(this.props, 'classes.isLoading') || false;
 
-    const renderName = (val, row) => {
-      return <Link to={`/class-profile/${row._id}`}>{row.name}</Link>;
+    const renderName = (val, row) => { 
+      return <Link to={`/class-profile/${row._id}`}><div className={`icon ${row.statusIcon}`}></div>{row.name}</Link>;
     }
 
     const columns = [
@@ -103,6 +112,10 @@ class Classes extends React.Component {
   }
   submitFilter() {
     clearClassesCache();
+  }
+  
+  componentWillUnmount() {
+    clearClassesCache()
   }
 }
 

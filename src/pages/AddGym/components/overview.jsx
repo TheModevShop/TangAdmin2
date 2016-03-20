@@ -124,7 +124,7 @@ class OverviewComponent extends React.Component {
 							  <InputField 
 							  	className="col-xs-12 col-sm-6 " 
 							  	name="hour" 
-							  	value={data.privatePricing ? data.privatePricing.hour : ''} 
+							  	value={data.privatePricing ? (data.privatePricing.hour / 100).toFixed(2) : ''} 
 							  	title="Private Session Hour Price" 
 							  	validations={{
 						  			isNumeric: true
@@ -133,19 +133,32 @@ class OverviewComponent extends React.Component {
 						  	<InputField 
 							  	className="col-xs-12 col-sm-6 " 
 							  	name="halfHour" 
-							  	value={data.privatePricing ? data.privatePricing.halfHour : ''} 
+							  	value={data.privatePricing ? (data.privatePricing.halfHour / 100).toFixed(2) : ''} 
 							  	title="Private Session Half Hour Price" 
 							  	validations={{
 						  			isNumeric: true
 						  		}}
 						  		validationError="Please enter a number!" />
 					  	</Row>
+					  	
 					  	<Row>
 							  <InputField 
 							  	className="col-xs-12 col-sm-6 " 
-							  	name="percent" 
+							  	name="gymFlatFeeCut" 
+							  	value={data.gymCut ? (data.gymCut.flatFee / 100).toFixed(2) : ''} 
+							  	title="Gym profit per session" 
+							  	validations={{
+						  			isNumeric: true
+						  		}}
+						  		validationError="Please enter a number!" />						  	
+					  	</Row>
+
+					  	<Row>
+							  <InputField 
+							  	className="col-xs-12 col-sm-6 " 
+							  	name="flatFee" 
 							  	title="Cancellation Fee" 
-							  	value={_.get(data, 'cancellationPolicy.percent') ? data.cancellationPolicy.percent : ''} 
+							  	value={_.get(data, 'cancellationPolicy.flatFee') ? (data.cancellationPolicy.flatFee / 100).toFixed(2) : ''} 
 							  	required
 							  	validations={{
 						  			isNumeric: true
@@ -211,12 +224,12 @@ class OverviewComponent extends React.Component {
 				
 				var durationType = form.durationType;
 				form.time = durationType === 'Days' ? Number(form.time) * 24 : Number(form.time);
-				form.percent = Number(form.time)
+				form.flatFee = this.currency(form.flatFee)
 				form.hour = this.currency(form.hour)
-				form.halfHour = this.currency(form.halfHour)
+				form.halfHour = this.currency(form.halfHour);
+				form.gymFlatFeeCut = this.currency(form.gymFlatFeeCut);
 
 				const gymId = this.props.data._id ? this.props.data._id : null;
-
 				if (gymId) {
 					updateGym(form, gymId);
 				} else {

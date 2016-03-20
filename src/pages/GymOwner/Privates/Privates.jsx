@@ -8,6 +8,7 @@ import {Link} from 'react-router';
 import TableFilter from 'components/Application/components/Table/TableFilter';
 import TablePagination from 'components/Application/components/Table/TablePagination';
 import {clearPrivatesCache} from 'actions/ClassActions';
+import currency from 'utility/currency';
 import "./privates.less";
 import _ from 'lodash';
 
@@ -23,7 +24,15 @@ class Privates extends React.Component {
       classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
       classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
       classItem.enrolled = classItem.enrolled ? (classItem.enrolled[0] ? classItem.enrolled[0].name.first + ' ' + classItem.enrolled[0].name.last : 'N/A') : 'N/A';
-      classItem.price = classItem.price ? '$' + (classItem.price / 100).toFixed(2) : 'N/A';
+      classItem.price = classItem.price ? currency(classItem.price) : '$0.00';
+
+      if ((moment().isAfter(classItem.dateAndTime) && !classItem.complete) || (classItem.complete && !_.get(classItem, 'sessionTransactions.passing'))) {
+        classItem.statusIcon = 'needs-attention';
+      } else if(moment().isBefore(classItem.dateAndTime)) {
+        classItem.statusIcon = 'pending';
+      } else if(classItem.complete) {
+        classItem.statusIcon = 'successful';
+      }
 
       return classItem;
     });
@@ -32,11 +41,16 @@ class Privates extends React.Component {
   }
   
   render() {
-    const classes = this.formatData(_.get(this.props, 'privates.allPrivates')) || [];
+    const classes = this.formatData(_.get(this.props, 'privates.allPrivates')) || []  ;
     const isLoading = _.get(this.props, 'privates.isLoading') || false;
     
     const renderName = (val, row) => {
-      return <Link to={`/class-profile/${row._id}`}>{ row.instructor ? row.instructor.name.first + ' ' + row.instructor.name.last : 'N/A'} </Link>;
+      return (
+        <Link to={`/class-profile/${row._id}`}>
+          <div className={`icon ${row.statusIcon}`}></div>
+          { row.instructor ? row.instructor.name.first + ' ' + row.instructor.name.last : 'N/A'}
+        </Link> 
+      );
     }
 
     const columns = [
@@ -101,6 +115,10 @@ class Privates extends React.Component {
     );
   }
   submitFilter() {
+    clearPrivatesCache();
+  }
+
+  componentWillUnmount() {
     clearPrivatesCache();
   }
 }

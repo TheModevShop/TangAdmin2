@@ -35,7 +35,7 @@ export async function updateGym(data, gymId) {
   try {
     update = await postGymUpdate(dataStr, gymId);
     gymList.set({stale: true}); // this will cause to refetch
-    addGymCursor.set(['data'], post.body);
+    addGymCursor.set(['data'], update.body);
     addGymCursor.set(['response'], {'success': true, 'message': 'Your gym information has been successfully submitted!'});
   } catch (err) {
     update = null;

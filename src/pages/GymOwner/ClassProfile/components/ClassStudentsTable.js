@@ -9,6 +9,9 @@ import Spinner from 'components/Spinner';
 
 class ClassStudentsTable extends React.Component {
   render() {
+    const profile = _.get(this.props, 'classProfile.classProfile') || {};
+    const students = profile.enrolled;
+
     const renderName = (val, row) => {
       return row.name ? <Link to={`/students/${row._id}`}><div className="image" style={{backgroundImage: `url(${row.image})`}}></div>{row.name.first} {row.name.last}</Link> : 'null';
     }
@@ -27,13 +30,17 @@ class ClassStudentsTable extends React.Component {
         prop: 'email' 
       },
       { 
-        title: 'Remove User', 
-        render: renderRemoveUser
+        title: 'Phone Number',
+        prop: 'phone' 
       }
     ];
+    if (!profile.private && !profile.complete) {
+      columns.push({ 
+        title: 'Remove User', 
+        render: renderRemoveUser
+      });
+    }
 
-    const profile = _.get(this.props, 'classProfile.classProfile') || {};
-    const students = profile.enrolled;
     return (
       <div className="col-xs-12 table-wrapper">
         <div className="row table-header">

@@ -11,7 +11,7 @@ const loader = new RESTLoader({
     const instructor = data.instructor || '';
     const student = data.student || '';
     // add query params to get. might need to add classname to server
-    return `${BASE}/gyms/${id}/sessions?limit=${LIMIT}&offset=${offset}&private=true&onlyEnrolled=true&instructor=${instructor}&student=${student}&startDate=${startDate}&endDate=${endDate}`;
+    return `${BASE}/gyms/${id}/sessions?showHistorical=true&limit=${LIMIT}&offset=${offset}&private=true&onlyEnrolled=true&instructor=${instructor}&student=${student}&startDate=${startDate}&endDate=${endDate}`;
   },
   successTransformer: (data, current) => {
     const numberReturned = data.body.length;

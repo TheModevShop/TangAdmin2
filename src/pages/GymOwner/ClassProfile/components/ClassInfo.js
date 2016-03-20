@@ -35,12 +35,13 @@ const ClassInfo = React.createClass({
   render() {
     const profile = _.get(this.props, 'classProfile.classProfile') || {};
     const date = profile.date ? moment(profile.date, 'YYYYMMDD').format('YYYY-MM-DD') : null;
+    const disabled = this.props.disable || profile.complete || profile.private === true ? true : false;
     return (
       <Grid fluid>
         <Row>
           <div className="col-xs-12 col-lg-10">
             <Row>
-              <Formsy.Form disabled={profile.private === true ? true : false} onValidSubmit={this.submitClass} onValid={this.enableButton} onInvalid={this.disableButton} className="col-xs-12">
+              <Formsy.Form disabled={disabled} onValidSubmit={this.submitClass} onValid={this.enableButton} onInvalid={this.disableButton} className="col-xs-12">
                 <Row>
                   <Textarea
                     className="col-xs-12 " 
@@ -92,7 +93,7 @@ const ClassInfo = React.createClass({
                     type="text" 
                     name="price" 
                     title="Price"
-                    value={profile.price ? profile.price : ''} 
+                    value={profile.price ? (profile.price / 100).toFixed(2) : ''}
                     required 
                     validations={{
                       isNumeric: true
@@ -111,7 +112,7 @@ const ClassInfo = React.createClass({
                     required/>
                 </Row>
                 {
-                  profile.private === false ? 
+                  profile.private === false && !disabled ? 
                     <Row>
                       <Col xs={12}>
                         <Button type="submit" value="Submit" disabled={!this.state.canSubmit}>Update</Button>

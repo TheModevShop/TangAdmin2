@@ -17,6 +17,7 @@ class Header extends React.Component {
     const user = _.get(this.props, 'user.details', {});
     const gym = _.get(this.props, 'user.myGym.gymDetails.name', null);
     const nameFormatted = name ? name.first +' '+name.last : null;
+    const defaultImg = 'http://blog.ramboll.com/fehmarnbelt/wp-content/themes/ramboll2/images/profile-img.jpg';
     return (
       <div className="app-header">
         <div onClick={this.goToHome.bind(this)} className="icon-logo salmon"></div>
@@ -27,7 +28,7 @@ class Header extends React.Component {
               <div className="name">{nameFormatted}</div>
               <div className="gym">{gym}</div>
             </div>
-            <div className="img" style={{backgroundImage: "url('http://blog.ramboll.com/fehmarnbelt/wp-content/themes/ramboll2/images/profile-img.jpg')"}}></div>
+            <div className="img" style={{backgroundImage: `url(${user.image || defaultImg})`}}></div>
             <div className="logout" onClick={this.logout}>Logout</div>
           </div> : null
         }

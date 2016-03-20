@@ -114,7 +114,7 @@ const AddClass = React.createClass({
                     type="text" 
                     name="price" 
                     title="Price"
-                    value={profile.price ? profile.price : ''} 
+                    value={profile.price ? (profile.price / 100).toFixed(2) : ''} 
                     required 
                     validations={{
                       isNumeric: true

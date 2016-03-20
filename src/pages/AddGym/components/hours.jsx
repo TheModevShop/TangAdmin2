@@ -17,10 +17,10 @@ class HoursComponent extends React.Component {
 		const data = this.props.data.hours ? this.props.data.hours : null;
 		const days = { "days": [{"name": "Monday", "abbr": "mon", "open": data ? data.mon_open : null, "close": data ? data.mon_close : null}, {"name": "Tuesday", "abbr": "tue", "open": data ? data.tue_open : null, "close": data ? data.tue_close : null}, {"name": "Wednesday", "abbr": "wed", "open": data ? data.wed_open : null, "close": data ? data.wed_close : null}, {"name": "Thursday", "abbr": "thu", "open": data ? data.thu_open : null, "close": data ? data.thu_close : null}, {"name": "Friday", "abbr": "fri", "open": data ? data.fri_open : null, "close": data ? data.fri_close : null}, {"name": "Saturday", "abbr": "sat", "open": data ? data.sat_open : null, "close": data ? data.sat_close : null}, {"name": "Sunday", "abbr": "sun", "open": data ? data.sun_open : null, "close": data ? data.sun_close : null}]};
 		const daysList = _.map(days.days, (day) => {
-						  return (
-						     <DayModule params={day} key={day.abbr} />
-						   );
-						 });
+		  return (
+		     <DayModule params={day} key={day.abbr} />
+		   );
+		 });
 
 		return (
 			<Formsy.Form ref="form" onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} className="row">

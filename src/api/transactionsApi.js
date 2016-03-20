@@ -13,3 +13,14 @@ console.log(id, gymId)
     });
   });
 }
+
+export function retryChargeApi(transactionId, gymId, userId) {
+  return new bluebird((resolve, reject) => {
+    xhr('PUT', `${BASE}/gyms/${gymId}/transactions/${transactionId}`, {userId: userId}).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+      console.log('err')
+    });
+  });
+}

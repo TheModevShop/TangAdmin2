@@ -93,6 +93,10 @@ const TableFilter = React.createClass({
       });
     };
   },
+
+  componentWillUnmount() {
+    actions.clearFilter();
+  }
 });
 
 // <DateFilter table={this.props.table} dates={dates} />      

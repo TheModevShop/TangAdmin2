@@ -11,6 +11,8 @@ const PrivatesList = tree.select(['views', 'Privates', 'list']);
 const ClassesView= tree.select(['views', 'Classes']);
 const ClassList = tree.select(['views', 'Classes', 'list']);
 
+import {clearTransactionsCache} from 'actions/TransactionsActions';
+
 const Dashboard = tree.select(['views', 'Dashboard']);
 
 export function setActiveClass() {
@@ -75,6 +77,7 @@ export async function completeClass(id) {
     await completeClassApi(id, _.get(myGym.get(), 'gymDetails._id'));
     response = true;
     clearClassesCache();
+    clearTransactionsCache();
     activeClass.set({stale: true});
     tree.commit();
   } catch(err) {

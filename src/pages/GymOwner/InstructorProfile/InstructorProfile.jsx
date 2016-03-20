@@ -36,19 +36,13 @@ class InstructorProfile extends React.Component {
                <div className="row tabs">
                 <Col xs={12}>
                   <div onClick={this.setTab.bind(this, 'description')} className="tab tab-1 description-tab">Description</div>
-                  <div onClick={this.setTab.bind(this, 'privates')} className="tab tab-2 privates-tab">Privates</div>
-                  <div onClick={this.setTab.bind(this, 'classes')} className="tab tab-3 classes-tab">Classes</div>
-                  <div onClick={this.setTab.bind(this, 'status')} className="tab tab-3 status-tab">Status</div>
+                  <div onClick={this.setTab.bind(this, 'status')} className="tab tab-2 status-tab">Status</div>
                 </Col>
               </div>
               <Row className="form-container">
                 {
                     this.state.activeTab === 'description' ?
                         <InstructorDescription /> : 
-                    this.state.activeTab === 'privates' ?
-                        <UserPrivatesTable table="instructor" privates={_.get(this.props, 'InstructorPrivates.privates')}/> :
-                    this.state.activeTab === 'classes' ?
-                        <UserClassesTable table="instructor-classes" classes={_.get(this.props, 'InstructorClasses.classes')} /> :
                     this.state.activeTab === 'status' ?
                         <InstructorForm />
                     : null
@@ -84,3 +78,11 @@ export default branch(InstructorProfile, {
     InstructorPrivates: 'InstructorPrivates'
   }
 });
+
+
+// <div onClick={this.setTab.bind(this, 'privates')} className="tab tab-2 privates-tab">Privates</div>
+// <div onClick={this.setTab.bind(this, 'classes')} className="tab tab-3 classes-tab">Classes</div>
+// this.state.activeTab === 'privates' ?
+// <UserPrivatesTable table="instructor" privates={_.get(this.props, 'InstructorPrivates.privates')}/> :
+// this.state.activeTab === 'classes' ?
+// <UserClassesTable table="instructor-classes" classes={_.get(this.props, 'InstructorClasses.classes')} /> :

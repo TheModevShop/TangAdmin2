@@ -17,7 +17,9 @@ class GymOwnerReports extends React.Component {
   render() {
     const reports = _.get(this.props.report, 'report.instructorsReport');
     const metrics = _.get(this.props.report, 'report.metrics', {});
+    const classesReport = _.get(this.props.report, 'report.classesReport', {});
     const isLoading = _.get(this.props.report, 'report.isLoading', false);
+    console.log(reports)
 
     const renderName = (val, row) => {
       return <span>{row.instructor.name.first} {row.instructor.name.last}</span>;
@@ -74,6 +76,9 @@ class GymOwnerReports extends React.Component {
                       </div>
                       <div>
                         <span>Total Coach Earnings</span><span>{metrics.instructorTotal ? currency(metrics.instructorTotal) : '$0.00'}</span>
+                      </div>
+                      <div>
+                        <span>{classesReport.totalClasses +' Total Classes'}</span><span>{classesReport.revenue ? currency(classesReport.revenue) : '$0.00'}</span>
                       </div>
                       <div>
                         <span>Total Gym Profit</span><span>{metrics.profit ? currency(metrics.profit) : '$0.00'}</span>

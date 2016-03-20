@@ -17,7 +17,7 @@ class GymOwners extends React.Component {
     const isLoading = _.get(this.props, 'gymOwners.isLoading') || false;
 
     const renderName = (val, row) => {
-      return <Link to={`/gym-owners/${row._id}`}>{row.name}</Link>;
+      return <Link to={`/gym-owners/${row._id}`}><div className="image" style={row.image ? {backgroundImage: `url(${row.image})`} : {backgroundImage: "url('src/images/profile.png')"}}></div>{row.name}</Link>;
     }
 
     const renderEmail = (val, row) => {

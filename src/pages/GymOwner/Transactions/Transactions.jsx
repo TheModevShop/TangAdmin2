@@ -19,10 +19,12 @@ class Transactions extends React.Component {
   formatData(transactions) {
     transactions = _.map(_.cloneDeep(transactions), (item) => {
       item.name = item.userCharged.name ? item.userCharged.name.first + ' ' + item.userCharged.name.last : 'N/A';
-      item.session = item.session ? item.session.name : 'N/A';
+      item.session = item.type === 'cancellationFee' ? 'Cancellation Fee' : item.session ? item.session.name : 'N/A';
       item.instructor = item.instructor.name ? item.instructor.name.first + ' ' + item.instructor.name.last : 'N/A';
       item.charged = item.stripe.amount ? currency(item.stripe.amount) : 'N/A';
       item.date = moment(item.date, 'YYYYMMDD').format('MM/DD/YYYY');
+      item.status = item.failed ? item.failed : item.status;
+      item.statusIcon = item.status
       return item;
     });
 
@@ -34,7 +36,7 @@ class Transactions extends React.Component {
     const isLoading = _.get(this.props, 'transactions.isLoading') || false;
 
     const renderName = (val, row) => {
-      return <Link to={`/transactions/${row._id}`}>{row.session}</Link>;
+      return <Link to={`/transactions/${row._id}`}><div className={`icon ${row.statusIcon}`}></div> {row.session}</Link>;
     }
 
     const columns = [
@@ -95,6 +97,10 @@ class Transactions extends React.Component {
 
   submitFilter() {
     clearTransactionsCache();
+  }
+
+  componentWillUnmount() {
+    clearTransactionsCache()
   }
 }
 export default branch(Transactions, {

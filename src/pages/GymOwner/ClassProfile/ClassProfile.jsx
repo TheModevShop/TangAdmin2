@@ -8,6 +8,7 @@ import ClassStudentsTable from './components/ClassStudentsTable';
 import ClassTransactionsTable from './components/ClassTransactionsTable';
 import CustomModal from 'components/Application/components/Modal/Modal';
 import {setActiveClass, completeClass} from 'actions/ClassActions';
+import RspMsg from 'components/Application/components/Forms/message';
 import {cancelClassApi} from 'api/classesApi';
 import history from 'appHistory';
 import moment from 'moment';
@@ -53,14 +54,32 @@ class ClassProfile extends React.Component {
   componentWillMount() {
     setActiveClass();
   }
+
+  renderMessage(profile) {
+    var msg;
+    if (profile) {
+      if (moment().isAfter(profile.dateAndTime) && !profile.complete) {
+        msg = 'This session is out of date and has not been completed or cancelled.'; 
+      } else if(profile.complete && !_.get(profile, 'sessionTransactions.passing')) {
+        msg = 'This session has one or more failing or missing transactions.'; 
+      }
+      if (msg) {
+        return (
+          <RspMsg persist={true} response={{message: msg}} />
+        );
+      }
+      return false;
+    }
+  }
   
   render() {
     const profile = _.get(this.props, 'classProfile.classProfile') || {};
+    const message = this.renderMessage(profile);
     return (
       this.state.loading ?
       <Spinner />  :
       profile.name ?
-        <Grid fluid className={this.state.activeTab + " instructor-profile"}>
+        <Grid fluid className={this.state.activeTab + " class-profile"}>
           <Row>
             <div className="col-xs-12">
               <div className="row header">
@@ -69,11 +88,11 @@ class ClassProfile extends React.Component {
                 </Col>
                 <Col xs={12} sm={7} className="header-btns">
                   {
-                    !profile.private ?
+                    !profile.private && !profile.complete ?
                     <Button className="cancel-btn" onClick={this.activateModal.bind(this, 'cancel', this.cancelClass.bind(this))}>Cancel Class</Button> : null
                   }
                   {
-                    !profile.private && moment().isAfter(profile.dateAndTime) ?
+                    !profile.private && moment().isAfter(profile.dateAndTime) && !profile.complete && profile.enrolled.length ?
                     <Button className="complete-btn" onClick={this.activateModal.bind(this, 'complete', this.completeClass.bind(this))}>Complete Class</Button> : null
                   }
                 </Col>
@@ -87,8 +106,12 @@ class ClassProfile extends React.Component {
               </div>
               <Row className="form-container">
                 {
+                  message ? 
+                  message : null
+                }
+                {
                     this.state.activeTab === 'details' ?
-                        <ClassInfo /> : 
+                        <ClassInfo disable={message} /> : 
                     this.state.activeTab === 'table' ?
                         <ClassStudentsTable /> :
                     this.state.activeTab === 'trans-table' ?

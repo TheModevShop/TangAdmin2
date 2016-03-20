@@ -1,15 +1,12 @@
 import React from 'react';
 import {Route} from 'react-router';
+import AddGym from './AddGym';
 
-function getComponents(location, cb) {
-  require.ensure([], (require) => {
-    cb(null, require('./AddGym'));
-  });
-}
 
 export default (
   <Route>
-    <Route pageName="add-gym" path="/add-gym" getComponents={getComponents} />
-    <Route pageName="add-gym" path="/add-gym/:id" getComponents={getComponents} />
+    <Route pageName="add-gym" path="/add-gym" component={AddGym} />
+    <Route pageName="add-gym-profile" path="/add-gym/:id" component={AddGym} />
+    <Route pageName="edit-gym-profile" path="/edit-gym/:id" component={AddGym} />
   </Route>
 );

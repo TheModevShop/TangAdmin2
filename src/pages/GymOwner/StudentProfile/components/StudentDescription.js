@@ -9,14 +9,14 @@ class StudentDescription extends React.Component {
     return (
         <Col xs={12}>
           { profile ?
-            <p>
+            <div>
               {
                 profile.bio ? 
                   <p>{profile.bio}</p>
                 :
                   <p>{profile.name.first} has not provided a description.</p>
               }
-            </p>
+            </div>
           : null
           }
           
@@ -26,9 +26,6 @@ class StudentDescription extends React.Component {
 }
 
 export default branch(StudentDescription, {
-  cursors: {
-    StudentProfile: ['views', 'StudentProfile']
-  },
   facets: {
     StudentProfile: 'StudentProfile'
   }

@@ -17,7 +17,7 @@ class GymOwnerForm extends React.Component {
   onSubmit(id, role, e) {
     e.preventDefault();   
     const isMe = _.get(this.props, 'me.details._id') === id;
-    const canRemoveGymOwnerRole = _.get(this.props, 'gymOwners.gymOwners.length' || false)
+    const canRemoveGymOwnerRole = _.get(this.props, 'gymOwners.gymOwners.length', false)
     if (isMe && role.name !== 'gym-owner') {
       alert('You cannot demote your own role.')
     } else if (role.name !== 'gym-owner' && !canRemoveGymOwnerRole) {
@@ -72,6 +72,7 @@ export default branch(GymOwnerForm, {
 
   facets: {
     Roles: 'Roles',
-    GymOwnerProfile: 'GymOwnerProfile'
+    GymOwnerProfile: 'GymOwnerProfile',
+    gymOwners: 'GymOwners'
   }
 });
