@@ -24,6 +24,10 @@ class ClassProfile extends React.Component {
     }
   }
 
+  componentWillMount() {
+    clearClassTransactions();
+  }
+
   cancelClass() {
     let id = this.props.classProfile.classProfile._id;
     cancelClassApi(id);
@@ -126,10 +130,6 @@ class ClassProfile extends React.Component {
         </Grid>
       : null
     );
-  }
-
-  componentWillUnmount() {
-    clearClassTransactions();
   }
 }
 

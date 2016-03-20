@@ -1,6 +1,6 @@
 import tree from 'state/StateTree';
 import {refundTransaction, retryChargeApi} from 'api/transactionsApi';
-import {clearClassesCache} from 'api/ClassActions';
+import {clearClassesCache} from 'actions/ClassActions';
 import _ from 'lodash';
 
 const activeClass = tree.select(['views', 'TransactionProfile']);
@@ -59,6 +59,6 @@ export async function retryCharge(id, user) {
 }
 
 export function clearClassTransactions() {
-  classTransactions.set(null);
+  classTransactions.set({stale: true});
   tree.commit();
 }

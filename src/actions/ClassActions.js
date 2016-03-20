@@ -112,4 +112,3 @@ export function clearPrivatesCache() {
   PrivatesList.set({stale: true});
   tree.commit();
 }
-
