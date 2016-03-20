@@ -24,10 +24,6 @@ class ClassProfile extends React.Component {
     }
   }
 
-  componentWillMount() {
-    clearClassTransactions();
-  }
-
   cancelClass() {
     let id = this.props.classProfile.classProfile._id;
     cancelClassApi(id);
@@ -58,6 +54,7 @@ class ClassProfile extends React.Component {
 
   componentWillMount() {
     setActiveClass();
+    clearClassTransactions();
   }
 
   renderMessage(profile) {

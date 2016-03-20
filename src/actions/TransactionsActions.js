@@ -59,6 +59,6 @@ export async function retryCharge(id, user) {
 }
 
 export function clearClassTransactions() {
-  classTransactions.set({stale: true});
+  classTransactions.set(null);
   tree.commit();
 }
