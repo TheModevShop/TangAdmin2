@@ -11,7 +11,7 @@ class StudentInfo extends React.Component {
         {
           profile.name ?
             <div>
-              <div className="image" style={{backgroundImage: `url(${profile.image})`}}></div>
+              <div className="image" style={profile.image ? {backgroundImage: `url(${profile.image})`} : {backgroundImage: "url('/src/images/profile.png')"}}></div>
               <div>
                 <span className="name">{profile.name.first} {profile.name.last}</span>
                 <span className="email">{profile.email}</span>

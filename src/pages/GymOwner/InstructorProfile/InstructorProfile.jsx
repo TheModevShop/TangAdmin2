@@ -25,11 +25,6 @@ class InstructorProfile extends React.Component {
         <Grid fluid className={this.state.activeTab + " instructor-profile"}>
           <Row>
             <div className="col-xs-12">
-              <div className="row">
-                <Col xs={12}>
-                  <h1>Edit Instructor</h1>
-                </Col>
-              </div>
               <Row className="info-container">
                 <InstructorInfo />
               </Row>

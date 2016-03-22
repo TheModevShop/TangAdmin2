@@ -78,7 +78,7 @@ class ClassTransactionsTable extends React.Component {
       <div className="table-wrapper">
         <div className="row table-header">
           <Col xs={12}>
-            <h1>Transactions</h1>
+            <h2>Transactions</h2>
           </Col>
         </div>
         {

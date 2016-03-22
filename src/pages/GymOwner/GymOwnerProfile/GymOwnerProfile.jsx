@@ -19,11 +19,6 @@ class GymOwnerProfile extends React.Component {
         <Grid fluid className="gym-owner-profile">
           <Row>
             <div className="col-xs-12">
-              <div className="row">
-                <Col xs={12}>
-                  <h1>Edit Gym owner</h1>
-                </Col>
-              </div>
               <Row className="info-container">
                 <GymOwnerInfo />
               </Row>

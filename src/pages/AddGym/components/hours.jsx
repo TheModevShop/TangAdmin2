@@ -26,9 +26,7 @@ class HoursComponent extends React.Component {
 			<Formsy.Form ref="form" onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} className="row">
 			    <Col xs={12}>
 					<Row>
-						<Col xs={12}>
 							{daysList}
-						</Col>
 					</Row>
 					<Button type="submit" value="Submit" disabled={!this.state.canSubmit}>Update</Button>
 			    </Col>

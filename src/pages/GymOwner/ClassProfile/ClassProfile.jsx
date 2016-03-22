@@ -83,7 +83,7 @@ class ClassProfile extends React.Component {
       profile.name ?
         <Grid fluid className={this.state.activeTab + " class-profile"}>
           <Row>
-            <div className="col-xs-12">
+            <div className="col-xs-12 col-lg-10 col-lg-offset-1">
               <div className="row header">
                 <Col xs={12} sm={5}>
                   <h1>{profile.name}</h1>
@@ -106,7 +106,7 @@ class ClassProfile extends React.Component {
                   <div onClick={this.setTab.bind(this, 'trans-table')} className="tab tab-3 trans-table-tab">Transactions Table</div>
                 </Col>
               </div>
-              <Row className="form-container">
+              <div className="form-container">
                 {
                   message ? 
                   message : null
@@ -120,7 +120,7 @@ class ClassProfile extends React.Component {
                         <ClassTransactionsTable />
                     : null
                 }
-              </Row>
+              </div>
             </div>
           </Row>
           <CustomModal ref="modal"/>

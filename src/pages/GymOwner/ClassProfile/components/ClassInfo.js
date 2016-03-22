@@ -37,9 +37,8 @@ const ClassInfo = React.createClass({
     const date = profile.date ? moment(profile.date, 'YYYYMMDD').format('YYYY-MM-DD') : null;
     const disabled = this.props.disable || profile.complete || profile.private === true ? true : false;
     return (
-      <Grid fluid>
         <Row>
-          <div className="col-xs-12 col-lg-10">
+          <div className="col-xs-12">
             <Row>
               <Formsy.Form disabled={disabled} onValidSubmit={this.submitClass} onValid={this.enableButton} onInvalid={this.disableButton} className="col-xs-12">
                 <Row>
@@ -125,7 +124,6 @@ const ClassInfo = React.createClass({
             <RspMsg delay={5000} response={this.props.view.response ? this.props.view.response : null} />
           </div>
         </Row>
-      </Grid>
     );
   },
   

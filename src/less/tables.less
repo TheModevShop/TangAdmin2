@@ -45,6 +45,17 @@
 		}
 		.Select .Select-control {
 			background-color: #e6e6e6;
+			cursor: pointer;
+			transition: all 0.1s ease-in-out;
+			&:hover {
+				background-color: @salmon;
+				.Select-placeholder {
+					color: #fff;
+				}
+				.Select-arrow {
+					border-color: #fff transparent transparent;
+				}
+			}
 		}
 		.Select .Select-menu-outer {
 			border-radius: 0;
@@ -74,7 +85,6 @@
 			background-color: #e6e6e6;
 			color: #333;
 			padding: 10px 0;
-			width: 110px;
 			&:hover {
 				background-color: @salmon;
 				color: #fff;
@@ -208,6 +218,7 @@
 			}
 			th,
 			td {
+				text-transform: capitalize;
 				border: none;
 				font-size: 1em;
 				padding: 15px;

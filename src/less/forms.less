@@ -2,17 +2,16 @@
 
 button.btn.btn-default,
 .btn {
-	padding: 12px 0;
+	padding: 12px 15px;
 	letter-spacing: 1px;
 	background-color: #FF6E66;
 	border: none;
 	color: #fff;
 	text-align: center;
-	max-width: 150px;
-	width: 100%;
 	font-family: 'default_regular';
 	position: relative;
 	min-height: 50px;
+	transition: background-color 0.1s ease-in-out;
 	&.disabled,
 	&[disabled] {
 		cursor: pointer;
@@ -62,6 +61,11 @@ form {
 				border-width: 2px;
 			}
 		}
+	}
+	select.form-control {
+	    -webkit-appearance: none;
+	    -moz-appearance: none;
+	    appearance: none;
 	}
 	.form-control {
 		padding: 10px 15px;

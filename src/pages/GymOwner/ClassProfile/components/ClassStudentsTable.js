@@ -42,7 +42,7 @@ class ClassStudentsTable extends React.Component {
     }
 
     return (
-      <div className="col-xs-12 table-wrapper">
+      <div className="table-wrapper">
         <div className="row table-header">
           <Col xs={12}>
             <h2>Students Enrolled</h2>
