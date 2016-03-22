@@ -2,9 +2,8 @@ import React from 'react';
 import {Link} from 'react-router';
 import {branch} from 'baobab-react/higher-order';
 import {getAuthentication} from 'actions/authenticationActions';
-import history from 'appHistory';
-import {Panel, Input, Button} from 'react-bootstrap';
-import $ from 'jquery';
+import {Button} from 'react-bootstrap';
+import InputField from 'components/Application/components/Forms/InputField';
 import formData from 'utility/formData';
 import './login.less';
 
@@ -12,7 +11,9 @@ import './login.less';
 class Login extends React.Component {
   constructor(...args) {
     super(...args);
-    this.state = {};
+    this.state = {
+      canSubmit: false
+    }
   }
 
   render() {
@@ -20,23 +21,31 @@ class Login extends React.Component {
     return (
       <div className="login-wrapper">
         <div className="icon-logo"></div>
-        <form role="form" onSubmit={this.submitForm}>
+        <Formsy.Form role="form" ref="form" onValidSubmit={this.submitForm} onInvalidSubmit={this.notifyFormError} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} className="row">
             <h2 className="light">Sign Into Tang Admin</h2>
             <fieldset>
-              <div className="form-group">
-                <Input onChange={this.setLoginID} className="form-control" placeholder="Username" ref="loginID" type="text" autofocus="" name="email" />
-              </div>
-
-              <div className="form-group">
-                <Input onChange={this.setPassword} className="form-control" placeholder="Password" ref="password" type="password" name="password" />
-              </div>
-              <Button type="submit" bsSize="large" block>Login</Button>
+              <InputField 
+                placeholder="Email Address"
+                ref="loginID"
+                type="text"
+                validations="isEmail"
+                validationError="Please enter a valid email address!" 
+                autofocus=""
+                name="email"
+                required />
+              <InputField
+                placeholder="Password" 
+                ref="password" 
+                type="password" 
+                name="password" 
+                required />
+              <Button bsSize="large" type="submit" value="Submit" disabled={!this.state.canSubmit} block>Login</Button>
               {
                 error ? 
                 <div className="error">Error Signing In</div> : null
               }  
             </fieldset>
-          </form>
+          </Formsy.Form>
           <footer>
             <h3><Link to={`/forgot-password`}>Forgot Password?</Link></h3>
           </footer>
@@ -44,9 +53,15 @@ class Login extends React.Component {
     );
   }
 
-  async submitForm(e) {
-    e.preventDefault();
-    await getAuthentication(formData(e.target));
+  async submitForm(data) {
+    await getAuthentication(data);
+  }
+  enableButton() {
+    this.setState({ canSubmit: true });
+  }
+
+  disableButton() {
+    this.setState({ canSubmit: false });
   }
 }
 
