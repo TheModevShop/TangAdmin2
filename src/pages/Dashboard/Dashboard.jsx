@@ -36,17 +36,15 @@ class Dashboard extends React.Component {
   formatData(classes) {
     classes = _.map(_.cloneDeep(classes), (classItem) => {
       let newClassItem = {};
-      // let date = moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY');
-      // let start = moment(classItem.time.start, 'H:mm').format('HH:mm');
-      // let end = moment(classItem.time.end, 'H:mm').format('HH:mm');
       let enrolled = classItem.enrolled ? (classItem.enrolled[0] ? classItem.enrolled[0].name.first : 'N/A') : 'N/A';
       let instructor = classItem.instructor ? classItem.instructor.name.first : 'N/A';
+      let pastDate = moment().format('YYYYMMDD') > Number(classItem.date);
       
       newClassItem.start = new Date(parseDate(classItem.date, classItem.time.start));
       newClassItem.end = new Date(parseDate(classItem.date, classItem.time.end));
       newClassItem.desc = classItem.description ? classItem.description : null;
       newClassItem.title = (classItem.private ? (instructor + ' - ' + enrolled) : classItem.name) + ', ' + moment(newClassItem.start).format('h:mm a') + ' - ' + moment(newClassItem.end).format('h:mm a');
-      newClassItem.className = classItem.private ? 'private-session' : '';
+      newClassItem.className = (classItem.private ? 'private-session ' : '') + (pastDate ? 'past-date' : '');
       newClassItem.shortTitle = classItem.private ? (instructor + ' - ' + enrolled) : classItem.name;
       newClassItem.id = classItem._id;
       newClassItem.duration = moment.duration(classItem.time.end).asMinutes() - moment.duration(classItem.time.start).asMinutes();
