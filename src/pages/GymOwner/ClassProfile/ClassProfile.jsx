@@ -76,9 +76,10 @@ class ClassProfile extends React.Component {
   
   render() {
     const profile = _.get(this.props, 'classProfile.classProfile') || {};
+    const isLoading = _.get(this.props, 'classProfile.isLoading') || false;
     const message = this.renderMessage(profile);
     return (
-      this.state.loading ?
+      this.state.loading || isLoading ?
       <Spinner />  :
       profile.name ?
         <Grid fluid className={this.state.activeTab + " class-profile"}>
@@ -96,6 +97,10 @@ class ClassProfile extends React.Component {
                   {
                     !profile.private && moment().isAfter(profile.dateAndTime) && !profile.complete && profile.enrolled.length ?
                     <Button className="complete-btn" onClick={this.activateModal.bind(this, 'complete', this.completeClass.bind(this))}>Complete Class</Button> : null
+                  }
+                  {
+                    profile.complete ?
+                    <h3 className="complete">session complete <span className={_.get(profile, 'sessionTransactions.passing') ? 'passing status' : 'status'}></span></h3> : null
                   }
                 </Col>
               </div>

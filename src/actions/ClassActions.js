@@ -78,6 +78,7 @@ export async function completeClass(id) {
     response = true;
     clearClassesCache();
     clearTransactionsCache();
+    clearClassTransactions();
     activeClass.set({stale: true});
     tree.commit();
   } catch(err) {

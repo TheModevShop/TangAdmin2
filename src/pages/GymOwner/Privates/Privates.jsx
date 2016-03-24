@@ -21,8 +21,8 @@ class Privates extends React.Component {
   formatData(classes) {
     classes = _.map(_.cloneDeep(classes), (classItem) => {
       classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
-      classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
-      classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
+      classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mma')}`;
+      classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mma')}`;
       classItem.enrolled = classItem.enrolled ? (classItem.enrolled[0] ? classItem.enrolled[0].name.first + ' ' + classItem.enrolled[0].name.last : 'N/A') : 'N/A';
       classItem.price = classItem.price ? currency(classItem.price) : '$0.00';
 

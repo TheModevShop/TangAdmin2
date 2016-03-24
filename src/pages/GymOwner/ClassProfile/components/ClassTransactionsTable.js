@@ -39,7 +39,7 @@ class ClassTransactionsTable extends React.Component {
 
   render() {
     const transactions = this.formatData(_.get(this.props, 'ClassTransactions.transactions')) || [];
-    const isLoading = _.get(this.props, 'transactions.isLoading') || false;
+    const isLoading = _.get(this.props, 'ClassTransactions.isLoading') || false;
 
     const renderName = (val, row) => {
       return <Link to={`/transactions/${row.transactionId}`}>{row.session}</Link>;

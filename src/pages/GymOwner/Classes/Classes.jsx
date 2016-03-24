@@ -20,8 +20,8 @@ class Classes extends React.Component {
   formatData(classes) {
     classes = _.map(_.cloneDeep(classes), (classItem) => {
       classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
-      classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
-      classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
+      classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mma')}`;
+      classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mma')}`;
       classItem.enrolled = classItem.enrolled.length ? classItem.enrolled.length + '/' + classItem.capacity : '0/' + classItem.capacity;
       classItem.price = classItem.price ? '$' + (classItem.price / 100).toFixed(2) : 'N/A';
 

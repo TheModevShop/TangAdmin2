@@ -2,12 +2,29 @@
   .header-btns {
     display: inline-block;
     text-align: right;
-    button {
-
-    }    
+    .complete {
+      padding: 6px 0px;
+      color: #BEBEBE;
+      .status {
+        display: inline-block;
+        background-color: #E16E6E;
+        height: 8px;
+        width: 8px;
+        border-radius: 100%;
+        vertical-align: middle;
+        margin-left: 4px;
+        &.passing {
+          background-color: #7ED47E;
+        }
+      }
+    } 
+  }
+  .loader {
+    margin-top: 290px;
   }
   .table-wrapper {
     float: none;
+    position: relative;
   }
   .msg-box.row {
     margin: 0 15px;

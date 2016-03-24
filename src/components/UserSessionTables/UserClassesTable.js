@@ -56,8 +56,8 @@ class UserClassesTable extends React.Component {
   formatData(classes) {
     return _.map(_.cloneDeep(classes), (classItem) => {
       classItem.date = `${moment(classItem.date, 'YYYYMMDD').format('MM/DD/YYYY')}`;
-      classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mm a')}`;
-      classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mm a')}`;
+      classItem.start = `${moment(classItem.time.start, 'H:mm').format('h:mma')}`;
+      classItem.end = `${moment(classItem.time.end, 'H:mm').format('h:mma')}`;
       return classItem;
     });
   }
