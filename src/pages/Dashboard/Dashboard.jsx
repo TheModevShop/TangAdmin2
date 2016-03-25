@@ -4,6 +4,7 @@ import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import parseDate from 'utility/parseDate';
+import Spinner from 'components/Spinner';
 import {Link} from 'react-router';
 import './dashboard.less';
 import _ from 'lodash';
@@ -61,18 +62,22 @@ class Dashboard extends React.Component {
 
   render() {
     const classes = this.formatData(_.get(this.props, 'dashboard.allClasses') || []);
+    const isLoading = _.get(this.props, 'dashboard.isLoading', null)
     return (
-
         <div className="dashboard">
-          <BigCalendar
-            events={classes}
-            popup
-            defaultDate={new Date()} 
-            eventPropGetter={this.setClassName.bind(this)}
-            components={{month:{event: this.monthEvent.bind(this)}, week:{event: this.weekEvent.bind(this)}, day:{event: this.monthEvent.bind(this)}}}
-            views={['month', 'week', 'day']}
-            formats={{dateFormat: 'D', dayFormat: 'ddd Do', weekHeaderFormat: 'MMMM D - D', dayHeaderFormat: 'MMMM D, YYYY'}}
-          />
+          {
+            isLoading ? 
+            <Spinner /> :
+            <BigCalendar
+              events={classes}
+              popup
+              defaultDate={new Date()} 
+              eventPropGetter={this.setClassName.bind(this)}
+              components={{month:{event: this.monthEvent.bind(this)}, week:{event: this.weekEvent.bind(this)}, day:{event: this.monthEvent.bind(this)}}}
+              views={['month', 'week', 'day']}
+              formats={{dateFormat: 'D', dayFormat: 'ddd Do', weekHeaderFormat: 'MMMM D - D', dayHeaderFormat: 'MMMM D, YYYY'}}
+            />
+          }
         </div>
     );
   }

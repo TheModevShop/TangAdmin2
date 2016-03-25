@@ -10,13 +10,6 @@ export default function getInitialState() {
   return {
     cursors: {
       roles: null,
-      tableFilters: {
-        instructor: null,
-        className: null,
-        startDate: null,
-        endDate: null,
-        student: null
-      },
       locationClassNames: null,
       views: {
         Dashboard: null,
@@ -98,6 +91,11 @@ export default function getInitialState() {
         sessionData: sessionData ? sessionData : null
       },
       awaitingAuthentication: false,
+      tableFilters: {
+        classes: {},
+        privates: {},
+        transactions: {},
+      },
     },
     facets: {facets: facets}
   };

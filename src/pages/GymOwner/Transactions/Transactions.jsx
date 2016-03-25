@@ -22,7 +22,7 @@ class Transactions extends React.Component {
       item.session = item.type === 'cancellationFee' ? 'Cancellation Fee' : item.session ? item.session.name : 'N/A';
       item.instructor = item.instructor.name ? item.instructor.name.first + ' ' + item.instructor.name.last : 'N/A';
       item.charged = item.stripe.amount ? currency(item.stripe.amount) : 'N/A';
-      item.date = moment(item.date, 'YYYYMMDD').format('MM/DD/YYYY');
+      item.date = moment(item.date).format('MM/DD/YYYY');
       item.status = item.failed ? item.failed : item.status;
       item.statusIcon = item.status
       return item;

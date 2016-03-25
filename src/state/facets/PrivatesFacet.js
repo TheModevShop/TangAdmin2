@@ -41,7 +41,8 @@ export default function PrivatesFacet() {
         loader.setCursor(this.cursors.privates);
       }
       const offset = _.get(data, 'privates.offset', 0);
-      const privates = _.clone(loader.fetch(_.get(data.myGym, 'gymDetails._id'), data.tableFilters, offset));
+      const tableFilter = data.tableFilters.privates || {};
+      const privates = _.clone(loader.fetch(_.get(data.myGym, 'gymDetails._id'), tableFilter, offset));
       
       const page = data.privatesView.page;
       var cloned = _.cloneDeep(privates);

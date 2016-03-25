@@ -18,7 +18,7 @@ const ClassFilter = React.createClass({
   },
 
   onChange(val) {    
-    actions.setClassName(val)
+    actions.setClassName(val, this.props.table)
   }
 });
 

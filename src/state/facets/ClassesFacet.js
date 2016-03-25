@@ -48,7 +48,8 @@ export default function ClassesFacet() {
       }
       // when we want to initiate a query we might need to add a search button to then set stale on the table to it refetches with new params
       const offset = _.get(data, 'classes.offset', 0);
-      const classes = _.clone(loader.fetch(_.get(data.myGym, 'gymDetails._id'), data.tableFilters, offset));
+      const tableFilter = data.tableFilters.classes || {};
+      const classes = _.clone(loader.fetch(_.get(data.myGym, 'gymDetails._id'), tableFilter, offset));
       
       const page = data.classesView.page;
       var cloned = _.cloneDeep(classes);

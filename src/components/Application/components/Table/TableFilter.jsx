@@ -29,7 +29,7 @@ const TableFilter = React.createClass({
     let allStudents = _.get(this.props.students, 'allStudents', []);
     let allInstructors = _.get(this.props.instructors, 'allInstructors', []);
     let allClassNames = _.get(this.props.classNames, 'classes', []);
-    const {student, instructor, className, startDate, endDate} = this.props.tableFilters;
+    const {student, instructor, className, startDate, endDate} = _.get(this.props, `tableFilters[${table}]`);
 
     const startDateFilter = startDate || moment().subtract(29, 'days')
     const endDateFilter = endDate || moment();
@@ -72,7 +72,7 @@ const TableFilter = React.createClass({
               <div className="calendar glyphicon glyphicon-calendar"></div>
               <span>
                 {
-                  this.state.startDate && this.state.endDate ?
+                  startDate && endDate?
                   moment(startDateFilter).format('M/DD/YY') + ' - ' + moment(endDateFilter).format('M/DD/YY') : 'Select a Date'
                 } 
               </span>
@@ -86,7 +86,7 @@ const TableFilter = React.createClass({
   },
   handleEvent: function (event, picker) {
     if (event.type === 'apply') {
-      actions.setDate(picker.startDate, picker.endDate);
+      actions.setDate(picker.startDate, picker.endDate, this.props.table);
       this.setState({
         startDate: picker.startDate,
         endDate: picker.endDate
@@ -95,7 +95,7 @@ const TableFilter = React.createClass({
   },
 
   componentWillUnmount() {
-    actions.clearFilter();
+    //actions.clearFilter();
   }
 });
 

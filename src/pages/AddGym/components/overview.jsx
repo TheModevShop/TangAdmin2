@@ -219,6 +219,14 @@ class OverviewComponent extends React.Component {
 				form.halfHour = this.currency(form.halfHour);
 				form.gymFlatFeeCut = this.currency(form.gymFlatFeeCut);
 
+				if(form.website.substr(0,7) != 'http://'){
+				    form.website = 'http://' + form.website;
+				}
+				if(form.website.substr(form.website.length-1, 1) != '/'){
+				    form.website = form.website + '/';
+				}
+
+
 				const gymId = this.props.data._id ? this.props.data._id : null;
 				if (gymId) {
 					updateGym(form, gymId);

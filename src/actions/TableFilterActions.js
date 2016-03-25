@@ -14,24 +14,24 @@ export function clearFilter() {
   tree.commit();
 }
 
-export function setInstructor(instructor) {
-  tableFilters.set('instructor', instructor);
+export function setInstructor(instructor, table) {
+  tableFilters.set([table, 'instructor'], instructor);
   tree.commit();
 }
 
-export function setClassName(className) {
-  tableFilters.set('className', className);
+export function setClassName(className, table) {
+  tableFilters.set([table, 'className'], className);
   tree.commit();
 }
 
-export function setStudent(student) {
-  tableFilters.set('student', student);
+export function setStudent(student, table) {
+  tableFilters.set([table, 'student'], student);
   tree.commit();
 }
 
-export function setDate(startDate, endDate) {
-  tableFilters.set('startDate', startDate);
-  tableFilters.set('endDate', endDate);
+export function setDate(startDate, endDate, table) {
+  tableFilters.set([table, 'startDate'], startDate);
+  tableFilters.set([table, 'endDate'], endDate);
   tree.commit();
 }
 

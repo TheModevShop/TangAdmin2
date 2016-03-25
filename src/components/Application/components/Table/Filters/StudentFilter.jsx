@@ -17,7 +17,7 @@ const StudentFilter = React.createClass({
   },
 
   onChange(val) {
-    actions.setStudent(val)
+    actions.setStudent(val, this.props.table)
   }
 });
 

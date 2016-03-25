@@ -90,7 +90,7 @@ class Privates extends React.Component {
         </div>
 
         <div className="row table-filter-container">
-          <TableFilter onSubmitFilter={this.submitFilter.bind(this)} table="private" />
+          <TableFilter onSubmitFilter={this.submitFilter.bind(this)} table="privates" />
         </div>
         {
           isLoading ? 

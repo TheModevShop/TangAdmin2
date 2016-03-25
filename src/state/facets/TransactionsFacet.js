@@ -45,7 +45,8 @@ export default function TransactionsFacet() {
       }
 
       const offset = _.get(data, 'transactions.offset', 0);
-      const transactions = _.clone(loader.fetch(_.get(data.myGym, 'gymDetails._id'), data.tableFilters, offset));
+      const tableFilter = data.tableFilters.transactions || {};
+      const transactions = _.clone(loader.fetch(_.get(data.myGym, 'gymDetails._id'), tableFilter, offset));
 
       const page = data.transactionsView.page;
       var cloned = _.cloneDeep(transactions);

@@ -17,7 +17,7 @@ const InstructorFilter = React.createClass({
   },
 
   onChange(val) {
-    actions.setInstructor(val)
+    actions.setInstructor(val, this.props.table)
   }
 });
 
