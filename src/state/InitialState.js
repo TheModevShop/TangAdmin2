@@ -95,6 +95,7 @@ export default function getInitialState() {
         classes: {},
         privates: {},
         transactions: {},
+        reports: {}
       },
     },
     facets: {facets: facets}

@@ -68,7 +68,19 @@ export async function resetAddClass(data) {
 }
 
 export async function cancelClasses(ids) {
-  cancelClassApi(ids)
+  let response;  
+  try {
+    await cancelClassApi(ids);
+    response = true;
+    clearClassesCache();
+    clearTransactionsCache();
+    clearClassTransactions();
+    activeClass.set({stale: true});
+    tree.commit();
+  } catch(err) {
+    response = false;
+  }
+  return response;
 }
 
 export async function completeClass(id) {

@@ -20,7 +20,7 @@ class Dashboard extends React.Component {
   monthEvent({event}) {
     return (
       <div>
-        <Link to={`/class-profile/${event.id}`}>{event.shortTitle}</Link>
+        <Link to={`/class-profile/${event.id}?dashboard=true`}>{event.shortTitle}</Link>
       </div>
     );
   }
@@ -28,7 +28,7 @@ class Dashboard extends React.Component {
   weekEvent({event}) {
     return (
       <div className={event.duration < 45 ? 'hide-content' : ''}>
-        <Link to={`/class-profile/${event.id}`}>{event.shortTitle}</Link>
+        <Link to={`/class-profile/${event.id}?dashboard=true`}>{event.shortTitle}</Link>
       </div>
     );
   }

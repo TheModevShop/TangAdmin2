@@ -26,9 +26,14 @@ class ClassProfile extends React.Component {
 
   cancelClass() {
     let id = this.props.classProfile.classProfile._id;
-    cancelClassApi(id);
+    const cancelled = cancelClassApi(id);
     this.refs.modal.close();
-    history.pushState(null, '/classes');
+    if (!cancelled) {
+      this.setState({loading: false});
+      alert('Error canceling, please try again')
+    } else {
+      history.pushState(null, '/classes');
+    }
   }
 
   async completeClass() {
@@ -60,7 +65,9 @@ class ClassProfile extends React.Component {
   renderMessage(profile) {
     var msg;
     if (profile) {
-      if (moment().isAfter(profile.dateAndTime) && !profile.complete) {
+      if (moment().isAfter(profile.dateAndTime) && !profile.enrolled.length) {
+        msg = 'This session is out of date and has no enrollment, please cancel the class.'; 
+      } else if (moment().isAfter(profile.dateAndTime) && !profile.complete) {
         msg = 'This session is out of date and has not been completed or cancelled.'; 
       } else if(profile.complete && !_.get(profile, 'sessionTransactions.passing')) {
         msg = 'This session has one or more failing or missing transactions.'; 
@@ -78,13 +85,21 @@ class ClassProfile extends React.Component {
     const profile = _.get(this.props, 'classProfile.classProfile') || {};
     const isLoading = _.get(this.props, 'classProfile.isLoading') || false;
     const message = this.renderMessage(profile);
+    const route = _.get(this.props, 'location.query.dashboard') ? 'dashboard' : profile.private ? 'privates' : 'classes'
     return (
       this.state.loading || isLoading ?
       <Spinner />  :
       profile.name ?
         <Grid fluid className={this.state.activeTab + " class-profile"}>
           <Row>
+          
             <div className="col-xs-12 col-lg-10 col-lg-offset-1">
+              <div className="navigation-wrapper">
+                <span className="primary-link navigation" onClick={() => history.pushState(null, '/'+route)}>
+                  <span className="glyphicon glyphicon-menu-left"></span>
+                  <h3>back to {route}</h3>
+                </span>
+              </div>
               <div className="row header">
                 <Col xs={12} sm={5}>
                   <h1>{profile.name}</h1>

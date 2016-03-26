@@ -6,6 +6,7 @@ import GymOwnerForm from './components/GymOwnerForm';
 import RspMsg from './../../../components/Application/components/Forms/message';
 import {setActiveGymOwner, clearResponse} from 'actions/GymOwnerActions';
 import _ from 'lodash';
+import history from 'appHistory';
 import './gym-owner-profile.less';
 
 class GymOwnerProfile extends React.Component {
@@ -19,6 +20,12 @@ class GymOwnerProfile extends React.Component {
         <Grid fluid className="gym-owner-profile">
           <Row>
             <div className="col-xs-12">
+              <div className="navigation-wrapper">
+                <span className="primary-link navigation" onClick={() => history.pushState(null, '/gym-owners')}>
+                  <span className="glyphicon glyphicon-menu-left"></span>
+                  <h3>back to gym owners</h3>
+                </span>
+              </div>
               <Row className="info-container">
                 <GymOwnerInfo />
               </Row>

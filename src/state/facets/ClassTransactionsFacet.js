@@ -28,7 +28,8 @@ export default function ClassTransactionsFacet() {
     },
     get(data) {
       const gymId = _.get(data.myGym, 'gymDetails._id');
-      const id = window.location.href.split('/').pop();
+      const windowLocation = window.location.href.replace('?dashboard=true', '');
+      const id = windowLocation.split('/').pop();
       
       if (data.ClassTransactions && data.ClassTransactions.stale) {
         loader.invalidateCache();

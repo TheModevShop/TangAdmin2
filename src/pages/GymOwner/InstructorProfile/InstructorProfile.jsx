@@ -9,6 +9,7 @@ import UserClassesTable from 'components/UserSessionTables/UserClassesTable';
 import RspMsg from './../../../components/Application/components/Forms/message';
 import {setActiveInstructor, clearResponse} from 'actions/InstructorActions';
 import _ from 'lodash';
+import history from 'appHistory';
 import './instructor-profile.less';
 
 class InstructorProfile extends React.Component {
@@ -20,11 +21,16 @@ class InstructorProfile extends React.Component {
   }
   
   render() {
-    console.log(this.props)
     return (
         <Grid fluid className={this.state.activeTab + " instructor-profile"}>
           <Row>
             <div className="col-xs-12">
+              <div className="navigation-wrapper">
+                <span className="primary-link navigation" onClick={() => history.pushState(null, '/instructors')}>
+                  <span className="glyphicon glyphicon-menu-left"></span>
+                  <h3>back to instructors</h3>
+                </span>
+              </div>
               <Row className="info-container">
                 <InstructorInfo />
               </Row>

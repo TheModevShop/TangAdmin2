@@ -1,5 +1,6 @@
 import React from 'react';
 import {branch} from 'baobab-react/higher-order';
+import history from 'appHistory';
 import {Row, Col, Grid} from 'react-bootstrap';
 import StudentInfo from './components/StudentInfo';
 import StudentDescription from './components/StudentDescription';
@@ -23,6 +24,12 @@ class StudentProfile extends React.Component {
         <Grid fluid className={this.state.activeTab + " student-profile"}>
           <Row>
             <div className="col-xs-12">
+              <div className="navigation-wrapper">
+                <span className="primary-link navigation" onClick={() => history.pushState(null, '/students')}>
+                  <span className="glyphicon glyphicon-menu-left"></span>
+                  <h3>back to students</h3>
+                </span>
+              </div>
               <Row className="info-container">
                 <StudentInfo />
               </Row>

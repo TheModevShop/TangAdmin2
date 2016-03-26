@@ -9,7 +9,8 @@ const tableFilters = tree.select(['tableFilters']);
 
 export async function gymOwnerReport() {
   const myGymId = _.get(myGym.get(), 'gymDetails._id');
-  const filters = tableFilters.get();
+  let filters = tableFilters.get();
+  filters = filters.reports || {};
 
   const startDate = filters.startDate ? moment(filters.startDate).format() : '';
   const endDate = filters.endDate ? moment(filters.endDate).format() : '';

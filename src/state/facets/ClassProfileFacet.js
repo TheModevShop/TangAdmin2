@@ -26,7 +26,8 @@ export default function LocationScheduleFacet() {
       myGym: ['user', 'myGym']
     },
     get(data) {
-      const id = window.location.href.split('/').pop();
+      const windowLocation = window.location.href.replace('?dashboard=true', '');
+      const id = windowLocation.split('/').pop();
       if (data.classProfile && data.classProfile.stale) {
         loader.invalidateCache();
       }

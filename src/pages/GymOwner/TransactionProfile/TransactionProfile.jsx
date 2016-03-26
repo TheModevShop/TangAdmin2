@@ -52,6 +52,12 @@ class TransactionProfile extends React.Component {
            <Grid fluid className="transaction-profile">
             <Row>
               <div className="col-xs-12">
+                <div className="navigation-wrapper">
+                  <span className="primary-link navigation" onClick={() => history.pushState(null, '/transactions')}>
+                    <span className="glyphicon glyphicon-menu-left"></span>
+                    <h3>back to transactions</h3>
+                  </span>
+                </div>
                 <div className="row heading">
                   <Col xs={12} sm={6}>
                     <h2>{currency(profile.amount)} {profile.refunded ? '(refunded)' : null}</h2>
