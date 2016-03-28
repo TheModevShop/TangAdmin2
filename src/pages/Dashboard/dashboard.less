@@ -1,5 +1,5 @@
 .hide-content {
-    max-width: 25%;
+    max-width: 20%;
     overflow: hidden;
     white-space: nowrap;
     overflow: hidden;
@@ -102,9 +102,9 @@
 	    		color: #999;
 	    	}
 	    	&.issue {
-	    		border-left-color: red;
+	    		border-left-color: #BD0000;
 		    	a {
-		    		color: red;
+		    		color: #BD0000;
 		    	}
 	    	}
 	    }
@@ -114,9 +114,15 @@
 			border: none;
 			background-color: #E8ECF9;
 			border-left: 3px solid #1C40C4;
+			padding: 4px;
 			.rbc-event-label {
-			    font-size: 10px;
-			    padding-bottom: 3px;
+				font-size: 10px;
+				padding-bottom: 3px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				max-width: 100%;
+				padding-right: 3px;
 			}
 			.rbc-event-content {
 			    white-space: nowrap;
