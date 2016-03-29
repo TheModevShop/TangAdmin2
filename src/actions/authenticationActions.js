@@ -4,6 +4,7 @@ import history from 'appHistory';
 import {fetchToken} from 'api/authApi';
 import {getMe} from 'actions/UserActions';
 import {resetState} from 'state/ResetStateTree';
+import {submitResetPassword} from 'api/authApi';
 
 const authentication = tree.select(['authentication']);
 
@@ -52,3 +53,15 @@ export async function teardownSession() {
   tree.commit();
   history.pushState(null, '/login');
 }
+
+export async function requestPasswordReset(email) {
+  let status;
+  try {
+    await submitResetPassword(email);
+    status = true;
+  } catch (err) {
+    status = false;
+  }
+  return status;
+}
+

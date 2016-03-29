@@ -50,5 +50,16 @@ export async function forgotPassword() {
   });
 }
 
+export async function submitResetPassword(email) {
+  return new bluebird((resolve, reject) => {
+    xhr('POST', `${BASE}/forgot`, {email}).then((res) => {
+      resolve(res);
+    }).catch((err) => {
+      reject(err);
+    });
+  });
+}
+
+
 // export function fetchPreferences(data) {
 // }
