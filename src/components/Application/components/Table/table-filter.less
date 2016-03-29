@@ -28,20 +28,30 @@
           justify-content: flex-start;
         }
         &.icon {
-          padding-left: 20px;
+          padding-left: 30px;
           overflow: hidden;
           position: relative;
           min-width: 100%;
+          background-color: #e6e6e6;
+          color: #666;
+          span {
+            display: block;
+            margin-top: -1px;
+          }
         }
         &:hover {
           color: #fff;
+          background-color: @salmon;
+          .calendar {
+            color: @salmon;
+          }
         }
         .calendar {
           background: #F5F5F5;
           border-right: 1px solid #999;
           border-top-left-radius: 2px;
           border-bottom-left-radius: 3px;
-          padding: 14px 5px;
+          padding: 14px 10px;
           margin-left: 1px;
           color: #A8A8A8;
           position: absolute;
@@ -71,6 +81,9 @@
   .applyBtn, .cancelBtn {
     width: 100%;
     min-width: 100%;
+    &:focus {
+      background-color: @salmonDark;
+    }
   }
   .cancelBtn {
     margin: 10px 0 0 0;
