@@ -7,9 +7,8 @@ import ClassInfo from './components/ClassInfo';
 import ClassStudentsTable from './components/ClassStudentsTable';
 import ClassTransactionsTable from './components/ClassTransactionsTable';
 import CustomModal from 'components/Application/components/Modal/Modal';
-import {setActiveClass, completeClass} from 'actions/ClassActions';
+import {setActiveClass, completeClass, cancelClasses} from 'actions/ClassActions';
 import RspMsg from 'components/Application/components/Forms/message';
-import {cancelClassApi} from 'api/classesApi';
 import {clearClassTransactions} from 'actions/TransactionsActions';
 import history from 'appHistory';
 import moment from 'moment';
@@ -26,13 +25,13 @@ class ClassProfile extends React.Component {
 
   cancelClass() {
     let id = this.props.classProfile.classProfile._id;
-    const cancelled = cancelClassApi(id);
+    const cancelled = cancelClasses(id);
     this.refs.modal.close();
     if (!cancelled) {
       this.setState({loading: false});
       alert('Error canceling, please try again')
     } else {
-      history.pushState(null, '/classes');
+      //history.pushState(null, '/classes');
     }
   }
 
@@ -106,7 +105,7 @@ class ClassProfile extends React.Component {
                 </Col>
                 <Col xs={12} sm={7} className="header-btns">
                   {
-                    !profile.private && !profile.complete ?
+                    !profile.private && !profile.complete && !profile.cancelled ?
                     <Button className="cancel-btn" onClick={this.activateModal.bind(this, 'cancel', this.cancelClass.bind(this))}>Cancel Class</Button> : null
                   }
                   {
@@ -116,6 +115,10 @@ class ClassProfile extends React.Component {
                   {
                     profile.complete ?
                     <h3 className="complete">session complete <span className={_.get(profile, 'sessionTransactions.passing') ? 'passing status' : 'status'}></span></h3> : null
+                  }
+                  {
+                    profile.cancelled ?
+                    <h3 className="complete">session cancelled</h3> : null
                   }
                 </Col>
               </div>

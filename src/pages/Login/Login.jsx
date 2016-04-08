@@ -28,8 +28,6 @@ class Login extends React.Component {
                 placeholder="Email Address"
                 ref="loginID"
                 type="text"
-                validations="isEmail"
-                validationError="Please enter a valid email address!" 
                 autofocus=""
                 name="email"
                 required />

@@ -35,7 +35,7 @@ const ClassInfo = React.createClass({
   render() {
     const profile = _.get(this.props, 'classProfile.classProfile') || {};
     const date = profile.date ? moment(profile.date, 'YYYYMMDD').format('YYYY-MM-DD') : null;
-    const disabled = this.props.disable || profile.complete || profile.private === true ? true : false;
+    const disabled = this.props.disable || profile.complete || profile.cancelled || profile.private === true ? true : false;
     return (
         <Row>
           <div className="col-xs-12">
@@ -111,7 +111,7 @@ const ClassInfo = React.createClass({
                     required/>
                 </Row>
                 {
-                  profile.private === false && !disabled ? 
+                  profile.private === false && !disabled && !profile.cancelled && !profile.complete ? 
                     <Row>
                       <Col xs={12}>
                         <Button type="submit" value="Submit" disabled={!this.state.canSubmit}>Update</Button>

@@ -76,6 +76,7 @@ export async function cancelClasses(ids) {
     clearTransactionsCache();
     clearClassTransactions();
     activeClass.set({stale: true});
+    Dashboard.set({'stale': true});
     tree.commit();
   } catch(err) {
     response = false;

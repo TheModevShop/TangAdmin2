@@ -18,8 +18,8 @@ class OverviewComponent extends React.Component {
 
 	render() {
 		const data = this.props.data || {};
-		let timeType = _.get(data, 'cancellationPolicy.time');
-		timeType = timeType ? timeType > 24 ? 'Days' : 'Hours' : '';
+		let time = _.get(data, 'cancellationPolicy.time');
+		const timeType = this.formatTime(time);
 		return (
 			<Formsy.Form ref="form" onValidSubmit={this.getGeoPoint.bind(this, false)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} className="row">
 				 <Col xs={12}>
@@ -164,7 +164,7 @@ class OverviewComponent extends React.Component {
 								className="col-xs-12 col-sm-4 "  
 								name="time" 
 								title="Cancellation Time"
-								value={_.get(data, 'cancellationPolicy.time') ? data.cancellationPolicy.time : ''} 
+								value={timeType.time} 
 								validations={{
 									isNumeric: true
 								}}
@@ -174,7 +174,7 @@ class OverviewComponent extends React.Component {
 								className="col-xs-12 col-sm-4 " 
 								name="durationType" 
 								title="Duration Type" 
-								value={timeType}
+								value={timeType.type}
 								options={{data: [{name:"Days", id:"Days"}, {name:"Hours", id:"Hours"}]}} 
 								validations="isExisty"
 								validationError="Please a duration type!"
@@ -237,6 +237,26 @@ class OverviewComponent extends React.Component {
 		} catch (err) {
 			console.log(err)
 		}
+	}
+
+	formatTime(timeLength) {
+		const time = timeLength ? Number(timeLength) : null;
+		if (time && time >= 24) {
+			return {
+				type: 'Days',
+				time: Math.ceil(time/24)
+			}
+		} else if(time) {
+			return {
+				type: 'Hours',
+				time: time
+			}
+		} 
+		return {
+			type: '',
+			time: ''
+		}
+
 	}
 
 	enableButton() {
