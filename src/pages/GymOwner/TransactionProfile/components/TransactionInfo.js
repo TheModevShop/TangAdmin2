@@ -29,6 +29,22 @@ class PrivateClassInfo extends React.Component {
               <p>{_.get(profile, 'instructor.name.first')} {_.get(profile, 'instructor.name.last')}</p>
             </Col>
           </Row>
+
+          <Row>
+            <Col xs={12}>
+              <h2>Instructor Profit</h2>
+              <p>{_.get(profile, 'instructor.name.first')} {_.get(profile, 'instructor.name.last')}</p>
+            </Col>
+            <Col xs={12}>
+              <h2>Application Fee</h2>
+              <p>{_.get(profile, 'instructor.name.first')} {_.get(profile, 'instructor.name.last')}</p>
+            </Col>
+            <Col xs={12}>
+              <h2>Gym Profit</h2>
+              <p>{_.get(profile, 'instructor.name.first')} {_.get(profile, 'instructor.name.last')}</p>
+            </Col>
+          </Row>
+
         </Col>
     );
   }
