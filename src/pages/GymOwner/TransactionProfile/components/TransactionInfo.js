@@ -1,11 +1,13 @@
 import React from 'react';
 import {Row, Col} from 'react-bootstrap';
+import currency from 'utility/currency';
 import moment from 'moment';
 import _ from 'lodash';
 
 class PrivateClassInfo extends React.Component {
   render() {
     const profile = this.props.profile;
+    console.log(profile)
     return (
         <Col xs={12} md={7}>
           <Row>
@@ -32,16 +34,13 @@ class PrivateClassInfo extends React.Component {
 
           <Row>
             <Col xs={12}>
-              <h2>Instructor Profit</h2>
-              <p>{_.get(profile, 'instructor.name.first')} {_.get(profile, 'instructor.name.last')}</p>
-            </Col>
-            <Col xs={12}>
-              <h2>Application Fee</h2>
-              <p>{_.get(profile, 'instructor.name.first')} {_.get(profile, 'instructor.name.last')}</p>
-            </Col>
-            <Col xs={12}>
-              <h2>Gym Profit</h2>
-              <p>{_.get(profile, 'instructor.name.first')} {_.get(profile, 'instructor.name.last')}</p>
+              <h2>Profit</h2>
+              <p> Instructor Cost: </p>
+              {
+                profile.type === 'session' && _.get(profile, 'session.private') ?
+                <p> Instructor Cut: {currency(_.get(profile, 'amountAfterProcessorAndApp'))} </p> : null
+              }
+              <p> Total Profit: {currency(_.get(profile, 'amountAfterProcessorAndApp'))} </p>
             </Col>
           </Row>
 
