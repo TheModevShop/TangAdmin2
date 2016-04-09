@@ -64,12 +64,6 @@ class TransactionProfile extends React.Component {
                     <p className="bold">Charged to {_.get(profile, 'userCharged.name.first')} {_.get(profile, 'userCharged.name.last')}</p>
                     <p>{moment(profile.date).format('M/D/YYYY h:mma')}</p>
                   </Col>
-                  {
-                    !profile.refunded ?
-                    <Col xs={12} sm={6} className="header-btns">
-                      <Button disabled={this.state.refunded} className="refund-btn" onClick={this.activateModal.bind(this, `refund ${userCharged} ${currency(profile.amount)} for`, this.refundTransaction.bind(this))}>Refund Transaction</Button>               
-                    </Col> : null
-                  }
                 </div>
                 <Row className="info-container">
                   <TransactionInfo profile={profile} />
@@ -87,3 +81,12 @@ export default branch(TransactionProfile, {
     TransactionProfile: 'TransactionProfile'
   }
 });
+
+
+// When Refunding is added back in
+// {
+//   !profile.refunded ?
+//   <Col xs={12} sm={6} className="header-btns">
+//     <Button disabled={this.state.refunded} className="refund-btn" onClick={this.activateModal.bind(this, `refund ${userCharged} ${currency(profile.amount)} for`, this.refundTransaction.bind(this))}>Refund Transaction</Button>               
+//   </Col> : null
+// }

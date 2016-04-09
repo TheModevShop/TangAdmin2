@@ -19,9 +19,6 @@ class GymOwnerLinks extends React.Component {
             <Link activeClassName="active" to={`/edit-gym/${id}`}>Edit Gym</Link> 
           </li>
           <li> 
-            <Link activeClassName="active" to="/gym-owners">Gym Owners</Link>
-          </li>
-          <li> 
             <Link activeClassName="active" to="/instructors">Instructors</Link>
           </li> 
           <li> 
@@ -53,3 +50,7 @@ export default branch(GymOwnerLinks, {
     user: ['user']
   }
 });
+
+// <li> 
+// <Link activeClassName="active" to="/gym-owners">Gym Owners</Link>
+// </li>

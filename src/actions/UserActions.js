@@ -33,13 +33,13 @@ export async function editMe(data) {
 export async function getMe() {
   try {
     const user = await getUser();
-    const location = _.find(_.get(user, 'body.gyms'), {default: true}) || _.get(user, 'body.gyms[0]');
-    const locationId = _.get(location, 'gym');
+    const loc = _.find(_.get(user, 'body.gyms'), {default: true}) || _.get(user, 'body.gyms[0]');
+    const locationId = _.get(loc, 'gym');
     await getMyGym(locationId);
     await getRoles();
     if (locationId) {
       await getMyGym(locationId);
-      userCursor.set('role', location.role.name);
+      userCursor.set('role', loc.role.name);
       tree.commit();
     }
 

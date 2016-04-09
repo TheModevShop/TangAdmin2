@@ -28,9 +28,12 @@ class Account extends React.Component {
           <ResetPassword loading={this.state.gymLoading} submitPassword={this.submitPassword.bind(this)}/>
         </div>
 
-        <div className="change-primary-gym card">
-          <ChangeGym gyms={_.get(this.props, 'gyms')}/>
-        </div>
+        {
+          false ?
+          <div className="change-primary-gym card">
+            <ChangeGym gyms={_.get(this.props, 'gyms')}/>
+          </div> : null
+        }
       </div>
     );
   }

@@ -41,7 +41,10 @@ class AddGym extends React.Component {
                 <span>
                   <div onClick={this.setTab.bind(this, 'hours')} className="tab tab-2 hours-tab">Hours of Operation</div>
                   <div onClick={this.setTab.bind(this, 'photos')} className="tab tab-3 photos-tab">Photos</div>
-                  <div onClick={this.setTab.bind(this, 'gym-owner')} className="tab tab-4 gym-owner-tab">Gym Owner</div>
+                  {
+                    _.get(this.props, 'user.role') === 'app-owner' ?
+                    <div onClick={this.setTab.bind(this, 'gym-owner')} className="tab tab-4 gym-owner-tab">Gym Owner</div> : false
+                  }
                 </span>
               : null
             }
@@ -76,10 +79,11 @@ class AddGym extends React.Component {
 
 export default branch(AddGym, {
   cursors: {
-    addGym: ['views', 'AddGym']
+    addGym: ['views', 'AddGym'],
+    user: ['user']
   },
   facets: {
-    gymProfile: 'GymProfile'
+    gymProfile: 'GymProfile',
   }
 
 });
