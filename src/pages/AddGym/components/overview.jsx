@@ -21,7 +21,7 @@ class OverviewComponent extends React.Component {
 		let time = _.get(data, 'cancellationPolicy.time');
 		const timeType = this.formatTime(time);
 		return (
-			<Formsy.Form ref="form" onValidSubmit={this.getGeoPoint.bind(this, false)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} className="row">
+			<Formsy.Form disabled={this.props.viewOnly} ref="form" onValidSubmit={this.getGeoPoint.bind(this, false)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} className="row">
 				 <Col xs={12}>
 						<Row>
 							<InputField 
@@ -186,7 +186,10 @@ class OverviewComponent extends React.Component {
 								<Button onClick={this.getGeoPoint.bind(this, true)}>Verify Location</Button>
 							</Col>
 						</Row>
-						<Button type="submit" value="Submit" disabled={!this.state.canSubmit}>{this.props.data._id ? 'Update' : 'Submit'}</Button>
+						{
+							!this.props.viewOnly ?
+							<Button type="submit" value="Submit" disabled={!this.state.canSubmit}>{this.props.data._id ? 'Update' : 'Submit'}</Button> : null
+						}
 					</Col>
 					
 			</Formsy.Form>

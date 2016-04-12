@@ -6,6 +6,7 @@ import {Row, Col, Grid, Button} from 'react-bootstrap';
 import RspMsg from './../../components/Application/components/Forms/message';
 import OverviewComponent from './components/overview';
 import HoursComponent from './components/hours';
+import AppFee from './components/appfee';
 import {setActiveGym} from 'actions/GymActions';
 import PhotosComponent from './components/photos';
 import OwnerComponent from './components/owner';
@@ -26,6 +27,7 @@ class AddGym extends React.Component {
 
   render() {
     const gym = _.get(this.props, 'gymProfile.gymProfile') || this.props.addGym.data || {};
+    const viewOnly = _.get(this.props, 'route.path', '').match('view-gym');
     return (
       <Grid fluid className={this.state.activeTab}>
         <div className="row header">
@@ -45,6 +47,10 @@ class AddGym extends React.Component {
                     _.get(this.props, 'user.role') === 'app-owner' ?
                     <div onClick={this.setTab.bind(this, 'gym-owner')} className="tab tab-4 gym-owner-tab">Gym Owner</div> : false
                   }
+                  {
+                    _.get(this.props, 'user.role') === 'app-owner' ?
+                    <div onClick={this.setTab.bind(this, 'app-fee')} className="tab tab-4 gym-app-fee">App Fee</div> : false
+                  }
                 </span>
               : null
             }
@@ -53,13 +59,15 @@ class AddGym extends React.Component {
 
         {
             this.state.activeTab === 'overview' ?
-                <OverviewComponent data={gym} /> : 
+              <OverviewComponent viewOnly={viewOnly} role={_.get(this.props, 'user.role')} data={gym} /> : 
             this.state.activeTab === 'hours' ?
-                <HoursComponent gymId={gym._id ? gym._id : null} data={gym} /> :
+              <HoursComponent viewOnly={viewOnly} role={_.get(this.props, 'user.role')} gymId={gym._id ? gym._id : null} data={gym} /> :
             this.state.activeTab === 'photos' ?
-                <PhotosComponent gymId={gym._id ? gym._id : null} data={gym} /> :
+              <PhotosComponent viewOnly={viewOnly} role={_.get(this.props, 'user.role')} gymId={gym._id ? gym._id : null} data={gym} /> :
             this.state.activeTab === 'gym-owner' ?
-                <OwnerComponent gymId={gym._id ? gym._id : null} data={gym} /> 
+              <OwnerComponent viewOnly={viewOnly} role={_.get(this.props, 'user.role')} gymId={gym._id ? gym._id : null} data={gym} /> : 
+            this.state.activeTab === 'app-fee' ?
+              <AppFee viewOnly={viewOnly} role={_.get(this.props, 'user.role')} gymId={gym._id ? gym._id : null} data={gym} /> 
             : null
         }
         <RspMsg delay={5000} response={this.props.addGym.response ? this.props.addGym.response : null} />

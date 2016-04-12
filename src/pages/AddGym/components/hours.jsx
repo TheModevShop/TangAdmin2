@@ -23,7 +23,7 @@ class HoursComponent extends React.Component {
 		 });
 
 		return (
-			<Formsy.Form ref="form" onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} className="row">
+			<Formsy.Form disbled={this.props.viewOnly} ref="form" onValidSubmit={this.submit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} className="row">
 			    <Col xs={12}>
 					<Row>
 							{daysList}

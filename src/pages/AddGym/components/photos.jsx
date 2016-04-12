@@ -96,22 +96,29 @@ const PhotosComponent = React.createClass({
                   this.state.images.map((file, i) =>
                   <Col key={i} xs={4} className="image-container">
                     <div className="image" style={{ backgroundImage: `url(${file.url})`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat'}}></div>
+                    
                     <div className="actions">
                       {
                         file.default ?
-                        <div className="make-default primary-link inactive">Is Default</div> :
-                        <div className="make-default primary-link" onClick={this.defaultPhoto.bind(null, file._id)}>Make Default</div>
+                        <div className="make-default primary-link inactive">Is Default</div> : !this.props.viewOnly ?
+                        <div className="make-default primary-link" onClick={this.defaultPhoto.bind(null, file._id)}>Make Default</div> : <div></div>
                       }
-                      <div className="delete primary-link" onClick={this.deletePhoto.bind(null, file._id)}>Delete</div>
+                      {
+                        !this.props.viewOnly ?
+                        <div className="delete primary-link" onClick={this.deletePhoto.bind(null, file._id)}>Delete</div> : null
+                      }
                     </div>
                   </Col>
                   ) : null
                 }
                 <Col className="dropzone-container" xs={4}>
-                  <Dropzone className="dropzone" ref="dropzone" onDrop={this.onDrop}>
-                    <span>+</span>
-                    <p>Upload Photos</p>
-                  </Dropzone>
+                  {
+                    !this.props.viewOnly ?
+                    <Dropzone className="dropzone" ref="dropzone" onDrop={this.onDrop}>
+                      <span>+</span>
+                      <p>Upload Photos</p>
+                    </Dropzone> : null
+                  }
                 </Col>
               </Row>
             </Col>

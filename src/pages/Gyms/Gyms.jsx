@@ -27,8 +27,8 @@ class Gyms extends React.Component {
   }
 
   delete() {
-    console.log(this.state.selections);
-    this.refs.modal.close();
+    // console.log(this.state.selections);
+    // this.refs.modal.close();
   }
 
   activateModal(action, fn) {
@@ -40,18 +40,10 @@ class Gyms extends React.Component {
     const isLoading = _.get(this.props, 'gyms.isLoading') || false;
 
     const renderName = (val, row) => {
-      return <Link to={`/add-gym/${row._id}`}>{row.name}</Link>;
-    }
-
-    const renderCheck = (val, row) => {
-      return <Input type="checkbox" name="delete" label=" " onChange={this.toggleSelection.bind(this, row._id)}/>;
+      return <Link to={`/view-gym/${row._id}`}>{row.name}</Link>;
     }
 
     const columns = [
-      { 
-        title: '', 
-        render: renderCheck
-      },
       { 
         title: 'Name', 
         prop: 'name',
@@ -83,13 +75,6 @@ class Gyms extends React.Component {
         <div className="row table-filter-container">
           <Col xs={12} sm={7}>
           </Col>
-          { 
-            this.state.selections.length ?
-              <Col xs={12} sm={5}>
-                <Button onClick={this.activateModal.bind(this, 'delete', this.delete.bind(this))}>Delete</Button>
-              </Col>
-            : null
-          }
         </div>
         {
           isLoading ? 

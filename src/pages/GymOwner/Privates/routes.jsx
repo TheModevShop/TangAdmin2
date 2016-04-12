@@ -6,12 +6,6 @@ import authOnEnter from 'utility/authOnEnter';
 
 const onEnter = authOnEnter('login');
 
-// function getComponents(location, cb) {
-//   require.ensure([], (require) => {
-//     cb(null, require('./Classes'));
-//   });
-
-
 export default (
   <Route>
     <Route pageName="privates" path="/privates" component={Privates} onEnter={onEnter}/>

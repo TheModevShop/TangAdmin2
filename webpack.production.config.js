@@ -13,7 +13,7 @@ var config = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: Date.now()+'-bundle.js'
   },
   module: {
     loaders: [

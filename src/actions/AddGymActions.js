@@ -1,5 +1,5 @@
 import tree from 'state/StateTree';
-import {postGym, postGymUpdate, addPhotosApi, defaultPhotoApi, deletePhotoApi} from 'api/locationsApi';
+import {postGym, postGymUpdate, addPhotosApi, defaultPhotoApi, deletePhotoApi, editAppFee} from 'api/locationsApi';
 import {createAdmin} from 'api/authApi';
 const gymList = tree.select(['views', 'GymList']);
 const activeGym = tree.select(['views', 'GymProfile']);
@@ -52,6 +52,22 @@ export async function addGymOwner(data, gymId) {
   try {
     update = await createAdmin(data, gymId);
     gymList.set({stale: true}); // this will cause to refetch
+    addGymCursor.set(['data'], update.body);
+    addGymCursor.set(['response'], {'success': true, 'message': 'Your gym information has been successfully submitted!'});
+  } catch (err) {
+    update = null;
+    addGymCursor.set(['response'], {'success': false, 'message': 'There was an error submitting your information.'});
+  }
+  addGymCursor.set(['awaitingSave'], false);
+  tree.commit();
+  return update;
+}
+
+export async function setAppFee(appFee, gymId) {
+  let update;
+  addGymCursor.set(['awaitingSave'], true);
+  try {
+    update = await editAppFee(appFee, gymId);
     addGymCursor.set(['data'], update.body);
     addGymCursor.set(['response'], {'success': true, 'message': 'Your gym information has been successfully submitted!'});
   } catch (err) {

@@ -51,6 +51,17 @@ export async function addPhotosApi(photos, id) {
   });
 }
 
+export async function editAppFee(amount, id) { 
+  return new bluebird((resolve, reject) => {
+    xhr('PUT', `${BASE}/gyms/${id}/app-fee`, {flatFee: amount}).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+      console.log('err')
+    });
+  });
+}
+
 export async function defaultPhotoApi(_id, id) { 
   return new bluebird((resolve, reject) => {
     xhr('POST', `${BASE}/gyms/${id}/add-photo/default`, {_id: _id}).then((data) => {

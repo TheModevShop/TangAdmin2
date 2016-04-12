@@ -1,6 +1,9 @@
 import React from 'react';
 import {Route} from 'react-router';
 import StudentProfile from './../StudentProfile';
+import authOnEnter from 'utility/authOnEnter';
+
+const onEnter = authOnEnter('login');
 
 function getComponents(location, cb) {
   require.ensure([], (require) => {
