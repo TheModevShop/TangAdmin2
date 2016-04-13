@@ -59,11 +59,11 @@ const TableFilter = React.createClass({
             <ClassFilter value={className} table={this.props.table} classes={allClassNames} /> : null
         }
         {
-          table === 'private' || table === 'classes' || table === 'student-privates'? 
+          table === 'private' || table === 'classes' || table === 'student-privates' || table === 'student-privates' ? 
             <InstructorFilter value={instructor} table={this.props.table} instructors={allInstructors} /> : null
         }
         {
-          table === 'private' || table === 'instructor' ? 
+          table === 'private' || table === 'instructor' || table === 'transactions' ? 
             <StudentFilter value={student} table={this.props.table} students={allStudents} /> : null
         }
 
