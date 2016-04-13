@@ -6,6 +6,8 @@ import _ from 'lodash';
 import './reports.less';
 import {DataTable} from 'react-data-components';
 import TableFilter from 'components/Application/components/Table/TableFilter';
+import {appOwnerReport} from 'actions/ReportActions';
+import currency from 'utility/currency';
 
 class AppOwnerReports extends React.Component {
   constructor(...args) {
@@ -13,33 +15,34 @@ class AppOwnerReports extends React.Component {
     this.state = {};
   }
 
-  formatData(classes) {
-    classes = _.map(_.cloneDeep(classes), (classItem) => {
-      return classItem;
-    });
-
-    return classes;
-  }
-
   render() {
-    const reports = [{name: "New Gym", classes: 12, privates: 15, earnings: "$60.00"}]
     const isLoading = _.get(this.props, 'privates.isLoading') || false;
+    const report = _.get(this.props, 'report.report', {});
+    const renderTotal = (val, row) => { 
+      return row.transactionsReport.total;
+    }
+    const renderFailing = (val, row) => { 
+      return row.transactionsReport.failing;
+    }
+    const renderProfit = (val, row) => { 
+      return currency(row.transactionsReport.profit);
+    }
     const columns = [
       { 
         title: 'Gym', 
         prop: 'name'
       },
       { 
-        title: 'Classes', 
-        prop: 'classes' 
+        title: 'total', 
+        render: renderTotal,
       },
       { 
-        title: 'Privates', 
-        prop: 'privates' 
+        title: 'Failing', 
+        render: renderFailing,
       },
       { 
         title: 'earnings', 
-        prop: 'earnings' 
+        render: renderProfit
       },
     ];
     return (
@@ -50,29 +53,32 @@ class AppOwnerReports extends React.Component {
             </Col>
           </div>
           <div className="row table-filter-container">
-            <TableFilter onSubmitFilter={this.submitFilter.bind(this)} table="reports" />
+            <TableFilter onSubmitFilter={this.submitFilter.bind(this)} table="appOwnerGymReports" />
           </div>
           {
             isLoading ? 
               <Spinner /> :
-                reports.length ?
+                report.gyms && report.gyms.length ?
                   <div>
                     <DataTable
                       keys={['_id']}
                       columns={columns}
-                      initialData={reports}
+                      initialData={report.gyms}
                       initialPageLength={1000}
                       className="table-body"
                     />
                     <div className="totals-wrapper">
                       <div>
-                        <span>Total Gym Revenue</span><span>$1000.00</span>
+                        <span>Total Transactions</span><span>{report.report.total}</span>
                       </div>
                       <div>
-                        <span>Total Coach Earnings</span><span>$1000.00</span>
+                        <span>Total Failing</span><span>{report.report.failing}</span>
                       </div>
                       <div>
-                        <span>Total Gym Profit</span><span>$1000.00</span>
+                        <span>Total App Revenue</span><span>{currency(report.report.revenue)}</span>
+                      </div>
+                      <div>
+                        <span>Total App Profit</span><span>{currency(report.report.profit)}</span>
                       </div>
                     </div>
                   </div>
@@ -82,8 +88,13 @@ class AppOwnerReports extends React.Component {
         </div>
     );
   }
-  submitFilter() {
+  submitFilter() {    
+    appOwnerReport();
   }
 }
 
-export default AppOwnerReports;
+export default branch(AppOwnerReports, {
+  facets: {
+    report: 'AppOwnerGymReport'
+  }
+});

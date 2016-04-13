@@ -12,28 +12,28 @@ class GymOwnerLinks extends React.Component {
     const id = _.get(this.props, 'user.myGym.gymDetails._id', null);
     return (
         <ul>
-          <li> 
+          <li className="dashboard"> 
             <Link activeClassName="active" to="/dashboard">Dashboard</Link> 
           </li>
-          <li> 
+          <li className="edit-gym"> 
             <Link activeClassName="active" to={`/edit-gym/${id}`}>Edit Gym</Link> 
           </li>
-          <li> 
+          <li className="instructor"> 
             <Link activeClassName="active" to="/instructors">Instructors</Link>
           </li> 
-          <li> 
+          <li className="student"> 
             <Link activeClassName="active" to="/students">Students</Link>
           </li> 
-          <li> 
+          <li className="private"> 
             <Link activeClassName="active" to="/privates">Privates</Link>
           </li> 
-          <li> 
+          <li className="classes"> 
             <Link activeClassName="active" to="/classes">Classes</Link>
           </li>
-          <li> 
+          <li className="transactions"> 
             <Link activeClassName="active" to="/transactions">Transactions</Link>
           </li>
-          <li> 
+          <li className="reports"> 
             <Link activeClassName="active" to="/gym-owner-reports">Reports</Link>
           </li>
         </ul>

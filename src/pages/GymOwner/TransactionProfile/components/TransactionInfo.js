@@ -7,7 +7,9 @@ import _ from 'lodash';
 class PrivateClassInfo extends React.Component {
   render() {
     const profile = this.props.profile;
-    console.log(profile)
+    const gymCut = _.get(this.props, 'gym.gymCut.flatFee', 0);
+    const amount = _.get(profile, 'amount', 0);
+    const fees = amount - _.get(profile, 'amountAfterProcessorAndApp', 0);
     return (
         <Col xs={12} md={7}>
           <Row>
@@ -35,12 +37,16 @@ class PrivateClassInfo extends React.Component {
           <Row>
             <Col xs={12}>
               <h2>Profit</h2>
-              <p> Instructor Cost: </p>
+              <p> App Fees: {currency(fees)}</p>
               {
                 profile.type === 'session' && _.get(profile, 'session.private') ?
-                <p> Instructor Cut: {currency(_.get(profile, 'amountAfterProcessorAndApp'))} </p> : null
+                <p> Instructor Cut: {currency(amount-gymCut)} </p> : null
               }
-              <p> Total Profit: {currency(_.get(profile, 'amountAfterProcessorAndApp'))} </p>
+              {
+                profile.type === 'session' && _.get(profile, 'session.private') ?
+                <p> Total Profit: {currency(_.get(profile, 'amountAfterProcessorAndApp', 0) - (amount-gymCut))} </p> :
+                <p> Total Profit: {currency(_.get(profile, 'amountAfterProcessorAndApp', 0))} </p>
+              }
             </Col>
           </Row>
 

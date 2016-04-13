@@ -46,7 +46,7 @@ class Privates extends React.Component {
     
     const renderName = (val, row) => {
       return (
-        <Link to={`/class-profile/${row._id}`}>
+        <Link to={`/private-profile/${row._id}`}>
           <div className={`icon ${row.statusIcon}`}></div>
           { row.instructor ? row.instructor.name.first + ' ' + row.instructor.name.last : 'N/A'}
         </Link> 

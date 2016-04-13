@@ -10,5 +10,6 @@ export default (
   <Route>
     <Route pageName="classes" path="/classes" component={Classes} onEnter={onEnter} />
     <Route pageName="classes" path="/class-profile/:id" component={ClassProfile} onEnter={onEnter} />
+    <Route pageName="private-profile" path="/private-profile/:id" component={ClassProfile} onEnter={onEnter} />
   </Route>
 );

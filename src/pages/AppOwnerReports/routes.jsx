@@ -7,6 +7,6 @@ const onEnter = authOnEnter('login');
 
 export default (
   <Route>
-    <Route pageName="reports" path="/reports" component={Reports} onEnter={onEnter}/>
+    <Route pageName="reports" path="/app-owner-report" component={Reports} onEnter={onEnter}/>
   </Route>
 );

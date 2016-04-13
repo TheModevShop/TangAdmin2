@@ -45,6 +45,7 @@ class TransactionProfile extends React.Component {
   render() {
     const profile = _.get(this.props, 'TransactionProfile.profile') || {};
     const userCharged = `${_.get(profile, 'userCharged.name.first')} ${_.get(profile, 'userCharged.name.last')}`
+    const gym = _.get(this.props, 'user.myGym.gymDetails', null);
     return (
         this.state.loading ?
         <Spinner />  :
@@ -66,7 +67,7 @@ class TransactionProfile extends React.Component {
                   </Col>
                 </div>
                 <Row className="info-container">
-                  <TransactionInfo profile={profile} />
+                  <TransactionInfo gym={gym} profile={profile} />
                 </Row>
               </div>
             </Row>
@@ -77,8 +78,11 @@ class TransactionProfile extends React.Component {
   }
 }
 export default branch(TransactionProfile, {
+  cursors: { 
+    user: ['user']
+  },
   facets: {
-    TransactionProfile: 'TransactionProfile'
+    TransactionProfile: 'TransactionProfile',
   }
 });
 

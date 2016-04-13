@@ -81,6 +81,9 @@ export default function getInitialState() {
         GymOwnerReports: {
           list: null
         },
+        AppOwnerGymReports: {
+          list: null
+        }
       },
       user: {
         details: {},
@@ -95,7 +98,8 @@ export default function getInitialState() {
         classes: {},
         privates: {},
         transactions: {},
-        reports: {}
+        reports: {},
+        appOwnerGymReports: {}
       },
     },
     facets: {facets: facets}
