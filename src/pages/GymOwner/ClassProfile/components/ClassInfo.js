@@ -144,18 +144,22 @@ const ClassInfo = React.createClass({
       })
     };
   },
-  submitClass(data) { 
+  submitClass(data) {
     const classTime = moment(data.date).set('hour', data.start.split(':')[0]).set('minute', data.start.split(':')[1]).format()
-    const validDate = moment().isBefore(moment(classTime))
-    if (validDate) {
+    const validDate = moment().isBefore(moment(classTime));
+    const formattedPrice = this.currency(data.price);
+    const validPrice = formattedPrice > 0 && formattedPrice < 200 ? false : true;
+    if (validDate && validPrice) {
       data.dateAndTime = classTime;
       data.date = moment(data.date).format('YYYYMMDD');
       data.private = false;
+      data.price = formattedPrice;
       data.name = data.name ? data.name.trim() : '';
-      data.price = this.currency(data.price);
       data.capacity = Number(data.capactiy);
       data.SessionId = this.props.classProfile.classProfile._id;
       updateClass(data, this.props.classProfile.classProfile._id);
+    } else if(!validPrice) {
+      setError({'success': false, 'message': 'Session price must be atleast $2.00'});
     } else {
       setError({'success': false, 'message': 'Invalid Date!'});
     }
@@ -172,8 +176,8 @@ const ClassInfo = React.createClass({
 
   currency(value) {
     var val = Number(value);
-    val = val.toFixed(2);
-      return val * 100;
+    val = val.toFixed(2) / 1;
+    return val * 100;
   }
 });
 
