@@ -205,8 +205,8 @@ const AddClass = React.createClass({
 
   currency(value) {
     var val = Number(value);
-    val = val.toFixed(2);
-      return val * 100;
+    val = val.toFixed(2) / 1;
+    return val * 100;
   }
 });
 

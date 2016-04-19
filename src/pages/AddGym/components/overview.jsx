@@ -177,7 +177,7 @@ class OverviewComponent extends React.Component {
 								value={timeType.type}
 								options={{data: [{name:"Days", id:"Days"}, {name:"Hours", id:"Hours"}]}} 
 								validations="isExisty"
-								validationError="Please a duration type!"
+								validationError="Please select a duration type!"
 								required />
 						</Row>
 						<Row>
@@ -198,8 +198,8 @@ class OverviewComponent extends React.Component {
 
 	currency(value) {
 		var val = Number(value);
-		val = val.toFixed(2);
-			return val * 100;
+		val = val.toFixed(2) / 1;
+		return val * 100;
 	}
 
 	async getGeoPoint(btn, form) {
