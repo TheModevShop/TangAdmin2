@@ -13,7 +13,7 @@ function getComponents(location, cb) {
 
 export default (
   <Route>
-    <Route pageName="students" path="/students" getComponents={getComponents} />
-    <Route pageName="student-profile" path="/students/:id" component={StudentProfile} />
+    <Route pageName="students" path="/students" getComponents={getComponents} onEnter={onEnter}/>
+    <Route pageName="student-profile" path="/students/:id" component={StudentProfile} onEnter={onEnter}/>
   </Route>
 );
